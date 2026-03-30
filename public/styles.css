@@ -1,0 +1,198 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Cairo", sans-serif;
+  background-color: #f5f3f4;
+}
+
+/* اللوقو */
+.logo-area {
+  width: 100%;
+  padding: 30px 0 0 0;
+  text-align: center;
+}
+
+.logo-area img {
+  max-width: 800px;
+  height: auto;
+}
+
+/* الحاوية */
+.container {
+  max-width: 900px;
+  margin: 40px auto 0 auto;
+  padding: 20px;
+}
+
+/* صف البحث */
+.search-row {
+  display: grid;
+  grid-template-columns: 60px 1fr 60px;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 25px;
+}
+
+/* 🔥 تنسيق الفورم الجديد داخل صف البحث */
+.search-form {
+  display: flex;
+  gap: 6px;
+  width: 100%;
+}
+
+/* خانة البحث */
+.search-form input[type="search"] {
+  flex: 1;
+  padding: 14px 16px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  font-size: 17px;
+  background: #fff;
+  text-align: center;
+  transition: box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.search-form input[type="search"]:focus {
+  outline: none;
+  border-color: #a4161a;
+  box-shadow: 0 0 8px rgba(164, 22, 26, 0.3);
+}
+
+/* زر ابحث */
+.search-submit {
+  padding: 0 18px;
+  background-color: #353434;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.25s;
+  white-space: nowrap;
+}
+
+.search-submit:hover {
+  background-color: #a4161a;
+  transform: translateY(-3px);
+}
+
+/* أزرار البحث */
+.btn-wrapper {
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+
+.main-btn {
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  border: none;
+  background-color: #7E0202;
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  text-decoration: none;
+}
+
+.main-btn:hover {
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 6px 16px rgba(164, 22, 26, 0.35);
+}
+
+/* التولتيب */
+.tooltip {
+  position: absolute;
+  top: -45px;
+  background-color: #7E0202;
+  color: #fff;
+  padding: 7px 12px;
+  border-radius: 8px;
+  font-size: 13px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+  transform: translateY(10px);
+}
+
+.btn-wrapper:hover .tooltip {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* قائمة الموظفين */
+.employee-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 25px;
+}
+
+/* صف الموظف */
+.employee-row {
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  padding: 16px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  transition: 0.25s;
+}
+
+.employee-row:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+}
+
+/* معلومات الموظف */
+.emp-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.emp-name {
+  font-size: 18px;
+  font-weight: bold;
+  color: #7E0202;
+}
+
+.emp-id,
+.emp-job {
+  font-size: 15px;
+  color: #444;
+}
+
+/* زر عرض البيانات */
+.view-btn-row {
+  padding: 10px 16px;
+  background-color: #7E0202;
+  color: #fff;
+  border-radius: 10px;
+  text-decoration: none;
+  transition: 0.25s;
+  white-space: nowrap;
+}
+
+.view-btn-row:hover {
+  background-color: #a4161a;
+  transform: translateY(-3px);
+}
+
+.success-message {
+    background-color: #e8fff3;
+    border-left: 5px solid #28a745;
+    padding: 14px 18px;
+    border-radius: 4px;
+    color: #155724;
+    font-size: 16px;
+    margin-bottom: 15px;
+    font-weight: bold;
+    transition: opacity 0.5s ease;
+}
