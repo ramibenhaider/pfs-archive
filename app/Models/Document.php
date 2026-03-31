@@ -8,7 +8,7 @@ class Document extends Model
 {
     protected $fillable =
     [
-        'docuement_type_id',
+        'document_type_id',
         'employee_id',
         'file_path',
         'comment'

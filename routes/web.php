@@ -11,5 +11,10 @@ Route::get('/', [DashboardController::class, 'home'])->name('index');
 Route::get('/employee/create', [EmployeeController::class, 'create'])->name('employee.create');
 Route::post('/', [EmployeeController::class, 'store'])->name('employee.store');
 Route::get('/search', [DashboardController::class, 'makeSearch'])->name('search');
-Route::get('/notes/index', [NoteController::class, 'index'])->name('notes.index');
-Route::post('/notes/index', [NoteController::class, 'store'])->name('images.store');
+Route::get('/library/index', [NoteController::class, 'index'])->name('library.index');
+
+Route::get('/documents',          [DocumentController::class, 'index'])  ->name('documents.index');
+Route::post('/documents',         [DocumentController::class, 'store'])  ->name('documents.store');
+Route::delete('/documents/{id}',  [DocumentController::class, 'destroy'])->name('documents.destroy');
+
+Route::post('/library/index', [NoteController::class, 'store'])->name('note.store');

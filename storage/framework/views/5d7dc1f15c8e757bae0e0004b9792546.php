@@ -3,19 +3,20 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title')</title>
+    <title><?php echo $__env->yieldContent('title'); ?></title>
     <link href="https://cdn.jsdelivr.net/npm/tom-select@2.3.1/dist/css/tom-select.css" rel="stylesheet">
-    @stack('styles')
+    <?php echo $__env->yieldPushContent('styles'); ?>
 </head>
 
 <body>
 
   <!-- منطقة اللوقو -->
   <div class="logo-area">
-     <img src="{{ asset('logo.png') }}" alt="Company Logo">
+     <img src="<?php echo e(asset('logo.png')); ?>" alt="Company Logo">
   </div>
-  @yield('content')
+  <?php echo $__env->yieldContent('content'); ?>
   <script src="https://cdn.jsdelivr.net/npm/tom-select@2.3.1/dist/js/tom-select.complete.min.js"></script>
-  @stack('scripts')
+  <?php echo $__env->yieldPushContent('scripts'); ?>
 </body>
 </html>
+<?php /**PATH C:\xampp\htdocs\archive-nags\resources\views/layouts/index-layout.blade.php ENDPATH**/ ?>

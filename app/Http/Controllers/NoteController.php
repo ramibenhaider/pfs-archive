@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Note;
 use App\Models\Document;
+use App\Models\Employee;
+use App\Models\Document_type;
 use Illuminate\Http\Request;
 
 class NoteController extends Controller
@@ -13,7 +15,11 @@ class NoteController extends Controller
      */
     public function index()
     {
-        return view('notes.index');
+        $employees = Employee::all();
+        $notes = Note::all();
+        $documents = Document::all();
+        $document_types = Document_type::all();
+        return view('library.index', compact('documents', 'notes', 'employees', 'document_types'));
     }
 
     /**
@@ -29,29 +35,22 @@ class NoteController extends Controller
      */
     public function store(Request $request)
     {
+        $data = $request->validate([
+            'employee_id' => ['required', 'exists:employees,id'],
+            'title'       => ['required', 'string', 'max:100'],
+            'note'        => ['nullable', 'string', 'max:255'],
+        ],
+        [
+            'employee_id.required' => 'يجب تحديد إلى من تعود الملاحظة!',
+            'employee_id.exists'   => 'لا يوجد هذا الموظف في قاعدة البيانات!',
 
-        $request->validate([
-            'images.*' => 'required|image|mimes:jpg,jpeg,png|max:2048',
-            'employee_id' => 'required|exists:employees,id',
-            'document_type_id' => 'required|exists:document_types,id'
+            'title.required' => 'يجب إضافة عنوان!',
+            'title.max' => 'لقد تجاوزت عدد الأحرف المسموحة!',
+
+            'note' => 'لقد تجاوزت عدد الأحرف المسموحة'
         ]);
-
-        $paths = [];
-
-        foreach ($request->file('images') as $image) {
-            $paths[] = $image->store('uploads', 'public');
-        }
-
-        // مثال: تخزين المسارات في جدول واحد
-        Document::insert(
-            collect($paths)->map(fn($p) => ['file_path' => $p,
-                                            'employee_id' => $request->employee_id,
-                                            'document_type_id' => $request->document_type_id
-                                            ])->toArray()
-    );
-
-    return back()->with('success', 'تم رفع الصور بنجاح');
-
+        Note::create($data);
+        return back()->with('sucsess', 'تمت إضافة الملاحظة بنجاح!');
     }
 
     /**
