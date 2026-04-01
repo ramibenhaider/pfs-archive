@@ -10,6 +10,8 @@
 
 <?php $__env->startSection('content'); ?>
 
+<a href="<?php echo e(route('index')); ?>">إغلاق</a>
+
     
     <form action="<?php echo e(route('documents.store')); ?>" method="POST" enctype="multipart/form-data">
         <?php echo csrf_field(); ?>
@@ -143,6 +145,41 @@ unset($__errorArgs, $__bag); ?>
 
         <button type="submit">حفظ الملاحظة</button>
     </form>
+
+    <form method="GET" action="<?php echo e(route('search_notes')); ?>">
+        <br>
+    <select name="employee_id" id="employee_id_search_notes">
+        <?php $__currentLoopData = $employees; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $employee): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+            <option value="<?php echo e($employee->id); ?>"><?php echo e($employee->name); ?></option>
+        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+    </select>
+    <button type="submit">ابحث</button>
+    </form>
+    
+    <br>
+
+    <table>
+        <thead>
+            <tr>
+                <th>الاسم</th>
+                <th>العنوان</th>
+                <th>الملاحظة</th>
+                <th>تاريخ الإضافة</th>
+                <th>تاريخ آخر تعديل</th>
+            </tr>
+        </thead>
+        <tbody>
+        <?php $__currentLoopData = $notes; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $note): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+            <tr>
+                <td><?php echo e($note->employee->name); ?></td>
+                <td><?php echo e($note->title); ?></td>
+                <td><?php echo e($note->note); ?></td>
+                <td><?php echo e($note->created_at); ?></td>
+                <td><?php echo e($note->updated_at); ?></td>
+            </tr>
+        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+        </tbody>
+    </table>
 
 <?php $__env->stopSection(); ?>
 

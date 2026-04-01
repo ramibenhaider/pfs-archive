@@ -10,6 +10,8 @@
 
 @section('content')
 
+<a href="{{ route('index') }}">إغلاق</a>
+
     {{-- قسم رفع الملفات --}}
     <form action="{{ route('documents.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
@@ -73,6 +75,41 @@
 
         <button type="submit">حفظ الملاحظة</button>
     </form>
+
+    <form method="GET" action="{{ route('search_notes') }}">
+        <br>
+    <select name="employee_id" id="employee_id_search_notes">
+        @foreach ($employees as $employee)
+            <option value="{{ $employee->id }}">{{ $employee->name }}</option>
+        @endforeach
+    </select>
+    <button type="submit">ابحث</button>
+    </form>
+    
+    <br>
+
+    <table>
+        <thead>
+            <tr>
+                <th>الاسم</th>
+                <th>العنوان</th>
+                <th>الملاحظة</th>
+                <th>تاريخ الإضافة</th>
+                <th>تاريخ آخر تعديل</th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach ($notes as $note)
+            <tr>
+                <td>{{ $note->employee->name }}</td>
+                <td>{{ $note->title }}</td>
+                <td>{{ $note->note }}</td>
+                <td>{{ $note->created_at }}</td>
+                <td>{{ $note->updated_at }}</td>
+            </tr>
+        @endforeach
+        </tbody>
+    </table>
 
 @endsection
 

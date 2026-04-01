@@ -18,3 +18,4 @@ Route::post('/documents',         [DocumentController::class, 'store'])  ->name(
 Route::delete('/documents/{id}',  [DocumentController::class, 'destroy'])->name('documents.destroy');
 
 Route::post('/library/index', [NoteController::class, 'store'])->name('note.store');
+Route::get('/search-notes', [NoteController::class, 'doSearch'])->name('search_notes');

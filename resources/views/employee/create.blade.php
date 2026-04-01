@@ -4,9 +4,9 @@
     إضافة موظف
 @endsection
 
-@section('styles')
-    "{{ asset('employee/create-styles.css') }}"
-@endsection
+@push('styles')
+    <link rel="stylesheet" href="{{ asset('employee/create-styles.css') }}">
+@endpush
 
 @section('content')
 

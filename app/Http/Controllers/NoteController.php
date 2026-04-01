@@ -15,8 +15,8 @@ class NoteController extends Controller
      */
     public function index()
     {
-        $employees = Employee::all();
-        $notes = Note::all();
+        $employees = Employee::orderBy('created_at', 'desc')->get();
+        $notes = Note::orderBy('created_at', 'desc')->get();
         $documents = Document::all();
         $document_types = Document_type::all();
         return view('library.index', compact('documents', 'notes', 'employees', 'document_types'));
@@ -83,5 +83,29 @@ class NoteController extends Controller
     public function destroy(Note $note)
     {
         //
+    }
+
+    public function doSearch(Request $request)
+    {
+        if(!$request->filled('employee_id')) {
+            return redirect()->route('library.index');
+        }
+        $request->validate([
+            'employee_id' => 'required|exists:employees,id'
+        ],
+        [
+            'employee_id.required' => 'اسم الموظف مطلوب!',
+            'employee_id.exists'   => 'هذا الموظف غير مسجل على قاعدة البيانات!'
+        ]);
+
+        $notes = Note::with('employee')
+                      ->where('employee_id', $request->employee_id)
+                      ->orderByDesc('created_at')
+                      ->get();
+        $employees = Employee::orderByDesc('created_at')->get();
+        $documents = Document::all();
+        $document_types = Document_type::all();
+        return view('library.index', compact('notes', 'employees', 'documents', 'document_types'))
+               ->with('success');
     }
 }

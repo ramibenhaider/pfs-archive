@@ -4,9 +4,9 @@
     إضافة موظف
 <?php $__env->stopSection(); ?>
 
-<?php $__env->startSection('styles'); ?>
-    "<?php echo e(asset('employee/create-styles.css')); ?>"
-<?php $__env->stopSection(); ?>
+<?php $__env->startPush('styles'); ?>
+    <link rel="stylesheet" href="<?php echo e(asset('employee/create-styles.css')); ?>">
+<?php $__env->stopPush(); ?>
 
 <?php $__env->startSection('content'); ?>
 

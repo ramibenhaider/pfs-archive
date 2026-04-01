@@ -138,3 +138,9 @@ if (document.getElementById('employee_id_note')) {
         placeholder: 'ابحث عن موظف...',
     });
 }
+
+if(document.getElementById('employee_id_search_notes')) {
+    new TomSelect('#employee_id_search_notes', {
+        placeholder: 'ابحث عن ملاحظات موظف...',
+    });
+}
