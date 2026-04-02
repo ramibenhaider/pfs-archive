@@ -66,7 +66,7 @@ class NoteController extends Controller
      */
     public function edit(Note $note)
     {
-        //
+        return view('library.notes.edit', compact('note'));
     }
 
     /**
@@ -74,15 +74,33 @@ class NoteController extends Controller
      */
     public function update(Request $request, Note $note)
     {
-        //
+        $new_data = $request->validate([
+            'title'       => ['required', 'string', 'max:100'],
+            'note'        => ['nullable', 'string', 'max:255'],
+        ],
+        [
+            'title.required' => 'لا يمكن ترك العنوان فارغاً!',
+            'title.max' => 'لقد تجاوزت عدد الأحرف المسموحة!',
+
+            'note' => 'لقد تجاوزت عدد الأحرف المسموحة'
+        ]);
+
+        if (!$note->fill($new_data)->isDirty()) {
+            return back()->withErrors(['same' => 'لم تقم بأي تعديل!']);
+        }
+
+        $note->save();
+        return redirect()->route('library.index')->with('success', 'تم التعديل بنجاح!');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Note $note)
+    public function destroy($id)
     {
-        //
+        $note = Note::findOrFail($id);
+        $note->delete();
+        return back()->with('success');
     }
 
     public function doSearch(Request $request)
