@@ -14,6 +14,11 @@
   <div class="logo-area">
      <img src="{{ asset('logo.png') }}" alt="Company Logo">
   </div>
+    @if (session('success'))
+    <div id="success-message" class="success-message">
+        {{ session('success') }}
+    </div>
+  @endif
   @yield('content')
   <script src="https://cdn.jsdelivr.net/npm/tom-select@2.3.1/dist/js/tom-select.complete.min.js"></script>
   @stack('scripts')

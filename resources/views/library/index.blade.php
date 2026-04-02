@@ -5,7 +5,7 @@
 @endsection
 
 @push('styles')
-    <link rel="stylesheet" href="{{ asset('notes/styles.css') }}">
+    <link rel="stylesheet" href="{{ asset('styles.css') }}">
 @endpush
 
 @section('content')
@@ -106,6 +106,19 @@
                 <td>{{ $note->note }}</td>
                 <td>{{ $note->created_at }}</td>
                 <td>{{ $note->updated_at }}</td>
+                <td><form method="POST"
+                action="{{ route('note.destroy', $note->id) }}" onclick="return confirm('هل أنت متأكد من الحذف؟')">
+                @csrf
+                @method('DELETE')
+                <button type="submit">حذف</button>
+                </form>
+                </td>
+                <td>
+                    <form method="GET" action="{{ route('note.edit', $note->id) }}">
+                        @csrf
+                        <button type="submit">تعديل</button>
+                </form>
+                </td>
             </tr>
         @endforeach
         </tbody>

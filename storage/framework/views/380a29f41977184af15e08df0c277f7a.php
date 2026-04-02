@@ -9,13 +9,6 @@
 <?php $__env->stopPush(); ?>
 
 <?php $__env->startSection('content'); ?>
-  
-  <?php if(session('success')): ?>
-    <div id="success-message" class="success-message">
-        <?php echo e(session('success')); ?>
-
-    </div>
-  <?php endif; ?>
 
   <div class="container">
 

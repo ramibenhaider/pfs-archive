@@ -5,7 +5,7 @@
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startPush('styles'); ?>
-    <link rel="stylesheet" href="<?php echo e(asset('notes/styles.css')); ?>">
+    <link rel="stylesheet" href="<?php echo e(asset('styles.css')); ?>">
 <?php $__env->stopPush(); ?>
 
 <?php $__env->startSection('content'); ?>
@@ -176,6 +176,19 @@ unset($__errorArgs, $__bag); ?>
                 <td><?php echo e($note->note); ?></td>
                 <td><?php echo e($note->created_at); ?></td>
                 <td><?php echo e($note->updated_at); ?></td>
+                <td><form method="POST"
+                action="<?php echo e(route('note.destroy', $note->id)); ?>" onclick="return confirm('هل أنت متأكد من الحذف؟')">
+                <?php echo csrf_field(); ?>
+                <?php echo method_field('DELETE'); ?>
+                <button type="submit">حذف</button>
+                </form>
+                </td>
+                <td>
+                    <form method="GET" action="<?php echo e(route('note.edit', $note->id)); ?>">
+                        <?php echo csrf_field(); ?>
+                        <button type="submit">تعديل</button>
+                </form>
+                </td>
             </tr>
         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
         </tbody>

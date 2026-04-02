@@ -9,12 +9,6 @@
 @endpush
 
 @section('content')
-  
-  @if (session('success'))
-    <div id="success-message" class="success-message">
-        {{ session('success') }}
-    </div>
-  @endif
 
   <div class="container">
 

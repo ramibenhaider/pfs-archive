@@ -19,3 +19,6 @@ Route::delete('/documents/{id}',  [DocumentController::class, 'destroy'])->name(
 
 Route::post('/library/index', [NoteController::class, 'store'])->name('note.store');
 Route::get('/search-notes', [NoteController::class, 'doSearch'])->name('search_notes');
+Route::delete('/library/index/{id}', [NoteController::class, 'destroy'])->name('note.destroy');
+Route::get('/library/note/{note}/edit', [NoteController::class, 'edit'])->name('note.edit');
+Route::put('/library/note/{note}/edit', [NoteController::class, 'update'])->name('note.update');
