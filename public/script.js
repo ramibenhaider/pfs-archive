@@ -39,7 +39,7 @@ document.addEventListener("DOMContentLoaded", function () {
             msg.style.transition = "opacity 0.5s ease";
             msg.style.opacity = "0";
             setTimeout(() => msg.remove(), 500);
-        }, 3000);
+        }, 5000);
     }
 });
 

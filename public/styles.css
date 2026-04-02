@@ -189,10 +189,14 @@ body {
     background-color: #e8fff3;
     border-left: 5px solid #28a745;
     padding: 14px 18px;
-    border-radius: 4px;
+    border-radius: 10px; /* زودنا الانحناء */
     color: #155724;
     font-size: 16px;
-    margin-bottom: 15px;
+    margin: 15px auto; /* يخليها في النص */
     font-weight: bold;
     transition: opacity 0.5s ease;
+
+    width: fit-content; /* على قد المحتوى */
+    max-width: 400px; /* حد أقصى */
+    text-align: center;
 }
