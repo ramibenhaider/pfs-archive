@@ -6,6 +6,7 @@
 
 <?php $__env->startPush('styles'); ?>
 <link rel="stylesheet" href="<?php echo e(asset('styles.css')); ?>">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
 <?php $__env->stopPush(); ?>
 
 <?php $__env->startSection('content'); ?>
@@ -56,6 +57,11 @@
 
         </div>
     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+
+</div>
+
+<div class="pagination-wrapper">
+  <?php echo e($employee->links()); ?>
 
 </div>
 

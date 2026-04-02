@@ -2,7 +2,7 @@ body {
     margin: 0;
     padding: 0;
     font-family: "Cairo", sans-serif;
-    background-color: #f5f3f4;
+    background-color: #f5f3f4 !important;
 }
 
 /* منطقة اللوقو */

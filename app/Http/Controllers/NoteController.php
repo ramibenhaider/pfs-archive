@@ -100,7 +100,7 @@ class NoteController extends Controller
     {
         $note = Note::findOrFail($id);
         $note->delete();
-        return back()->with('success');
+        return back()->with('success', 'تم الحذف بنجاح!');
     }
 
     public function doSearch(Request $request)

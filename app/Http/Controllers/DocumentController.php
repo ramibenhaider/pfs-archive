@@ -72,7 +72,7 @@ class DocumentController extends Controller
             }
         });
 
-        return back()->with('success', 'تم رفع الملفات بنجاح');
+        return back()->with('success', 'تم رفع الملفات بنجاح!');
     }
 
 
@@ -115,6 +115,6 @@ class DocumentController extends Controller
         // ثم حذف الـ record من DB
         $document->delete();
 
-        return back()->with('success', 'تم حذف الملف بنجاح');
+        return back()->with('success', 'تم حذف الملف بنجاح!');
     }
 }

@@ -6,6 +6,7 @@
 
 @push('styles')
 <link rel="stylesheet" href="{{ asset('styles.css') }}">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
 @endpush
 
 @section('content')
@@ -57,6 +58,10 @@
         </div>
     @endforeach
 
+</div>
+
+<div class="pagination-wrapper">
+  {{ $employee->links() }}
 </div>
 
   </div>

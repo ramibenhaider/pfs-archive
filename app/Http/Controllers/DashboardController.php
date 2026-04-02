@@ -10,7 +10,7 @@ class DashboardController extends Controller
 
     public function home()
     {
-        $employee = Employee::orderBy('created_at', 'desc')->get();
+        $employee = Employee::orderBy('created_at', 'desc')->paginate(5);
         return view('index', compact('employee'));
     }
 
@@ -26,7 +26,7 @@ class DashboardController extends Controller
                     ->orWhere('id_number', 'LIKE', $search . '%');
             })
             ->orderBy('created_at', 'desc')
-            ->get();
+            ->paginate(5);
         return view('index', compact('employee'));
     }
 }
