@@ -36,20 +36,22 @@ class EmployeeController extends Controller
      */
     public function store(Request $request)
     {
+        $is_active = $request->has('is_active') ? 1 : 0;
         
         if ($request->filled('passport_number'))
             {
                 $request->merge([ 'passport_number' => strtoupper($request->passport_number)]);
             }
         $data = $request->validate([
-            'name' => ['required', 'string', 'min:2'],
-            'job_number' => ['nullable', 'string', 'between:5,6', 'unique:employees,job_number'],
-            'management_id' => ['nullable', 'integer'],
+            'name'            => ['required', 'string', 'min:2'],
+            'job_number'      => ['nullable', 'string', 'between:5,6', 'unique:employees,job_number'],
+            'management_id'   => ['nullable', 'integer'],
             'passport_number' => ['nullable', 'string', 'regex:/^[A-Z0-9]{6,9}$/', 'unique:employees,passport_number'],
-            'id_number' => ['nullable', 'numeric', 'digits:10', 'unique:employees,id_number'],
-            'expiry_date_id' => ['nullable', 'date', 'after:today'],
-            'phone_number' => ['nullable', 'digits:10', 'unique:employees,phone_number'],
-            'nationality_id' => ['nullable', 'integer']
+            'id_number'       => ['nullable', 'numeric', 'digits:10', 'unique:employees,id_number'],
+            'expiry_date_id'  => ['nullable', 'date', 'after:today'],
+            'phone_number'    => ['nullable', 'digits:10', 'unique:employees,phone_number'],
+            'nationality_id'  => ['nullable', 'integer'],
+            'is_active'       => 'nullable'
         ],
         [
             'name.required' => 'يجب إدخال الاسم!',
@@ -69,7 +71,6 @@ class EmployeeController extends Controller
             'phone_number.digits' => 'رقم الجوال يجب أن يتكون من 10 أرقام بالضبط!',
             'phone_number.uniqe' => 'رقم الجوال مكرر!'
         ]);
-
         Employee::create($data);
         return redirect()->route('index')->with('success', 'تمت إضافة الموظف بنجاح!');
     }

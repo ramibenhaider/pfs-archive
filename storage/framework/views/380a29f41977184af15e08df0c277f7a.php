@@ -53,6 +53,14 @@
                 <span class="emp-job">الرقم الوظيفي: <?php echo e($emp->job_number ?? 'لم يتم التحديد'); ?></span>
             </div>
 
+            <div class="emp-status">
+              <?php if($emp->is_active == 1): ?> 
+                  <span class="badge badge-active">موظف</span>
+              <?php else: ?>
+                  <span class="badge badge-inactive">غير موظف</span>
+              <?php endif; ?>
+            </div>
+
             <a href="#" class="view-btn-row">عرض بيانات الموظف</a>
 
         </div>

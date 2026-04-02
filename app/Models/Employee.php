@@ -16,7 +16,8 @@ class Employee extends Model
         'nationality_id',
         'job_number',
         'passport_number',
-        'phone_number'
+        'phone_number',
+        'is_active'
     ];
 
     public function nationlaity()

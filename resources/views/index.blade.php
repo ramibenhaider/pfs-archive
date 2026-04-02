@@ -53,6 +53,14 @@
                 <span class="emp-job">الرقم الوظيفي: {{ $emp->job_number ?? 'لم يتم التحديد' }}</span>
             </div>
 
+            <div class="emp-status">
+              @if($emp->is_active == 1) 
+                  <span class="badge badge-active">موظف</span>
+              @else
+                  <span class="badge badge-inactive">غير موظف</span>
+              @endif
+            </div>
+
             <a href="#" class="view-btn-row">عرض بيانات الموظف</a>
 
         </div>
