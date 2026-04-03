@@ -20,7 +20,7 @@ class Employee extends Model
         'is_active'
     ];
 
-    public function nationlaity()
+    public function nationality()
     {
         return $this->BelongsTo(Nationality::class);
     }

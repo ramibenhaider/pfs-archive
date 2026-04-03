@@ -22,3 +22,5 @@ Route::get('/search-notes', [NoteController::class, 'doSearch'])->name('search_n
 Route::delete('/library/index/{id}', [NoteController::class, 'destroy'])->name('note.destroy');
 Route::get('/library/note/{note}/edit', [NoteController::class, 'edit'])->name('note.edit');
 Route::put('/library/note/{note}/edit', [NoteController::class, 'update'])->name('note.update');
+
+Route::get('/employee/show/{employee}', [EmployeeController::class, 'show'])->name('employee.show');

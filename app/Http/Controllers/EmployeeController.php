@@ -8,6 +8,7 @@ use App\Models\Document_type;
 use App\Models\Management;
 use App\Models\Nationality;
 use App\Models\Document;
+use App\Models\Note;
 
 class EmployeeController extends Controller
 {
@@ -79,8 +80,11 @@ class EmployeeController extends Controller
      * Display the specified resource.
      */
     public function show(Employee $employee)
-    {
-        //
+    {   
+        $documents = Document::where('employee_id', $employee->id)->orderByDesc('created_at')->get();
+        $notes = Note::where('employee_id', $employee->id)->orderByDesc('created_at')->get();
+
+        return view('employee.show', compact('employee', 'documents', 'notes'));
     }
 
     /**

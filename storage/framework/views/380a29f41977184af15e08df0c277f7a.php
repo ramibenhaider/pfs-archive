@@ -62,7 +62,7 @@
             </div>
 
             <div class="emp-action">
-              <a href="#" class="view-btn-row">عرض بيانات الموظف</a>
+              <a href="<?php echo e(route('employee.show', $emp->id)); ?>" class="view-btn-row">عرض بيانات الموظف</a>
             </div>
         </div>
     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>

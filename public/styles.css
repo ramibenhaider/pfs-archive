@@ -387,3 +387,10 @@ input:checked + .slider:before {
 
 .invalid-feedback { color: red; font-size: 13px; margin-top: 5px; }
 .is-invalid { border-color: red !important; }
+
+/*##############show employee#########################################################*/
+
+.auto-resize {
+    resize: none;
+    overflow: hidden;
+}
