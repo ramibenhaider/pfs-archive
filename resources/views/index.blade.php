@@ -61,8 +61,9 @@
               @endif
             </div>
 
-            <a href="#" class="view-btn-row">عرض بيانات الموظف</a>
-
+            <div class="emp-action">
+              <a href="#" class="view-btn-row">عرض بيانات الموظف</a>
+            </div>
         </div>
     @endforeach
 

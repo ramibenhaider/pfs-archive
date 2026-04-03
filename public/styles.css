@@ -34,7 +34,7 @@ body {
   max-width: 400px; /* حد أقصى */
   text-align: center;
 }
-
+/*#############index################################################
 /* الحاوية */
 .container {
   max-width: 900px;
@@ -180,10 +180,25 @@ body {
 }
 
 /* معلومات الموظف */
+.emp-info, .emp-status, .emp-action {
+    flex: 1; 
+    display: flex;
+}
+
+/* محاذاة محتوى اليمين (الاسم) */
 .emp-info {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+/* محاذاة محتوى الوسط (الحالة) في المنتصف تماماً */
+.emp-status {
+    justify-content: center;
+}
+
+/* محاذاة محتوى اليسار (الزر) للجهة البعيدة */
+.emp-action {
+    justify-content: flex-end;
 }
 
 .emp-name {
@@ -246,7 +261,9 @@ body {
   background-color: #a4161a;
   transform: translateY(-3px);
 }
+
 /*#############create employee #########################################
+
 /* الحاوية */
 .container-createEmployee {
     max-width: 1000px;
