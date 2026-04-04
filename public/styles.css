@@ -775,3 +775,111 @@ select.form-select {
 }
 .close-link:hover { color: #dc3545; }
 
+/*####################################### edit notes and documents #################################################
+
+/* تنسيقات كرت الموظف الرئيسي */
+.emp-main-card-unique {
+    border: 1px solid #7E0202 !important;
+    border-radius: 12px !important;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(126, 2, 2, 0.1);
+}
+
+.card-header-unique {
+    background-color: #7E0202 !important;
+    color: #ffffff !important;
+    padding: 15px 20px;
+}
+
+.btn-save-custom {
+    background-color: #7E0202 !important;
+    color: white !important;
+    border: none !important;
+    padding: 6px 20px !important;
+    transition: 0.3s;
+}
+
+.btn-save-custom:hover {
+    background-color: #5a0101 !important;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+/* تنسيقات الكروت الجانبية (اليسار) */
+.side-card-unique {
+    border: 1px solid #7E0202 !important;
+    border-radius: 10px !important;
+    overflow: hidden;
+}
+
+.side-card-header {
+    background-color: #7E0202;
+    color: white;
+    padding: 10px 15px;
+}
+
+.side-title {
+    font-weight: bold;
+    font-size: 1rem;
+}
+
+/* المربع الصغير لإجمالي عدد التسجيلات في الهيدر */
+.total-count-badge {
+    background-color: #ffffff;
+    color: #7E0202;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-weight: bold;
+    font-size: 0.85rem;
+    min-width: 25px;
+    text-align: center;
+}
+
+/* المربع الصغير داخل عناصر قائمة المستندات */
+.inner-item-count {
+    background-color: #f0f0f0;
+    color: #7E0202;
+    border: 1px solid #7E0202;
+    padding: 0px 6px;
+    border-radius: 3px;
+    font-size: 0.75rem;
+    font-weight: bold;
+    display: inline-block;
+}
+
+.side-item {
+    padding: 10px 15px !important;
+    transition: background 0.2s;
+}
+
+.side-item:hover {
+    background-color: #fff5f5 !important;
+}
+
+/* أزرار الإجراءات (تعديل وحذف) */
+.side-actions a {
+    text-decoration: none;
+    margin: 0 4px;
+    font-size: 0.9rem;
+}
+
+.btn-edit-small { color: #198754; }
+.btn-delete-small { color: #dc3545; }
+
+/* رابط مشاهدة الكل */
+.view-all-link {
+    color: #7E0202;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 0.85rem;
+}
+
+.view-all-link:hover {
+    text-decoration: underline;
+    color: #5a0101;
+}
+
+/* تخصيص السكرول بار للقوائم إذا كانت طويلة */
+.side-list {
+    max-height: 250px;
+    overflow-y: auto;
+}

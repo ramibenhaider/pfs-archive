@@ -29,7 +29,7 @@
             <path d="M10 4l2 2h8a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V4h8z"/>
           </svg>
         </a>
-        <div class="tooltip">المكتبة</div>
+        <div class="tooltip">دار الوثائق</div>
       </div>
  
       <!-- مربع البحث -->
