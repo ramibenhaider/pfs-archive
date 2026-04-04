@@ -104,13 +104,13 @@ function removeFile(index) {
 // ======== TomSelect ========
 if (document.getElementById('employee_id')) {
     new TomSelect('#employee_id', {
-        placeholder: 'ابحث عن موظف...',
+        placeholder: 'ابحث عن موظف لإدراج مستنداته...',
     });
 }
 
 if (document.getElementById('employee_id_note')) {
     new TomSelect('#employee_id_note', {
-        placeholder: 'ابحث عن موظف...',
+        placeholder: 'ابحث عن موظف لإدراج ملاحظة عليه...',
     });
 }
 

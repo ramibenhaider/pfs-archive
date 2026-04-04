@@ -110,13 +110,16 @@ class EmployeeController extends Controller
             }
         $new_data = $request->validate([
             'name'            => 'required|string|min:2',
-            'job_number'      => 'nullable|string|between:5,6', Rule::unique('employees,job_number')->ignore($employee->id),
+            'job_number'      => ['nullable', 'string', 'between:5,6',
+                                    Rule::unique('employees', 'job_number')->ignore($employee->id)],
             'management_id'   => 'nullable|integer',
-            'passport_number' => 'nullable|string|regex:/^[A-Z0-9]{6,9}$/',
-                                    Rule::unique('employees,passport_number')->ignore($employee->id),
-            'id_number'       => 'nullable|numeric|digits:10',Rule::unique('employees,id_number')->ignore($employee->id),
+            'passport_number' => ['nullable', 'string', 'regex:/^[A-Z0-9]{6,9}$/',
+                                    Rule::unique('employees', 'passport_number')->ignore($employee->id)],
+            'id_number'       => ['nullable', 'numeric', 'digits:10',
+                                    Rule::unique('employees', 'id_number')->ignore($employee->id)],
             'expiry_date_id'  => 'nullable|date|after:today',
-            'phone_number'    => 'nullable|digits:10', Rule::unique('employees,phone_number')->ignore($employee->id),
+            'phone_number'    => ['nullable', 'digits:10',
+                                    Rule::unique('employees', 'phone_number')->ignore($employee->id)],
             'nationality_id'  => 'nullable|integer',
         ],
         [

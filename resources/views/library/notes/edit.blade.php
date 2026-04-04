@@ -39,7 +39,8 @@
                 <label class="form-label-custom">الملاحظة التفصيلية</label>
                 <textarea name="note" 
                           class="form-control custom-input custom-textarea @error('note') is-invalid @enderror"
-                          placeholder="اكتب ملاحظاتك هنا...">{{ old('note', $note->note) }}</textarea>
+                          placeholder="اكتب ملاحظاتك هنا...">{{ old('note', $note->note) }}
+                </textarea>
                 @error('note')
                 <div class="invalid-feedback">{{ $message }}</div>
                 @enderror

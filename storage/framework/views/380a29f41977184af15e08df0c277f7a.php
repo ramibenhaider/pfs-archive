@@ -11,6 +11,13 @@
 
 <?php $__env->startSection('content'); ?>
 
+    <?php if(session('success')): ?>
+      <div id="success" class="success-message">
+          <?php echo e(session('success')); ?>
+
+      </div>
+    <?php endif; ?>
+
   <div class="container">
 
     <!-- صف البحث -->

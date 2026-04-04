@@ -11,9 +11,9 @@
 
 @section('content')
 
-    @if (session('warning'))
-      <div id="warning" class="warning-message">
-          {{ session('warning') }}
+    @if (session('success'))
+      <div id="success" class="success-message">
+          {{ session('success') }}
       </div>
     @endif
 

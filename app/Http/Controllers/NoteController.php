@@ -119,7 +119,7 @@ class NoteController extends Controller
         $notes = Note::with('employee')
                       ->where('employee_id', $request->employee_id)
                       ->orderByDesc('created_at')
-                      ->get();
+                      ->paginate(5);
         $employees = Employee::orderByDesc('created_at')->get();
         $documents = Document::all();
         $document_types = Document_type::all();

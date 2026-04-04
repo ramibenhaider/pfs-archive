@@ -528,6 +528,86 @@ input:checked + .slider:before {
 }
 
 /*################## index library ###########################################
+/* الحاوية */
+.notes-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    margin-bottom: 30px;
+    padding: 18px 22px;
+    background: #fff;
+    border-radius: 14px;
+    box-shadow: 0 6px 16px rgba(0,0,0,0.06);
+}
+
+/* العنوان */
+.notes-toolbar__title {
+    font-size: 18px;
+    font-weight: 700;
+    color: #222;
+    margin: 0;
+}
+
+/* الفورم في النص */
+.notes-toolbar__form {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 10px;
+    width: 50%;
+    min-width: 320px;
+}
+
+/* select */
+.notes-toolbar__select {
+    flex: 1;
+    padding: 11px 14px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    background: #fff;
+    appearance: none;
+    outline: none;
+}
+
+/* الزر — كسر Bootstrap بالقوة */
+.notes-toolbar__btn,
+.notes-toolbar__btn.btn,
+.notes-toolbar__btn.btn-primary {
+    background-color: #7E0202 !important;
+    border: none !important;
+    color: #fff !important;
+
+    padding: 11px 20px;
+    border-radius: 10px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+/* hover */
+.notes-toolbar__btn:hover {
+    background-color: #5f0101 !important;
+}
+
+/* active */
+.notes-toolbar__btn:active {
+    transform: scale(0.96);
+}
+
+/* responsive */
+@media (max-width: 768px) {
+    .notes-toolbar {
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .notes-toolbar__form {
+        position: static;
+        transform: none;
+        width: 100%;
+    }
+}
 
 /* ======== عام ======== */
 select.form-select {
@@ -694,3 +774,4 @@ select.form-select {
     font-weight: bold;
 }
 .close-link:hover { color: #dc3545; }
+

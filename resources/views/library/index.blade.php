@@ -10,22 +10,22 @@
 @section('content')
 <div class="container py-4">
     
-    <a href="{{ route('index') }}" class="main-btn close-btn-fix">
-        <i class="bi bi-x-circle"></i> رجوع
+    <a href="{{ route('index') }}" class="btn btn-back-note">
+        <i class="bi bi-x-circle"></i> عودة للرئيسية
     </a>
-
+            <br><br>
    <div class="note-section-card">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h5 class="section-header m-0">سجل الملاحظات</h5>
-        
-        <form method="GET" action="{{ route('search_notes') }}" class="search-form d-flex gap-0">
-            <select name="employee_id" class="form-select flex-grow-1" id="employee_id_search_notes">
-                <option value="">كل الموظفين</option>
+    <div class="notes-toolbar">
+        <h5 class="notes-toolbar__title">سجل الملاحظات</h5>
+
+        <form method="GET" action="{{ route('search_notes') }}" class="notes-toolbar__form">
+            <select name="employee_id" id="employee_id_search_notes" class="notes-toolbar__select form-select">
                 @foreach ($employees as $employee)
                     <option value="{{ $employee->id }}">{{ $employee->name }}</option>
                 @endforeach
             </select>
-            <button type="submit" class="btn-main">بحث</button>
+
+            <button type="submit" class="notes-toolbar__btn btn">بحث</button>
         </form>
     </div>
 
@@ -74,35 +74,35 @@
             <form action="{{ route('documents.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="mb-3">
-                    <label class="form-label">اختر الموظف</label>
-                    <select name="employee_id" id="employee_id" class="form-select custom-input @error('employee_id') is-invalid @enderror">
+                    <label class="form-label">الموظف</label>
+                    <select name="employee_id" id="employee_id" class="form-select custom-input @error('employee_id', 'doc_errors') is-invalid @enderror">
                         @foreach ($employees as $employee)
                             <option value="{{ $employee->id }}" {{ old('employee_id') == $employee->id ? 'selected' : '' }}>{{ $employee->name }}</option>
                         @endforeach
                     </select>
-                    @error('employee_id')
+                    @error('employee_id', 'doc_errors')
                         <div class="invalid-feedback d-block">{{ $message }}</div>
                     @enderror
                 </div>
 
                 <div class="mb-3">
                     <label class="form-label">نوع المستند</label>
-                    <select name="document_type_id" class="form-select custom-input @error('document_type_id') is-invalid @enderror">
+                    <select name="document_type_id" class="form-select custom-input @error('document_type_id', 'doc_errors') is-invalid @enderror">
                         @foreach ($document_types as $document_type)
                             <option value="{{ $document_type->id }}" {{ old('document_type_id') == $document_type->id ? 'selected' : '' }}>{{ $document_type->type }}</option>
                         @endforeach
                     </select>
-                    @error('document_type_id')
+                    @error('document_type_id', 'doc_errors')
                         <div class="invalid-feedback d-block">{{ $message }}</div>
                     @enderror
                 </div>
 
                 <div class="mb-3">
                     <label class="form-label">الملفات</label>
-                    <input type="file" id="fileInput" class="form-control custom-input @error('files') is-invalid @enderror" multiple accept=".pdf,.doc,.docx,.xls,.xlsx">
+                    <input type="file" id="fileInput" class="form-control custom-input @error('files', 'doc_errors') is-invalid @enderror" multiple accept=".pdf,.doc,.docx,.xls,.xlsx">
                     <div id="fileList" class="mt-2"></div>
                     <input type="file" name="files[]" id="hiddenFiles" multiple style="display:none">
-                    @error('files')
+                    @error('files', 'doc_errors')
                         <div class="invalid-feedback d-block">{{ $message }}</div>
                     @enderror
                 </div>
@@ -119,28 +119,31 @@
                 @csrf
                 <div class="mb-3">
                     <label class="form-label">الموظف</label>
-                    <select name="employee_id" id="employee_id_note" class="form-select custom-input @error('employee_id') is-invalid @enderror">
+                    <select name="employee_id" id="employee_id_note" class="form-select custom-input @error('employee_id', 'note_errors') is-invalid @enderror">
                         @foreach ($employees as $employee)
                             <option value="{{ $employee->id }}" {{ old('employee_id') == $employee->id ? 'selected' : '' }}>{{ $employee->name }}</option>
                         @endforeach
                     </select>
-                    @error('employee_id')
+                    @error('employee_id', 'note_errors')
                         <div class="invalid-feedback d-block">{{ $message }}</div>
                     @enderror
                 </div>
 
                 <div class="mb-3">
                     <label class="form-label">عنوان الملاحظة</label>
-                    <input type="text" name="title" value="{{ old('title') }}" class="form-control custom-input @error('title') is-invalid @enderror">
-                    @error('title')
+                    <input type="text" name="title" value="{{ old('title') }}" class="form-control custom-input @error('title', 'note_errors') is-invalid @enderror">
+                    @error('title', 'note_errors')
                         <div class="invalid-feedback d-block">{{ $message }}</div>
                     @enderror
                 </div>
 
                 <div class="mb-3">
                     <label class="form-label">نص الملاحظة</label>
-                    <textarea name="note" class="form-control custom-input @error('note') is-invalid @enderror" rows="3">{{ old('note') }}</textarea>
-                    @error('note')
+                    <textarea name="note" 
+                          class="form-control custom-input @error('note', 'note_errors') is-invalid @enderror" rows="3"
+                          placeholder="اكتب ملاحظاتك هنا...">{{ old('note') }}
+                    </textarea>
+                    @error('note', 'note_errors')
                         <div class="invalid-feedback d-block">{{ $message }}</div>
                     @enderror
                 </div>

@@ -58,7 +58,6 @@ unset($__errorArgs, $__bag); ?>
         </div>
     </div>
 </li>
-
 <li class="list-group-item">
     <div class="d-flex align-items-center">
         <strong style="min-width: 160px;">الرقم الوظيفي:</strong>
@@ -86,7 +85,6 @@ unset($__errorArgs, $__bag); ?>
         </div>
     </div>
 </li>
-
 <li class="list-group-item">
     <div class="d-flex align-items-center">
         <strong style="min-width: 160px;">رقم الهوية:</strong>
@@ -114,7 +112,6 @@ unset($__errorArgs, $__bag); ?>
         </div>
     </div>
 </li>
-
 <li class="list-group-item">
     <div class="d-flex align-items-center">
         <strong style="min-width: 160px;">رقم جواز السفر:</strong>
@@ -142,7 +139,6 @@ unset($__errorArgs, $__bag); ?>
         </div>
     </div>
 </li>
-
 <li class="list-group-item">
     <div class="d-flex align-items-center">
         <strong style="min-width: 160px;">رقم الجوال:</strong>
@@ -200,7 +196,7 @@ unset($__errorArgs, $__bag); ?>
 </li>
                         <li class="list-group-item d-flex justify-content-between align-items-center">
                             <strong>الإدارة:</strong>
-                            <select name="management" class="text-muted" >
+                            <select name="management_id" class="text-muted" >
                             <?php $__currentLoopData = $managements; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $management): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                 <option value="<?php echo e($management->id); ?>"
                                     <?php echo e($management->id == $employee->management_id ? 'selected':''); ?>>
@@ -212,7 +208,7 @@ unset($__errorArgs, $__bag); ?>
                         </li>
                         <li class="list-group-item d-flex justify-content-between align-items-center">
                             <strong>الجنسية:</strong>
-                            <select name="nationality" class="text-muted" value="<?php echo e($employee->nationality->nationality_name); ?>">
+                            <select name="nationality_id" class="text-muted" value="<?php echo e($employee->nationality->nationality_name); ?>">
                             <?php $__currentLoopData = $nationalities; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $nationality): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                 <option value="<?php echo e($nationality->id); ?>"
                                     <?php echo e($nationality->id == $employee->nationality_id ? 'selected':''); ?>>

@@ -10,22 +10,22 @@
 <?php $__env->startSection('content'); ?>
 <div class="container py-4">
     
-    <a href="<?php echo e(route('index')); ?>" class="main-btn close-btn-fix">
-        <i class="bi bi-x-circle"></i> رجوع
+    <a href="<?php echo e(route('index')); ?>" class="btn btn-back-note">
+        <i class="bi bi-x-circle"></i> عودة للرئيسية
     </a>
-
+            <br><br>
    <div class="note-section-card">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h5 class="section-header m-0">سجل الملاحظات</h5>
-        
-        <form method="GET" action="<?php echo e(route('search_notes')); ?>" class="search-form d-flex gap-0">
-            <select name="employee_id" class="form-select flex-grow-1" id="employee_id_search_notes">
-                <option value="">كل الموظفين</option>
+    <div class="notes-toolbar">
+        <h5 class="notes-toolbar__title">سجل الملاحظات</h5>
+
+        <form method="GET" action="<?php echo e(route('search_notes')); ?>" class="notes-toolbar__form">
+            <select name="employee_id" id="employee_id_search_notes" class="notes-toolbar__select form-select">
                 <?php $__currentLoopData = $employees; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $employee): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                     <option value="<?php echo e($employee->id); ?>"><?php echo e($employee->name); ?></option>
                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
             </select>
-            <button type="submit" class="btn-main">بحث</button>
+
+            <button type="submit" class="notes-toolbar__btn btn">بحث</button>
         </form>
     </div>
 
@@ -75,8 +75,8 @@
             <form action="<?php echo e(route('documents.store')); ?>" method="POST" enctype="multipart/form-data">
                 <?php echo csrf_field(); ?>
                 <div class="mb-3">
-                    <label class="form-label">اختر الموظف</label>
-                    <select name="employee_id" id="employee_id" class="form-select custom-input <?php $__errorArgs = ['employee_id'];
+                    <label class="form-label">الموظف</label>
+                    <select name="employee_id" id="employee_id" class="form-select custom-input <?php $__errorArgs = ['employee_id', 'doc_errors'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
@@ -88,7 +88,7 @@ unset($__errorArgs, $__bag); ?>">
                             <option value="<?php echo e($employee->id); ?>" <?php echo e(old('employee_id') == $employee->id ? 'selected' : ''); ?>><?php echo e($employee->name); ?></option>
                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                     </select>
-                    <?php $__errorArgs = ['employee_id'];
+                    <?php $__errorArgs = ['employee_id', 'doc_errors'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
@@ -102,7 +102,7 @@ unset($__errorArgs, $__bag); ?>
 
                 <div class="mb-3">
                     <label class="form-label">نوع المستند</label>
-                    <select name="document_type_id" class="form-select custom-input <?php $__errorArgs = ['document_type_id'];
+                    <select name="document_type_id" class="form-select custom-input <?php $__errorArgs = ['document_type_id', 'doc_errors'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
@@ -114,7 +114,7 @@ unset($__errorArgs, $__bag); ?>">
                             <option value="<?php echo e($document_type->id); ?>" <?php echo e(old('document_type_id') == $document_type->id ? 'selected' : ''); ?>><?php echo e($document_type->type); ?></option>
                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                     </select>
-                    <?php $__errorArgs = ['document_type_id'];
+                    <?php $__errorArgs = ['document_type_id', 'doc_errors'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
@@ -128,7 +128,7 @@ unset($__errorArgs, $__bag); ?>
 
                 <div class="mb-3">
                     <label class="form-label">الملفات</label>
-                    <input type="file" id="fileInput" class="form-control custom-input <?php $__errorArgs = ['files'];
+                    <input type="file" id="fileInput" class="form-control custom-input <?php $__errorArgs = ['files', 'doc_errors'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
@@ -138,7 +138,7 @@ endif;
 unset($__errorArgs, $__bag); ?>" multiple accept=".pdf,.doc,.docx,.xls,.xlsx">
                     <div id="fileList" class="mt-2"></div>
                     <input type="file" name="files[]" id="hiddenFiles" multiple style="display:none">
-                    <?php $__errorArgs = ['files'];
+                    <?php $__errorArgs = ['files', 'doc_errors'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
@@ -162,7 +162,7 @@ unset($__errorArgs, $__bag); ?>
                 <?php echo csrf_field(); ?>
                 <div class="mb-3">
                     <label class="form-label">الموظف</label>
-                    <select name="employee_id" id="employee_id_note" class="form-select custom-input <?php $__errorArgs = ['employee_id'];
+                    <select name="employee_id" id="employee_id_note" class="form-select custom-input <?php $__errorArgs = ['employee_id', 'note_errors'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
@@ -174,7 +174,7 @@ unset($__errorArgs, $__bag); ?>">
                             <option value="<?php echo e($employee->id); ?>" <?php echo e(old('employee_id') == $employee->id ? 'selected' : ''); ?>><?php echo e($employee->name); ?></option>
                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                     </select>
-                    <?php $__errorArgs = ['employee_id'];
+                    <?php $__errorArgs = ['employee_id', 'note_errors'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
@@ -188,7 +188,7 @@ unset($__errorArgs, $__bag); ?>
 
                 <div class="mb-3">
                     <label class="form-label">عنوان الملاحظة</label>
-                    <input type="text" name="title" value="<?php echo e(old('title')); ?>" class="form-control custom-input <?php $__errorArgs = ['title'];
+                    <input type="text" name="title" value="<?php echo e(old('title')); ?>" class="form-control custom-input <?php $__errorArgs = ['title', 'note_errors'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
@@ -196,7 +196,7 @@ $message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>">
-                    <?php $__errorArgs = ['title'];
+                    <?php $__errorArgs = ['title', 'note_errors'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
@@ -210,15 +210,19 @@ unset($__errorArgs, $__bag); ?>
 
                 <div class="mb-3">
                     <label class="form-label">نص الملاحظة</label>
-                    <textarea name="note" class="form-control custom-input <?php $__errorArgs = ['note'];
+                    <textarea name="note" 
+                          class="form-control custom-input <?php $__errorArgs = ['note', 'note_errors'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
 $message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
-unset($__errorArgs, $__bag); ?>" rows="3"><?php echo e(old('note')); ?></textarea>
-                    <?php $__errorArgs = ['note'];
+unset($__errorArgs, $__bag); ?>" rows="3"
+                          placeholder="اكتب ملاحظاتك هنا..."><?php echo e(old('note')); ?>
+
+                    </textarea>
+                    <?php $__errorArgs = ['note', 'note_errors'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
