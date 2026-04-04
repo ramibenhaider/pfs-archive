@@ -6,27 +6,75 @@
 @endpush
 
 @section('content')
-@error('same')
-<div class="alert alert-danger">{{ $message }}</div>
-@enderror
-<h1>{{ $note->employee->name }}</h1>
-<br>
-<form method="POST" action="{{ route('note.update', $note->id) }}">
-    @csrf
-    @method('PUT')
-        <label>العنوان</label>
-        <input type="text" name="title" value="{{ old('title', $note->title) }}" class="form-control @error('title') is-invalid @enderror">
-        @error('title')
-        <div class="invalid-feedback">{{ $message }}</div>
+<div class="container">
+    <div class="edit-note-container">
+        
+        @error('same')
+        <div class="alert alert-danger d-flex align-items-center" role="alert">
+            <i class="bi bi-exclamation-triangle-fill me-2"></i>
+            <div>{{ $message }}</div>
+        </div>
         @enderror
-<br>
-        <label>الملاحظة</label>
-        <textarea name="note" class="form-control @error('note') is-invalid @enderror">{{ old('note', $note->note) }}</textarea>
-        @error('note')
-        <div class="invalid-feedback">{{ $message }}</div>
-        @enderror
-<br>
-        <button type="submit">حفظ التعديل</button>
-        <a href="{{ route('library.index') }}" onclick="return confirm('هل أنت متأكد؟ لم تقم بإجراء تعديل!')">رجوع</a>
+
+        <div class="edit-note-header text-center">
+            <h1>تعديل ملاحظة: {{ $note->employee->name }}</h1>
+        </div>
+
+        <form method="POST" action="{{ route('note.update', $note->id) }}">
+            @csrf
+            @method('PUT')
+
+            <div class="mb-4">
+                <label class="form-label-custom">العنوان</label>
+                <input type="text" name="title" 
+                       value="{{ old('title', $note->title) }}" 
+                       class="form-control custom-input @error('title') is-invalid @enderror"
+                       placeholder="أدخل عنوان الملاحظة">
+                @error('title')
+                <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+            </div>
+
+            <div class="mb-4">
+                <label class="form-label-custom">الملاحظة التفصيلية</label>
+                <textarea name="note" 
+                          class="form-control custom-input custom-textarea @error('note') is-invalid @enderror"
+                          placeholder="اكتب ملاحظاتك هنا...">{{ old('note', $note->note) }}</textarea>
+                @error('note')
+                <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+            </div>
+
+            <div class="edit-actions">
+                <button type="submit" class="btn btn-save-note">
+                    <i class="bi bi-check-lg"></i> حفظ التعديلات
+                </button>
+                <a href="{{ route('library.index') }}" 
+                   class="btn btn-back-note" 
+                   onclick="return confirm('هل أنت متأكد؟ لم تقم بحفظ التعديلات!')">
+                    <i class="bi bi-arrow-right"></i> رجوع
+                </a>
+            </div>
         </form>
+    </div>
+</div>
+@push('scripts')
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const textarea = document.querySelector('.custom-textarea');
+        
+        // وظيفة لتعديل الارتفاع
+        function autoResize() {
+            textarea.style.height = 'auto'; // إعادة التعيين لحساب الطول الجديد
+            textarea.style.height = textarea.scrollHeight + 'px';
+        }
+
+        // تشغيل الوظيفة فور تحميل الصفحة لعرض النص الموجود كاملاً
+        autoResize();
+
+        // تشغيل الوظيفة أثناء الكتابة (إذا أراد المستخدم التعديل)
+        textarea.addEventListener('input', autoResize);
+    });
+</script>
+@endpush
 @endsection

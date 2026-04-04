@@ -24,3 +24,4 @@ Route::get('/library/note/{note}/edit', [NoteController::class, 'edit'])->name('
 Route::put('/library/note/{note}/edit', [NoteController::class, 'update'])->name('note.update');
 
 Route::get('/employee/show/{employee}', [EmployeeController::class, 'show'])->name('employee.show');
+Route::put('/employee/show/{employee}', [EmployeeController::class, 'update'])->name('employee.update');

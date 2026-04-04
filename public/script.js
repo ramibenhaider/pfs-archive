@@ -1,36 +1,3 @@
-// ======== Modal ========
-document.querySelectorAll(".open-modal").forEach(btn => {
-    btn.addEventListener("click", () => {
-        const modal = document.getElementById("modal-template");
-        if (modal) modal.style.display = "block";
-    });
-});
-
-const closeBtn = document.querySelector(".close");
-if (closeBtn) {
-    closeBtn.onclick = function () {
-        const modal = document.getElementById("modal-template");
-        if (modal) modal.style.display = "none";
-    };
-}
-
-const saveBtn = document.querySelector(".modal-save");
-if (saveBtn) {
-    saveBtn.onclick = function () {
-        const modal = document.getElementById("modal-template");
-        if (modal) modal.style.display = "none";
-    };
-}
-
-const deleteBtn = document.querySelector(".modal-delete");
-if (deleteBtn) {
-    deleteBtn.onclick = function () {
-        const preview = document.querySelector(".file-preview");
-        if (preview) preview.innerHTML = "";
-        alert("تم حذف الملف");
-    };
-}
-
 // ======== رسالة النجاح ========
 document.addEventListener("DOMContentLoaded", function () {
     const msg = document.getElementById("success-message");
@@ -39,6 +6,14 @@ document.addEventListener("DOMContentLoaded", function () {
             msg.style.transition = "opacity 0.5s ease";
             msg.style.opacity = "0";
             setTimeout(() => msg.remove(), 500);
+        }, 5000);
+    }
+    const wmsg = document.getElementById("warning-message");
+    if (wmsg) {
+        setTimeout(() => {
+            wmsg.style.transition = "opacity 0.5s ease";
+            wmsg.style.opacity = "0";
+            setTimeout(() => wmsg.remove(), 500);
         }, 5000);
     }
 });

@@ -9,6 +9,7 @@ use App\Models\Management;
 use App\Models\Nationality;
 use App\Models\Document;
 use App\Models\Note;
+use Illuminate\Validation\Rule;
 
 class EmployeeController extends Controller
 {
@@ -70,7 +71,7 @@ class EmployeeController extends Controller
             'expiry_date_id.after' => 'الهوية منتهية!',
 
             'phone_number.digits' => 'رقم الجوال يجب أن يتكون من 10 أرقام بالضبط!',
-            'phone_number.uniqe' => 'رقم الجوال مكرر!'
+            'phone_number.unique' => 'رقم الجوال مكرر!'
         ]);
         Employee::create($data);
         return redirect()->route('index')->with('success', 'تمت إضافة الموظف بنجاح!');
@@ -80,11 +81,12 @@ class EmployeeController extends Controller
      * Display the specified resource.
      */
     public function show(Employee $employee)
-    {   
+    {   $managements = Management::all();
+        $nationalities = Nationality::all();
         $documents = Document::where('employee_id', $employee->id)->orderByDesc('created_at')->get();
         $notes = Note::where('employee_id', $employee->id)->orderByDesc('created_at')->get();
 
-        return view('employee.show', compact('employee', 'documents', 'notes'));
+        return view('employee.show', compact('employee', 'documents', 'notes', 'managements', 'nationalities'));
     }
 
     /**
@@ -100,7 +102,50 @@ class EmployeeController extends Controller
      */
     public function update(Request $request, Employee $employee)
     {
-        //
+        $is_active = $request->has('is_active') ? 1 : 0;
+        
+        if ($request->filled('passport_number'))
+            {
+                $request->merge([ 'passport_number' => strtoupper($request->passport_number)]);
+            }
+        $new_data = $request->validate([
+            'name'            => 'required|string|min:2',
+            'job_number'      => 'nullable|string|between:5,6', Rule::unique('employees,job_number')->ignore($employee->id),
+            'management_id'   => 'nullable|integer',
+            'passport_number' => 'nullable|string|regex:/^[A-Z0-9]{6,9}$/',
+                                    Rule::unique('employees,passport_number')->ignore($employee->id),
+            'id_number'       => 'nullable|numeric|digits:10',Rule::unique('employees,id_number')->ignore($employee->id),
+            'expiry_date_id'  => 'nullable|date|after:today',
+            'phone_number'    => 'nullable|digits:10', Rule::unique('employees,phone_number')->ignore($employee->id),
+            'nationality_id'  => 'nullable|integer',
+        ],
+        [
+            'name.required' => 'لا يمكن ترك الاسم فارغاً!',
+            'name.min' => 'يجب أن يكون الاسم من حرفين على الأقل!',
+
+            'job_number.between' => 'يجب أن يكون الرقم الوظيفي من 5 أو 6 خانات!',
+            'job_number.unique' => 'هذا الرقم الوظيفي مسجل من قبل!',
+            
+            'passport_number.regex' => 'رقم الجواز يجب أن يكون: من 6 إلى 9 خانات - لا يحتوى إلا على أرقام أو حروف انجليزية',
+            'passport_number.unique' => 'رقم جواز السفر مسجل من قبل!',
+
+            'id_number.digits' => 'رقم الهوية مكون من 10 أرقام بالضبط!',
+            'id_number.unique' => 'رقم الهوية مكرر!',
+
+            'expiry_date_id.after' => 'الهوية منتهية!',
+
+            'phone_number.digits' => 'رقم الجوال يجب أن يتكون من 10 أرقام بالضبط!',
+            'phone_number.unique' => 'رقم الجوال مكرر!'
+        ]);
+        $new_data['is_active'] = $is_active;
+
+        if (!$employee->fill($new_data)->isDirty()) {
+            return back()->with('warning', 'لم تقم بأي تعديل!');
+        }
+
+        $employee->update($new_data);
+
+        return redirect()->route('employee.show', $employee->id)->with('success', 'تم التعديل بنجاح!');
     }
 
     /**

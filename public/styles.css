@@ -34,6 +34,25 @@ body {
   max-width: 400px; /* حد أقصى */
   text-align: center;
 }
+
+.warning-message {
+  position: fixed;
+  right: 80px;
+  top: 80px;
+  background-color: #fcebd3;
+  border: 2px solid #f5712f;
+  padding: 14px 18px;
+  border-radius: 10px; /* زودنا الانحناء */
+  color: #a37b3e;
+  font-size: 16px;
+  margin: 15px auto; /* يخليها في النص */
+  font-weight: bold;
+  transition: opacity 0.5s ease;
+  width: fit-content; /* على قد المحتوى */
+  max-width: 400px; /* حد أقصى */
+  text-align: center;
+}
+
 /*#############index################################################
 /* الحاوية */
 .container {
@@ -52,46 +71,55 @@ body {
 }
 
 /* 🔥 تنسيق الفورم الجديد داخل صف البحث */
+/* الحاوية - قللنا الـ gap لصفر عشان نلحم الزر بالخانة */
+/* الحاوية - تجعل العناصر ملتحمة */
 .search-form {
-  display: flex;
-  gap: 6px;
-  width: 100%;
+    display: flex;
+    gap: 0; 
+    width: 100%;
+    direction: rtl; /* لضمان اليمين لليسار */
 }
 
-/* خانة البحث */
-.search-form input[type="search"] {
-  flex: 1;
-  padding: 14px 16px;
-  border-radius: 10px;
-  border: 1px solid #ccc;
-  font-size: 17px;
-  background: #fff;
-  text-align: center;
-  transition: box-shadow 0.25s ease, border-color 0.25s ease;
+/* تنسيق خانة الاختيار (Select) أو الإدخال */
+.search-form select, 
+.search-form input {
+    flex: 1;
+    height: 50px; /* توحيد الطول */
+    padding: 0 15px;
+    border: 1px solid #ccc;
+    border-radius: 0 10px 10px 0 !important; /* انحناء يمين فقط */
+    font-size: 16px;
+    background-color: #fff;
+    text-align: right;
+    outline: none;
+    appearance: none; /* لإزالة سهم المتصفح الافتراضي في بعض المتصفحات */
+    -webkit-appearance: none;
 }
 
-.search-form input[type="search"]:focus {
-  outline: none;
-  border-color: #a4161a;
-  box-shadow: 0 0 8px rgba(164, 22, 26, 0.3);
-}
-
-/* زر ابحث */
+/* زر البحث الأحمر */
 .search-submit {
-  padding: 0 18px;
-  background-color: #353434;
-  color: #fff;
-  border: none;
-  border-radius: 10px;
-  font-size: 16px;
-  cursor: pointer;
-  transition: 0.25s;
-  white-space: nowrap;
+    height: 50px; /* نفس طول الخانة */
+    padding: 0 25px;
+    background-color: #7E0202 !important; /* أحمر داكن */
+    color: #fff !important;
+    border: 1px solid #7E0202;
+    border-radius: 10px 0 0 10px !important; /* انحناء يسار فقط */
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: 0.25s;
 }
 
+/* تأثير عند تمرير الماوس */
 .search-submit:hover {
-  background-color: #a4161a;
-  transform: translateY(-3px);
+    background-color: #a4161a !important;
+}
+
+/* تأثير عند الضغط على الخانة */
+.search-form select:focus {
+    border-color: #7E0202;
+    box-shadow: 0 0 5px rgba(126, 2, 2, 0.2);
 }
 
 /* أزرار البحث */
@@ -246,6 +274,14 @@ body {
     justify-content: center;
 }
 
+.pagination-wrapper .page-item:first-child .page-link {
+    border-radius: 0 0.375rem 0.375rem 0 !important;
+}
+
+.pagination-wrapper .page-item:last-child .page-link {
+    border-radius: 0.375rem 0 0 0.375rem !important;
+}
+
 /* زر عرض البيانات */
 .view-btn-row {
   padding: 10px 16px;
@@ -324,7 +360,6 @@ body {
     color: #555;
 }
 
-/* --- تصميم الـ Switch (الصغير) --- */
 .switch-container {
     position: relative;
     display: inline-block;
@@ -394,3 +429,268 @@ input:checked + .slider:before {
     resize: none;
     overflow: hidden;
 }
+
+.list-group-item strong {
+  min-width: 160px;
+}
+
+/* ############## Edit Note Page ####################################################### */
+
+.edit-note-container {
+    max-width: 700px;
+    margin: 40px auto;
+    background: #fff;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+}
+
+.edit-note-header {
+    border-bottom: 2px solid #f0f0f0;
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+}
+
+.edit-note-header h1 {
+    font-size: 24px;
+    color: #7E0202;
+    margin: 0;
+    font-weight: bold;
+}
+
+.form-label-custom {
+    font-weight: bold;
+    color: #444;
+    margin-bottom: 8px;
+    display: block;
+    font-size: 16px;
+}
+
+.custom-input {
+    border-radius: 10px !important;
+    padding: 12px 15px !important;
+    border: 1px solid #ddd !important;
+    transition: all 0.3s ease;
+}
+
+.custom-input:focus {
+    border-color: #7E0202 !important;
+    box-shadow: 0 0 0 0.2rem rgba(126, 2, 2, 0.1) !important;
+}
+
+.custom-textarea {
+    min-height: 150px;
+    resize: none;
+    overflow: hidden;
+    line-height: 1.6;
+}
+
+/* زر حفظ التعديل - أحمر داكن */
+.btn-save-note {
+    background-color: #7E0202 !important;
+    color: #ffffff !important;
+    border: none !important;
+    padding: 10px 30px !important;
+    border-radius: 10px !important;
+    font-weight: bold !important;
+    transition: 0.3s !important;
+    display: inline-block;
+}
+
+.btn-save-note:hover {
+    background-color: #a4161a !important;
+    transform: translateY(-2px);
+}
+
+/* زر الرجوع - رمادي */
+.btn-back-note {
+    background-color: #6c757d !important; /* لون رمادي بوتستراب */
+    color: #ffffff !important;
+    text-decoration: none !important;
+    padding: 10px 30px !important;
+    border-radius: 10px !important;
+    font-weight: bold !important;
+    transition: 0.3s !important;
+    display: inline-block;
+}
+
+.btn-back-note:hover {
+    background-color: #5a6268 !important;
+    color: #ffffff !important;
+}
+
+/* مساحة الأزرار */
+.edit-actions {
+    margin-top: 30px;
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+}
+
+/*################## index library ###########################################
+
+/* ======== عام ======== */
+select.form-select {
+    direction: rtl;
+    padding-left: 2.5rem !important;
+    background-position: left 0.75rem center !important;
+}
+
+/* ======== زر إغلاق الصفحة ======== */
+.close-btn-fix {
+    width: auto !important;
+    height: auto !important;
+    padding: 10px 20px !important;
+    border-radius: 10px !important;
+    gap: 8px;
+    margin-bottom: 20px;
+    display: inline-flex;
+}
+
+/* ======== كارد الملاحظات ======== */
+.note-section-card {
+    background: #fff;
+    border-radius: 15px;
+    padding: 25px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    margin-bottom: 30px;
+    border-top: 4px solid #7E0202;
+}
+
+.section-header {
+    color: #7E0202;
+    font-weight: bold;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* عنوان سجل الملاحظات */
+.note-section-card .d-flex h5.section-header {
+    margin: 0 !important;
+    white-space: nowrap;
+    font-size: 16px !important;
+    flex-shrink: 0;
+}
+
+/* ======== فورم البحث ======== */
+.note-section-card .search-form {
+    direction: rtl;
+    gap: 0 !important;
+    max-width: 350px;
+    margin-right: 20px;
+    display: flex;
+    align-items: center;
+}
+
+.note-section-card .search-form .btn-main {
+    height: 38px !important;
+    padding: 0 15px !important;
+    font-size: 14px !important;
+    width: auto !important;
+    border-radius: 8px 0 0 8px !important;
+    flex-shrink: 0;
+}
+
+/* ======== TomSelect داخل فورم البحث ======== */
+.note-section-card .search-form .ts-wrapper {
+    flex: 1 !important;
+    height: 38px !important;
+    min-height: 38px !important;
+}
+
+.note-section-card .search-form .ts-control {
+    height: 38px !important;
+    min-height: 38px !important;
+    border-radius: 0 8px 8px 0 !important;
+    border: 1px solid #dee2e6 !important;
+    padding: 0 10px !important;
+    display: flex !important;
+    align-items: center !important;
+    box-shadow: none !important;
+    direction: rtl !important;
+    font-size: 14px !important;
+}
+
+.note-section-card .search-form .ts-control input {
+    height: auto !important;
+    padding: 0 !important;
+    font-size: 14px !important;
+    direction: rtl !important;
+}
+
+.note-section-card .search-form .ts-wrapper.focus .ts-control {
+    border-color: #7E0202 !important;
+    box-shadow: 0 0 0 0.2rem rgba(126, 2, 2, 0.1) !important;
+}
+
+.note-section-card .search-form .ts-dropdown {
+    direction: rtl !important;
+    font-size: 14px !important;
+    border-color: #dee2e6 !important;
+}
+
+/* ======== الجداول ======== */
+.custom-table {
+    width: 100%;
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.custom-table thead {
+    background-color: #7E0202;
+    color: white;
+}
+
+.custom-table th, .custom-table td {
+    padding: 15px;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.custom-table tbody tr:hover {
+    background-color: #fcebd3;
+}
+
+/* ======== الأزرار ======== */
+.btn-main {
+    background-color: #7E0202 !important;
+    color: white !important;
+    border-radius: 8px !important;
+    padding: 8px 20px !important;
+    border: none !important;
+    transition: 0.3s;
+}
+.btn-main:hover {
+    background-color: #a4161a !important;
+    transform: translateY(-2px);
+}
+
+.btn-edit-sm {
+    background-color: #ffc107 !important;
+    border: none !important;
+    border-radius: 6px !important;
+    padding: 5px 12px !important;
+    font-size: 14px !important;
+}
+
+.btn-delete-sm {
+    background-color: #dc3545 !important;
+    border: none !important;
+    border-radius: 6px !important;
+    padding: 5px 12px !important;
+    font-size: 14px !important;
+    color: white !important;
+}
+
+.close-link {
+    display: inline-block;
+    color: #6c757d;
+    text-decoration: none;
+    margin-bottom: 15px;
+    font-weight: bold;
+}
+.close-link:hover { color: #dc3545; }

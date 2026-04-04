@@ -30,7 +30,7 @@ class DocumentController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate(
+        $request->validateWithBag('doc_errors',
             [
                 'files' => 'required|array',
                 'files.*' => 'required|file|mimes:pdf,doc,docx,xls,xlsx|max:10240',

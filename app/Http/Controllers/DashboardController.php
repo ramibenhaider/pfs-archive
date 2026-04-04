@@ -10,7 +10,7 @@ class DashboardController extends Controller
 
     public function home()
     {
-        $employee = Employee::orderBy('created_at', 'desc')->paginate(5);
+        $employee = Employee::orderBy('created_at', 'desc')->paginate(6);
         return view('index', compact('employee'));
     }
 

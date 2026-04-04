@@ -16,7 +16,7 @@ class NoteController extends Controller
     public function index()
     {
         $employees = Employee::orderBy('created_at', 'desc')->get();
-        $notes = Note::orderBy('created_at', 'desc')->get();
+        $notes = Note::orderBy('created_at', 'desc')->paginate(5);
         $documents = Document::all();
         $document_types = Document_type::all();
         return view('library.index', compact('documents', 'notes', 'employees', 'document_types'));
@@ -35,7 +35,7 @@ class NoteController extends Controller
      */
     public function store(Request $request)
     {
-        $data = $request->validate([
+        $data = $request->validateWithBag('note_errors', [
             'employee_id' => ['required', 'exists:employees,id'],
             'title'       => ['required', 'string', 'max:100'],
             'note'        => ['nullable', 'string', 'max:255'],
@@ -86,7 +86,7 @@ class NoteController extends Controller
         ]);
 
         if (!$note->fill($new_data)->isDirty()) {
-            return back()->withErrors(['same' => 'لم تقم بأي تعديل!']);
+            return back()->with('warning', 'لم تقم بأي تعديل!');
         }
 
         $note->save();

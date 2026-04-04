@@ -11,6 +11,12 @@
 
 @section('content')
 
+    @if (session('warning'))
+      <div id="warning" class="warning-message">
+          {{ session('warning') }}
+      </div>
+    @endif
+
   <div class="container">
 
     <!-- صف البحث -->
