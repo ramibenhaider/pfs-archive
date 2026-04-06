@@ -1,6 +1,6 @@
 @extends('layouts.index-layout')
 
-@section('title', 'المكتبة')
+@section('title', 'دار الوثائق')
 
 @push('styles')
     <link rel="stylesheet" href="{{ asset('styles.css') }}">
@@ -50,7 +50,7 @@
                     <td>
                         <div class="d-flex justify-content-center gap-2">
                             <a href="{{ route('note.edit', $note->id) }}" class="btn btn-edit-sm">عرض</a>
-                            <form method="POST" action="{{ route('note.destroy', $note->id) }}" onsubmit="return confirm('حذف؟')">
+                            <form method="POST" action="{{ route('note.destroy', $note->id) }}" onsubmit="return confirm('هل أنت متأكدة من حذف؟')">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-delete-sm">حذف</button>

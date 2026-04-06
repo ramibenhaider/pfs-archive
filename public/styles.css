@@ -90,7 +90,7 @@ body {
     border-radius: 0 10px 10px 0 !important; /* انحناء يمين فقط */
     font-size: 16px;
     background-color: #fff;
-    text-align: right;
+    text-align: center;
     outline: none;
     appearance: none; /* لإزالة سهم المتصفح الافتراضي في بعض المتصفحات */
     -webkit-appearance: none;
@@ -100,9 +100,9 @@ body {
 .search-submit {
     height: 50px; /* نفس طول الخانة */
     padding: 0 25px;
-    background-color: #7E0202 !important; /* أحمر داكن */
+    background-color: #3B524A !important; /* أحمر داكن */
     color: #fff !important;
-    border: 1px solid #7E0202;
+    border: 1px solid #3B524A;
     border-radius: 10px 0 0 10px !important; /* انحناء يسار فقط */
     font-size: 16px;
     font-weight: bold;
@@ -113,12 +113,12 @@ body {
 
 /* تأثير عند تمرير الماوس */
 .search-submit:hover {
-    background-color: #a4161a !important;
+    background-color: #497033 !important;
 }
 
 /* تأثير عند الضغط على الخانة */
 .search-form select:focus {
-    border-color: #7E0202;
+    border-color: #3B524A;
     box-shadow: 0 0 5px rgba(126, 2, 2, 0.2);
 }
 
@@ -144,7 +144,7 @@ body {
   left: 50%;
   transform: translateX(-50%) translateY(10px); /* للتوسيط وحركة الأنيميشن */
   
-  background-color: #7E0202;
+  background-color: #3B524A;
   color: #fff;
   padding: 7px 12px;
   border-radius: 8px;
@@ -166,7 +166,7 @@ body {
   height: 48px;
   border-radius: 14px;
   border: none;
-  background-color: #7E0202;
+  background-color: #3B524A;
   color: #fff;
   cursor: pointer;
   display: flex;
@@ -178,7 +178,7 @@ body {
 
 .main-btn:hover {
   transform: translateY(-3px) scale(1.05);
-  box-shadow: 0 6px 16px rgba(164, 22, 26, 0.35);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35);
 }
 
 /* قائمة الموظفين */
@@ -232,7 +232,7 @@ body {
 .emp-name {
   font-size: 18px;
   font-weight: bold;
-  color: #7E0202;
+  color: #3B524A;
 }
 
 .emp-id,
@@ -258,7 +258,7 @@ body {
 }
 
 .badge-inactive {
-    background-color: #dc3545; /* أحمر */
+    background-color: #d30e00; /* أحمر */
     box-shadow: 0 2px 4px rgba(220, 53, 69, 0.2);
 }
 
@@ -285,7 +285,7 @@ body {
 /* زر عرض البيانات */
 .view-btn-row {
   padding: 10px 16px;
-  background-color: #7E0202;
+  background-color: #3B524A;
   color: #fff;
   border-radius: 10px;
   text-decoration: none;
@@ -294,7 +294,7 @@ body {
 }
 
 .view-btn-row:hover {
-  background-color: #a4161a;
+  background-color: #497033;
   transform: translateY(-3px);
 }
 
@@ -309,11 +309,11 @@ body {
 
 /* عناوين الأقسام */
 .section-title {
-    color: #7E0202;
+    color: #3B524A;
     margin-top: 35px;
     margin-bottom: 15px;
     font-size: 22px;
-    border-right: 5px solid #7E0202;
+    border-right: 5px solid #3B524A;
     padding-right: 10px;
 }
 
@@ -377,7 +377,7 @@ body {
     position: absolute;
     cursor: pointer;
     top: 0; left: 0; right: 0; bottom: 0;
-    background-color: #dc3545; /* أحمر */
+    background-color: #D30E00; /* أحمر */
     transition: .4s;
     border-radius: 34px;
 }
@@ -417,7 +417,7 @@ input:checked + .slider:before {
     cursor: pointer;
 }
 
-.save-btn { background-color: #7E0202; color: white; }
+.save-btn { background-color: #3B524A; color: white; }
 .cancel-btn { background-color: #999; color: white; text-decoration: none;}
 
 .invalid-feedback { color: red; font-size: 13px; margin-top: 5px; }
@@ -453,7 +453,7 @@ input:checked + .slider:before {
 
 .edit-note-header h1 {
     font-size: 24px;
-    color: #7E0202;
+    color: #3B524A;
     margin: 0;
     font-weight: bold;
 }
@@ -474,7 +474,7 @@ input:checked + .slider:before {
 }
 
 .custom-input:focus {
-    border-color: #7E0202 !important;
+    border-color: #3B524A !important;
     box-shadow: 0 0 0 0.2rem rgba(126, 2, 2, 0.1) !important;
 }
 
@@ -487,7 +487,7 @@ input:checked + .slider:before {
 
 /* زر حفظ التعديل - أحمر داكن */
 .btn-save-note {
-    background-color: #7E0202 !important;
+    background-color: #3B524A !important;
     color: #ffffff !important;
     border: none !important;
     padding: 10px 30px !important;
@@ -498,7 +498,7 @@ input:checked + .slider:before {
 }
 
 .btn-save-note:hover {
-    background-color: #a4161a !important;
+    background-color: #497033 !important;
     transform: translateY(-2px);
 }
 
@@ -575,7 +575,7 @@ input:checked + .slider:before {
 .notes-toolbar__btn,
 .notes-toolbar__btn.btn,
 .notes-toolbar__btn.btn-primary {
-    background-color: #7E0202 !important;
+    background-color: #3B524A !important;
     border: none !important;
     color: #fff !important;
 
@@ -587,7 +587,7 @@ input:checked + .slider:before {
 
 /* hover */
 .notes-toolbar__btn:hover {
-    background-color: #5f0101 !important;
+    background-color: #00390e !important;
 }
 
 /* active */
@@ -634,11 +634,11 @@ select.form-select {
     padding: 25px;
     box-shadow: 0 4px 15px rgba(0,0,0,0.05);
     margin-bottom: 30px;
-    border-top: 4px solid #7E0202;
+    border-top: 4px solid #3B524A;
 }
 
 .section-header {
-    color: #7E0202;
+    color: #3B524A;
     font-weight: bold;
     margin-bottom: 20px;
     display: flex;
@@ -701,7 +701,7 @@ select.form-select {
 }
 
 .note-section-card .search-form .ts-wrapper.focus .ts-control {
-    border-color: #7E0202 !important;
+    border-color: #3B524A !important;
     box-shadow: 0 0 0 0.2rem rgba(126, 2, 2, 0.1) !important;
 }
 
@@ -721,7 +721,7 @@ select.form-select {
 }
 
 .custom-table thead {
-    background-color: #7E0202;
+    background-color: #3B524A;
     color: white;
 }
 
@@ -737,7 +737,7 @@ select.form-select {
 
 /* ======== الأزرار ======== */
 .btn-main {
-    background-color: #7E0202 !important;
+    background-color: #3B524A !important;
     color: white !important;
     border-radius: 8px !important;
     padding: 8px 20px !important;
@@ -745,7 +745,7 @@ select.form-select {
     transition: 0.3s;
 }
 .btn-main:hover {
-    background-color: #a4161a !important;
+    background-color: #497033 !important;
     transform: translateY(-2px);
 }
 
@@ -758,7 +758,7 @@ select.form-select {
 }
 
 .btn-delete-sm {
-    background-color: #dc3545 !important;
+    background-color: #D20E00 !important;
     border: none !important;
     border-radius: 6px !important;
     padding: 5px 12px !important;
@@ -773,26 +773,26 @@ select.form-select {
     margin-bottom: 15px;
     font-weight: bold;
 }
-.close-link:hover { color: #dc3545; }
+.close-link:hover { color: #497033; }
 
 /*####################################### edit notes and documents #################################################
 
 /* تنسيقات كرت الموظف الرئيسي */
 .emp-main-card-unique {
-    border: 1px solid #7E0202 !important;
+    border: 1px solid #3B524A !important;
     border-radius: 12px !important;
     overflow: hidden;
     box-shadow: 0 4px 12px rgba(126, 2, 2, 0.1);
 }
 
 .card-header-unique {
-    background-color: #7E0202 !important;
+    background-color: #3B524A !important;
     color: #ffffff !important;
     padding: 15px 20px;
 }
 
 .btn-save-custom {
-    background-color: #7E0202 !important;
+    background-color: #3B524A !important;
     color: white !important;
     border: none !important;
     padding: 6px 20px !important;
@@ -800,19 +800,19 @@ select.form-select {
 }
 
 .btn-save-custom:hover {
-    background-color: #5a0101 !important;
+    background-color: #497033 !important;
     box-shadow: 0 2px 8px rgba(0,0,0,0.2);
 }
 
 /* تنسيقات الكروت الجانبية (اليسار) */
 .side-card-unique {
-    border: 1px solid #7E0202 !important;
+    border: 1px solid #3B524A !important;
     border-radius: 10px !important;
     overflow: hidden;
 }
 
 .side-card-header {
-    background-color: #7E0202;
+    background-color: #3B524A;
     color: white;
     padding: 10px 15px;
 }
@@ -825,7 +825,7 @@ select.form-select {
 /* المربع الصغير لإجمالي عدد التسجيلات في الهيدر */
 .total-count-badge {
     background-color: #ffffff;
-    color: #7E0202;
+    color: #3B524A;
     padding: 2px 8px;
     border-radius: 4px;
     font-weight: bold;
@@ -837,8 +837,8 @@ select.form-select {
 /* المربع الصغير داخل عناصر قائمة المستندات */
 .inner-item-count {
     background-color: #f0f0f0;
-    color: #7E0202;
-    border: 1px solid #7E0202;
+    color: #3B524A;
+    border: 1px solid #3B524A;
     padding: 0px 6px;
     border-radius: 3px;
     font-size: 0.75rem;
@@ -863,11 +863,11 @@ select.form-select {
 }
 
 .btn-edit-small { color: #198754; }
-.btn-delete-small { color: #dc3545; }
+.btn-delete-small { color: #497033; }
 
 /* رابط مشاهدة الكل */
 .view-all-link {
-    color: #7E0202;
+    color: #3B524A;
     text-decoration: none;
     font-weight: bold;
     font-size: 0.85rem;
@@ -875,7 +875,7 @@ select.form-select {
 
 .view-all-link:hover {
     text-decoration: underline;
-    color: #5a0101;
+    color: #497033;
 }
 
 /* تخصيص السكرول بار للقوائم إذا كانت طويلة */
@@ -883,3 +883,11 @@ select.form-select {
     max-height: 250px;
     overflow-y: auto;
 }
+
+
+
+/*103---#3B524A*/
+/*181---box-shadow: 0 6px 16px rgba(164, 22, 26, 0.35);*/
+/*297---497033*/
+/*380---497033*/
+/*590---497033*/
