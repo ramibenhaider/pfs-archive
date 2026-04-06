@@ -154,45 +154,22 @@
         <div class="col-md-5">
             <div class="card side-card-unique mb-4">
                 <div class="side-card-header d-flex justify-content-between align-items-center">
-                    <span class="side-title">الملاحظات</span>
-                    <span class="total-count-badge">{{ $employee->notes->count() ?? 0 }}</span>
-                </div>
-                <div class="card-body p-0">
-                    <ul class="list-group list-group-flush side-list">
-                        @forelse($employee->notes as $note)
-                        <li class="list-group-item d-flex justify-content-between align-items-center side-item">
-                            <span class="text-truncate" style="max-width: 70%;">{{ $note->note }}</span>
-                            <div class="side-actions">
-                                <a href="#" class="btn-edit-small"><i class="fas fa-edit"></i></a>
-                                <a href="#" class="btn-delete-small"><i class="fas fa-trash"></i></a>
-                            </div>
-                        </li>
-                        @empty
-                        <li class="list-group-item text-center text-muted">لا توجد ملاحظات</li>
-                        @endforelse
-                    </ul>
-                </div>
-                <div class="card-footer text-center bg-white border-0">
-                    <a href="#" class="view-all-link">مشاهدة الكل</a>
-                </div>
-            </div>
-<!--################################################################################################################-->
-            <div class="card side-card-unique">
-                <div class="side-card-header d-flex justify-content-between align-items-center">
                     <span class="side-title">المستندات</span>
                     <span class="total-count-badge">{{ $employee->documents->count() ?? 0 }}</span>
                 </div>
                 <div class="card-body p-0">
-                    <ul class="list-group list-group-flush side-list">
-                        @forelse($employee->documents as $doc)
-                        <li class="list-group-item d-flex justify-content-between align-items-center side-item">
-                            <div class="d-flex align-items-center">
-                                <span class="inner-item-count me-2">{{ $doc->files_count ?? 0 }}</span>
-                                <span class="text-truncate">{{ $doc->file_path }}</span>
+                    <ul class="list-group list-group-flush nags-doc-container">
+                        @forelse($documentTypes as $document_type)
+                        <li class="list-group-item d-flex justify-content-between align-items-center nags-doc-wrapper">
+                            <div class="d-flex align-items-center flex-grow-1">
+                                <a href="{{ route('documents.show', $employee->id) }}"
+                                class="nags-doc-title-link">
+                                    <i class="fas fa-folder-open me-2"></i> {{ $document_type->type }}
+                                </a>
                             </div>
-                            <div class="side-actions">
-                                <a href="#" class="btn-edit-small"><i class="fas fa-edit"></i></a>
-                                <a href="#" class="btn-delete-small"><i class="fas fa-trash"></i></a>
+
+                            <div class="d-flex align-items-center">
+                                <span class="nags-count-square">{{ $document_type->documents_count ?? 0 }}</span>
                             </div>
                         </li>
                         @empty
@@ -202,6 +179,26 @@
                 </div>
                 <div class="card-footer text-center bg-white border-0">
                     <a href="#" class="view-all-link">مشاهدة الكل</a>
+                </div>
+            </div>
+<!--################################################################################################################-->
+            <div class="card side-card-unique mb-4">
+                <div class="side-card-header d-flex justify-content-between align-items-center">
+                    <span class="side-title">الملاحظات</span>
+                    <span class="total-count-badge">{{ $employee->notes->count() ?? 0 }}</span>
+                </div>
+                <div class="card-body p-0">
+                    <ul class="list-group list-group-flush side-list">
+                        @forelse($employee->notes as $note)
+                        <li class="list-group-item d-flex justify-content-between align-items-center side-item">
+                            <a href="{{ route('note.edit', $note->id) }}" class="text-decoration-none text-reset d-inline-flex align-items-center w-100">
+                                <span class="text-truncate" style="max-width: 70%;">{{ $note->title }}</span>
+                            </a>
+                        </li>
+                        @empty
+                        <li class="list-group-item text-center text-muted">لا توجد ملاحظات</li>
+                        @endforelse
+                    </ul>
                 </div>
             </div>
         </div>

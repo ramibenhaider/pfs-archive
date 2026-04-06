@@ -85,8 +85,11 @@ class EmployeeController extends Controller
         $nationalities = Nationality::all();
         $documents = Document::where('employee_id', $employee->id)->orderByDesc('created_at')->get();
         $notes = Note::where('employee_id', $employee->id)->orderByDesc('created_at')->get();
+        $documentTypes = Document_type::withCount(['documents' => function ($query) use ($employee) {
+            $query->where('employee_id', $employee->id);
+        }])->orderByDesc('created_at')->get();
 
-        return view('employee.show', compact('employee', 'documents', 'notes', 'managements', 'nationalities'));
+        return view('employee.show', compact('employee', 'documents', 'notes', 'managements', 'nationalities', 'documentTypes'));
     }
 
     /**

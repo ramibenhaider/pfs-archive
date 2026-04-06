@@ -9,20 +9,12 @@
 <div class="container">
     <div class="edit-note-container">
         
-        <?php $__errorArgs = ['same'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?>
-        <div class="alert alert-danger d-flex align-items-center" role="alert">
-            <i class="bi bi-exclamation-triangle-fill me-2"></i>
-            <div><?php echo e($message); ?></div>
-        </div>
-        <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>
+    <?php if(session('warning')): ?>
+      <div id="warning" class="warning-message">
+          <?php echo e(session('warning')); ?>
 
+      </div>
+    <?php endif; ?>
         <div class="edit-note-header text-center">
             <h1>تعديل ملاحظة: <?php echo e($note->employee->name); ?></h1>
         </div>
@@ -86,7 +78,7 @@ unset($__errorArgs, $__bag); ?>
                 <button type="submit" class="btn btn-save-note">
                     <i class="bi bi-check-lg"></i> حفظ التعديلات
                 </button>
-                <a href="<?php echo e(route('library.index')); ?>" 
+                <a href="<?php echo e(route('employee.show', $note->employee)); ?>" 
                    class="btn btn-back-note" 
                    onclick="return confirm('هل أنت متأكد؟ لم تقم بحفظ التعديلات!')">
                     <i class="bi bi-arrow-right"></i> رجوع

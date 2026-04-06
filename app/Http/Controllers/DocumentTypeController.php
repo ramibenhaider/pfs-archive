@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Document_type;
+use App\Models\Document;
+use App\Models\Employee;
 use Illuminate\Http\Request;
 
 class DocumentTypeController extends Controller

@@ -128,17 +128,25 @@ unset($__errorArgs, $__bag); ?>
 
                 <div class="mb-3">
                     <label class="form-label">الملفات</label>
-                    <input type="file" id="fileInput" class="form-control custom-input <?php $__errorArgs = ['files', 'doc_errors'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+                    <input type="file" id="fileInput"
+                    class="form-control custom-input <?php if($errors->doc_errors->has('files') || $errors->doc_errors->has('files.*')): ?> is-invalid <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
-unset($__errorArgs, $__bag); ?>" multiple accept=".pdf,.doc,.docx,.xls,.xlsx">
+unset($__errorArgs, $__bag); ?>"
+                    multiple accept=".pdf,.doc,.docx,.xls,.xlsx">
                     <div id="fileList" class="mt-2"></div>
                     <input type="file" name="files[]" id="hiddenFiles" multiple style="display:none">
                     <?php $__errorArgs = ['files', 'doc_errors'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                        <div class="invalid-feedback d-block"><?php echo e($message); ?></div>
+                    <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+                    <?php $__errorArgs = ['files.*', 'doc_errors'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }

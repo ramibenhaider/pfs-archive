@@ -54,7 +54,7 @@ class DocumentController extends Controller
                 'comments.*.max' => 'لقد تجاوزت الحد المسموح من الحروف!',
             ]
         );
-
+        
         DB::transaction(function () use ($request) {
 
             foreach ($request->file('files') as $index => $file) {

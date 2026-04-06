@@ -99,10 +99,15 @@
 
                 <div class="mb-3">
                     <label class="form-label">الملفات</label>
-                    <input type="file" id="fileInput" class="form-control custom-input @error('files', 'doc_errors') is-invalid @enderror" multiple accept=".pdf,.doc,.docx,.xls,.xlsx">
+                    <input type="file" id="fileInput"
+                    class="form-control custom-input @if($errors->doc_errors->has('files') || $errors->doc_errors->has('files.*')) is-invalid @enderror"
+                    multiple accept=".pdf,.doc,.docx,.xls,.xlsx">
                     <div id="fileList" class="mt-2"></div>
                     <input type="file" name="files[]" id="hiddenFiles" multiple style="display:none">
                     @error('files', 'doc_errors')
+                        <div class="invalid-feedback d-block">{{ $message }}</div>
+                    @enderror
+                    @error('files.*', 'doc_errors')
                         <div class="invalid-feedback d-block">{{ $message }}</div>
                     @enderror
                 </div>

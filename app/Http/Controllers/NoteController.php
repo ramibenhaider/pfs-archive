@@ -90,7 +90,7 @@ class NoteController extends Controller
         }
 
         $note->save();
-        return redirect()->route('library.index')->with('success', 'تم التعديل بنجاح!');
+        return redirect()->route('employee.show', $note->employee)->with('success', 'تم التعديل بنجاح!');
     }
 
     /**

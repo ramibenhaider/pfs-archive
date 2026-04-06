@@ -9,13 +9,11 @@
 <div class="container">
     <div class="edit-note-container">
         
-        @error('same')
-        <div class="alert alert-danger d-flex align-items-center" role="alert">
-            <i class="bi bi-exclamation-triangle-fill me-2"></i>
-            <div>{{ $message }}</div>
-        </div>
-        @enderror
-
+    @if (session('warning'))
+      <div id="warning" class="warning-message">
+          {{ session('warning') }}
+      </div>
+    @endif
         <div class="edit-note-header text-center">
             <h1>تعديل ملاحظة: {{ $note->employee->name }}</h1>
         </div>
@@ -50,7 +48,7 @@
                 <button type="submit" class="btn btn-save-note">
                     <i class="bi bi-check-lg"></i> حفظ التعديلات
                 </button>
-                <a href="{{ route('library.index') }}" 
+                <a href="{{ route('employee.show', $note->employee) }}" 
                    class="btn btn-back-note" 
                    onclick="return confirm('هل أنت متأكد؟ لم تقم بحفظ التعديلات!')">
                     <i class="bi bi-arrow-right"></i> رجوع
