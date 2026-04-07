@@ -36,9 +36,12 @@ class DocumentTypeController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Document_type $document_type)
+    public function show(Employee $employee, Document_type $document_type)
     {
-        //
+        $documents = Document::where('employee_id', $employee->id)
+                             ->where('document_type_id', $document_type->id)
+                             ->orderByDesc('created_at')->get();
+        return view('library.document.show', compact('documents'));
     }
 
     /**

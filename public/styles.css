@@ -852,7 +852,7 @@ select.form-select {
 }
 
 .side-item:hover {
-    background-color: #fff5f5 !important;
+    background-color: #f9fafb !important;
 }
 
 /* أزرار الإجراءات (تعديل وحذف) */
@@ -892,16 +892,10 @@ select.form-select {
 }
 
 /* تغليف السطر الواحد */
-.nags-doc-wrapper {
-    padding: 16px 12px !important;
-    border-bottom: 1px solid #edf2f7 !important;
-    background-color: #ffffff;
-    transition: all 0.25s ease-in-out;
-}
+
 
 .nags-doc-wrapper:hover {
     background-color: #f9fafb;
-    transform: translateX(-3px); /* حركة بسيطة لجهة اليسار عند التمرير */
 }
 
 /* الرابط واللون المطلوب (95BF30) */
@@ -913,9 +907,6 @@ select.form-select {
     transition: color 0.2s;
 }
 
-.nags-doc-title-link:hover {
-    color: #7da128 !important;
-}
 /*#7da128*/
 /* المربع الصغير لحساب عدد الملفات */
 .nags-count-square {
@@ -955,9 +946,3 @@ select.form-select {
 .nags-doc-wrapper:last-child {
     border-bottom: none !important;
 }
-
-/*103---#3B524A*/
-/*181---box-shadow: 0 6px 16px rgba(164, 22, 26, 0.35);*/
-/*297---497033*/
-/*380---497033*/
-/*590---497033*/

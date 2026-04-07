@@ -17,7 +17,6 @@ Route::get('/library/index', [NoteController::class, 'index'])->name('library.in
 Route::get('/documents',          [DocumentController::class, 'index'])  ->name('documents.index');
 Route::post('/documents',         [DocumentController::class, 'store'])  ->name('documents.store');
 Route::delete('/documents/{id}',  [DocumentController::class, 'destroy'])->name('documents.destroy');
-Route::get
 
 Route::post('/library/index', [NoteController::class, 'store'])->name('note.store');
 Route::get('/search-notes', [NoteController::class, 'doSearch'])->name('search_notes');
@@ -28,4 +27,4 @@ Route::put('/library/note/{note}/edit', [NoteController::class, 'update'])->name
 Route::get('/employee/show/{employee}', [EmployeeController::class, 'show'])->name('employee.show');
 Route::put('/employee/show/{employee}', [EmployeeController::class, 'update'])->name('employee.update');
 
-Route::get('/library/document/{employee}/show', [DocumentTypeController::Class, 'show'])->name('documents.show');
+Route::get('/library/document/{employee}/{document_type}/show', [DocumentTypeController::Class, 'show'])->name('documents.show');

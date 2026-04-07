@@ -239,61 +239,56 @@ unset($__errorArgs, $__bag); ?>
             </div>
         </div>
 <!-- ###################################################################################################################-->
-        <div class="col-md-5">
-            <div class="card side-card-unique mb-4">
-                <div class="side-card-header d-flex justify-content-between align-items-center">
-                    <span class="side-title">المستندات</span>
-                    <span class="total-count-badge"><?php echo e($employee->documents->count() ?? 0); ?></span>
-                </div>
-                <div class="card-body p-0">
-                    <ul class="list-group list-group-flush nags-doc-container">
-                        <?php $__empty_1 = true; $__currentLoopData = $documentTypes; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $document_type): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
-                        <li class="list-group-item d-flex justify-content-between align-items-center nags-doc-wrapper">
-                            <div class="d-flex align-items-center flex-grow-1">
-                                <a href="<?php echo e(route('documents.show', $employee->id)); ?>"
-                                class="nags-doc-title-link">
-                                    <i class="fas fa-folder-open me-2"></i> <?php echo e($document_type->type); ?>
-
-                                </a>
-                            </div>
-
-                            <div class="d-flex align-items-center">
-                                <span class="nags-count-square"><?php echo e($document_type->documents_count ?? 0); ?></span>
-                            </div>
-                        </li>
-                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
-                        <li class="list-group-item text-center text-muted">لا توجد مستندات</li>
-                        <?php endif; ?>
-                    </ul>
-                </div>
-                <div class="card-footer text-center bg-white border-0">
-                    <a href="#" class="view-all-link">مشاهدة الكل</a>
-                </div>
-            </div>
-<!--################################################################################################################-->
-            <div class="card side-card-unique mb-4">
-                <div class="side-card-header d-flex justify-content-between align-items-center">
-                    <span class="side-title">الملاحظات</span>
-                    <span class="total-count-badge"><?php echo e($employee->notes->count() ?? 0); ?></span>
-                </div>
-                <div class="card-body p-0">
-                    <ul class="list-group list-group-flush side-list">
-                        <?php $__empty_1 = true; $__currentLoopData = $employee->notes; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $note): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
-                        <li class="list-group-item d-flex justify-content-between align-items-center side-item">
-                            <a href="<?php echo e(route('note.edit', $note->id)); ?>" class="text-decoration-none text-reset d-inline-flex align-items-center w-100">
-                                <span class="text-truncate" style="max-width: 70%;"><?php echo e($note->title); ?></span>
-                            </a>
-                        </li>
-                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
-                        <li class="list-group-item text-center text-muted">لا توجد ملاحظات</li>
-                        <?php endif; ?>
-                    </ul>
-                </div>
-                <div class="card-footer text-center bg-white border-0">
-                    <a href="#" class="view-all-link">مشاهدة الكل</a>
-                </div>
-            </div>
+       <div class="col-md-5">
+    <div class="card side-card-unique mb-4">
+        <div class="side-card-header d-flex justify-content-between align-items-center">
+            <span class="side-title">المستندات</span>
+            <span class="total-count-badge"><?php echo e($employee->documents->count() ?? 0); ?></span>
         </div>
+        <div class="card-body p-0">
+            <ul class="list-group list-group-flush nags-doc-container">
+                <?php $__empty_1 = true; $__currentLoopData = $documentTypes; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $document_type): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
+                <li class="list-group-item p-0 nags-doc-wrapper position-relative">
+                    <a href="<?php echo e(route('documents.show', [$employee->id, $document_type])); ?>" 
+                       class="nags-doc-title-link d-flex justify-content-between align-items-center w-100 p-3 text-decoration-none">
+                        <div class="d-flex align-items-center">
+                            <i class="fas fa-folder-open me-2"></i> 
+                            <span><?php echo e($document_type->type); ?></span>
+                        </div>
+                        <span class="nags-count-square"><?php echo e($document_type->documents_count ?? 0); ?></span>
+                    </a>
+                </li>
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
+                <li class="list-group-item text-center text-muted">لا توجد مستندات</li>
+                <?php endif; ?>
+            </ul>
+        </div>
+        <div class="card-footer text-center bg-white border-0">
+            <a href="#" class="view-all-link">مشاهدة الكل</a>
+        </div>
+    </div>
+
+    <div class="card side-card-unique mb-4">
+        <div class="side-card-header d-flex justify-content-between align-items-center">
+            <span class="side-title">الملاحظات</span>
+            <span class="total-count-badge"><?php echo e($employee->notes->count() ?? 0); ?></span>
+        </div>
+        <div class="card-body p-0">
+            <ul class="list-group list-group-flush side-list">
+                <?php $__empty_1 = true; $__currentLoopData = $employee->notes; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $note): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
+                <li class="list-group-item p-0 side-item position-relative">
+                    <a href="<?php echo e(route('note.edit', $note->id)); ?>" 
+                       class="text-decoration-none text-reset d-flex align-items-center w-100 p-3">
+                        <span class="text-truncate" style="max-width: 90%;"><?php echo e($note->title); ?></span>
+                    </a>
+                </li>
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
+                <li class="list-group-item text-center text-muted">لا توجد ملاحظات</li>
+                <?php endif; ?>
+            </ul>
+        </div>
+    </div>
+</div>
     </div>
 </div>
 <?php $__env->stopSection(); ?>

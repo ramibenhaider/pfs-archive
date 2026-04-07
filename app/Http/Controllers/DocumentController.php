@@ -65,6 +65,7 @@ class DocumentController extends Controller
                 // إنشاء سجل لكل ملف
                 Document::create([
                     'file_path' => $path,
+                    'original_name' => $file->getClientOriginalName(),
                     'employee_id' => $request->employee_id,
                     'document_type_id' => $request->document_type_id,
                     'comment' => $request->comments[$index] ?? null,
