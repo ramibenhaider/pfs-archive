@@ -13,28 +13,33 @@ return new class extends Migration
     {
         Schema::create('employees', function (Blueprint $table) {
             $table->id();
-            $table->string('id_number', 10)
-                  ->nullable()
-                  ->unique();
-            $table->date('expiry_date_id')
-                  ->nullable();
+            $table->string('id_number', 10)->nullable()->unique();
+            $table->date('expiry_date_id')->nullable();
             $table->foreignId('management_id')
-                  ->constrained('management')
-                  ->nullable();
+                  ->nullable()
+                  ->constrained()
+                  ->cascadeOnUpdate()
+                  ->nullOnDelete();
             $table->foreignId('nationality_id')
-                  ->constrained('nationalities')
-                  ->nullable();
-            $table->string('name')
-                  ->nullable();
-            $table->string('job_number')
                   ->nullable()
-                  ->unique();
-            $table->string('phone_number', 10)
+                  ->constrained()
+                  ->cascadeOnUpdate()
+                  ->nullOnDelete();
+            $table->foreignId('job_title_id')
                   ->nullable()
-                  ->unique();
-            $table->string('passport_number')
+                  ->constrained()
+                  ->cascadeOnUpdate()
+                  ->nullOnDelete();
+            $table->foreignId('airline_id')
                   ->nullable()
-                  ->unique();
+                  ->constrained()
+                  ->cascadeOnUpdate()
+                  ->nullOnDelete();
+            $table->string('name', 120)->nullable();
+            $table->string('job_number', 10)->nullable()->unique();
+            $table->string('phone_number', 10)->nullable()->unique();
+            $table->string('passport_number', 9)->nullable()->unique();
+            $table->boolean('is_active')->default(false);
             $table->timestamps();
         });
     }

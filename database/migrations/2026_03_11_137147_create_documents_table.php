@@ -15,13 +15,18 @@ return new class extends Migration
         Schema::create('documents', function (Blueprint $table) {
             $table->id();
             $table->foreignId('employee_id')
-                  ->constrained('employees');
+                  ->constrained()
+                  ->cascadeOnUpdate()
+                  ->nullOnDelete();
             $table->foreignId('document_type_id')
-                  ->constrained('document_types');
+                  ->nullable()
+                  ->constrained()
+                  ->cascadeOnUpdate()
+                  ->nullOnDelete();
             $table->string('file_path')->nullable();
-            $table->string('comment')
-            ->nullable();
+            $table->string('comment', 100)->nullable();
             $table->timestamps();
+            $table->string('original_name', 150)->nullable()->after('file_path');
         });
     }
 

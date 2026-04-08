@@ -13,13 +13,12 @@ return new class extends Migration
     {
         Schema::create('notes', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('employee_id');
-            $table->foreign('employee_id')
-                  ->references('id')
-                  ->on('employees');
-            $table->string('title');
-            $table->string('note')
-                  ->nullable();
+            $table->foreignId('employee_id')
+                  ->constrained()
+                  ->cascadeOnUpdate()
+                  ->cascadeOnDelete();
+            $table->string('title', 100);
+            $table->string('note')->nullable();
             $table->timestamps();
         });
     }

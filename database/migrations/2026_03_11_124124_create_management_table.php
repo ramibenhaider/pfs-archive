@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('management', function (Blueprint $table) {
             $table->id();
-            $table->string('management_name')->nullable();
+            $table->string('management_name', '30')->nullable();
             $table->timestamps();
         });
     }
