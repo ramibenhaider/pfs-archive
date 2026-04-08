@@ -19,9 +19,22 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
-        'email',
+        'username',
         'password',
+        'admin_id',
+        'is_active',
+        'createEmployee',
+        'deleteEmployee',
+        'updateEmployee',
+        'createDoc',
+        'showDoc',
+        'deleteDoc',
     ];
+
+    public function admin()
+    {
+        return $this->belongsTo(Admin::Class);
+    }
 
     /**
      * The attributes that should be hidden for serialization.
@@ -43,6 +56,13 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'is_active' => 'boolean',
+            'createEmployee' => 'boolean',
+            'deleteEmployee' => 'boolean',
+            'updateEmployee' => 'boolean',
+            'createDoc' => 'boolean',
+            'showDoc' => 'boolean',
+            'deleteDoc' => 'boolean',
         ];
     }
 }

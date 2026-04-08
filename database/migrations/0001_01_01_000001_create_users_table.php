@@ -14,10 +14,21 @@ return new class extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            // $table->string('email')->unique();
             $table->string('username')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->foreignId('admin_id')
+                  ->nullable()
+                  ->constrained('admins')
+                  ->cascadeOnUpdate()
+                  ->nullOnDelete();
+            $table->boolean('is_active')->default(true);
+            $table->boolean('createEmployee')->default(false);
+            $table->boolean('deleteEmployee')->default(false);
+            $table->boolean('updateEmployee')->default(false);
+            $table->boolean('createDoc')->default(false);
+            $table->boolean('showDoc')->default(false);
+            $table->boolean('deleteDoc')->default(false);
             $table->rememberToken();
             $table->timestamps();
         });

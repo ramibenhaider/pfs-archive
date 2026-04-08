@@ -15,6 +15,7 @@ return new class extends Migration
         Schema::create('documents', function (Blueprint $table) {
             $table->id();
             $table->foreignId('employee_id')
+                  ->nullable()
                   ->constrained()
                   ->cascadeOnUpdate()
                   ->nullOnDelete();
@@ -26,7 +27,7 @@ return new class extends Migration
             $table->string('file_path')->nullable();
             $table->string('comment', 100)->nullable();
             $table->timestamps();
-            $table->string('original_name', 150)->nullable()->after('file_path');
+            $table->string('original_name', 150)->nullable();
         });
     }
 
