@@ -18,6 +18,10 @@
       <div id="success-message" class="success-message">
           {{ session('success') }}
       </div>
+    @elseif (session('warning'))
+      <div id="warning-message" class="warning-message">
+          {{ session('warning') }}
+      </div>
     @endif
   @yield('content')
   <script src="https://cdn.jsdelivr.net/npm/tom-select@2.3.1/dist/js/tom-select.complete.min.js"></script>

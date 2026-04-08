@@ -6,15 +6,6 @@
 @endpush
 
 @section('content')
-@if (session('success'))
-    <div id="success" class="success-message">
-        {{ session('success') }}
-    </div>
-@elseif(session('warning'))
-    <div id="warning" class="warning-message">
-        {{ session('warning') }}
-    </div>
-@endif
 <div class="container-createEmployee">
     <div class="mb-3">
         <a href="{{ route('employee.show', $employee->id) }}" class="btn-back-note" style="text-decoration: none; display: inline-flex; align-items: center; gap: 8px;">
@@ -71,5 +62,7 @@
     @endforeach
 
 </div>
-<script src="{{ asset('script.js') }}"></script>
 @endsection
+@push('scripts')
+<script src="{{ asset('script.js') }}"></script>
+@endpush

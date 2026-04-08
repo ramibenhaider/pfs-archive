@@ -9,15 +9,6 @@
 @section('title', 'بيانات الموظف')
 
 @section('content')
-@if (session('success'))
-    <div id="success-message" class="success-message">
-        {{ session('success') }}
-    </div>
-@elseif (session('warning'))
-    <div id="warning" class="warning-message">
-        {{ session('warning') }}
-    </div>
-@endif
 
 <div class="container-fluid mt-3" dir="rtl">
     <div class="row">
@@ -111,18 +102,18 @@
                         </li>
                         <li class="list-group-item d-flex justify-content-between align-items-center">
                             <strong>الإدارة:</strong>
-                            <select name="airline_id" class="form-select w-50 text-muted" >
-                            @foreach ($airlines as $airline)
-                                <option value="{{ $airline->id }}"
-                                    {{ old('airline_id', $airline->id) == $employee->airline_id ? 'selected':''}}>
-                                    {{ $airline->airline_name }}
+                            <select name="management_id" class="form-select w-50 text-muted" >
+                            @foreach ($managements as $management)
+                                <option value="{{ $management->id }}"
+                                    {{ old('management_id', $management->id) == $employee->management_id ? 'selected':''}}>
+                                    {{ $management->management_name }}
                                 </option>
                             @endforeach
                             </select>
                         </li>
                         <li class="list-group-item d-flex justify-content-between align-items-center">
                             <strong>المسمى الوظيفي:</strong>
-                            <select name="job_title" class="form-select w-50 text-muted" >
+                            <select name="job_title_id" class="form-select w-50 text-muted" >
                             @foreach ($job_titles as $job_title)
                                 <option value="{{ $job_title->id }}"
                                     {{ old('job_title_id', $job_title->id) == $employee->job_title_id ? 'selected':''}}>
@@ -226,3 +217,6 @@
         <a href="{{ route('library.index') }}" class="view-all-link">قم بإضافة مستند جديد أو ملاحظة من هنا</a>
     </div>
 @endsection
+@push('scripts')
+<script src="{{ asset('script.js') }}"></script>
+@endpush

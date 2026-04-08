@@ -9,17 +9,6 @@
 <?php $__env->startSection('title', 'بيانات الموظف'); ?>
 
 <?php $__env->startSection('content'); ?>
-<?php if(session('success')): ?>
-    <div id="success-message" class="success-message">
-        <?php echo e(session('success')); ?>
-
-    </div>
-<?php elseif(session('warning')): ?>
-    <div id="warning" class="warning-message">
-        <?php echo e(session('warning')); ?>
-
-    </div>
-<?php endif; ?>
 
 <div class="container-fluid mt-3" dir="rtl">
     <div class="row">
@@ -197,11 +186,11 @@ unset($__errorArgs, $__bag); ?>
                         </li>
                         <li class="list-group-item d-flex justify-content-between align-items-center">
                             <strong>الإدارة:</strong>
-                            <select name="airline_id" class="form-select w-50 text-muted" >
-                            <?php $__currentLoopData = $airlines; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $airline): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                <option value="<?php echo e($airline->id); ?>"
-                                    <?php echo e(old('airline_id', $airline->id) == $employee->airline_id ? 'selected':''); ?>>
-                                    <?php echo e($airline->airline_name); ?>
+                            <select name="management_id" class="form-select w-50 text-muted" >
+                            <?php $__currentLoopData = $managements; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $management): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <option value="<?php echo e($management->id); ?>"
+                                    <?php echo e(old('management_id', $management->id) == $employee->management_id ? 'selected':''); ?>>
+                                    <?php echo e($management->management_name); ?>
 
                                 </option>
                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
@@ -209,7 +198,7 @@ unset($__errorArgs, $__bag); ?>
                         </li>
                         <li class="list-group-item d-flex justify-content-between align-items-center">
                             <strong>المسمى الوظيفي:</strong>
-                            <select name="job_title" class="form-select w-50 text-muted" >
+                            <select name="job_title_id" class="form-select w-50 text-muted" >
                             <?php $__currentLoopData = $job_titles; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $job_title): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                 <option value="<?php echo e($job_title->id); ?>"
                                     <?php echo e(old('job_title_id', $job_title->id) == $employee->job_title_id ? 'selected':''); ?>>
@@ -316,4 +305,7 @@ unset($__errorArgs, $__bag); ?>
         <a href="<?php echo e(route('library.index')); ?>" class="view-all-link">قم بإضافة مستند جديد أو ملاحظة من هنا</a>
     </div>
 <?php $__env->stopSection(); ?>
+<?php $__env->startPush('scripts'); ?>
+<script src="<?php echo e(asset('script.js')); ?>"></script>
+<?php $__env->stopPush(); ?>
 <?php echo $__env->make('layouts.index-layout', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\xampp\htdocs\archive-nags\resources\views/employee/show.blade.php ENDPATH**/ ?>

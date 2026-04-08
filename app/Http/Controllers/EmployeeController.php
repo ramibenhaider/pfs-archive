@@ -131,6 +131,10 @@ class EmployeeController extends Controller
             'phone_number'    => ['nullable', 'digits:10',
                                     Rule::unique('employees', 'phone_number')->ignore($employee->id)],
             'nationality_id'  => 'nullable|integer',
+
+            'airline_id'      => 'nullable|integer',
+
+            'job_title_id'    => 'nullable|integer'
         ],
         [
             'name.required' => 'لا يمكن ترك الاسم فارغاً!',

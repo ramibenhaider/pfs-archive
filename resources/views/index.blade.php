@@ -10,13 +10,6 @@
 @endpush
 
 @section('content')
-
-    @if (session('success'))
-      <div id="success" class="success-message">
-          {{ session('success') }}
-      </div>
-    @endif
-
   <div class="container">
 
     <!-- صف البحث -->
@@ -80,6 +73,7 @@
 </div>
 
   </div>
-  <script src="{{ asset('script.js') }}"></script>
-
 @endsection
+@push("scripts")
+<script src="{{ asset('script.js') }}"></script>
+@endpush

@@ -8,12 +8,7 @@
 @section('content')
 <div class="container">
     <div class="edit-note-container">
-        
-    @if (session('warning'))
-      <div id="warning" class="warning-message">
-          {{ session('warning') }}
-      </div>
-    @endif
+
         <div class="edit-note-header text-center">
             <h1>تعديل ملاحظة: {{ $note->employee->name }}</h1>
         </div>
@@ -35,10 +30,7 @@
 
             <div class="mb-4">
                 <label class="form-label-custom">الملاحظة التفصيلية</label>
-                <textarea name="note" 
-                          class="form-control custom-input custom-textarea @error('note') is-invalid @enderror"
-                          placeholder="اكتب ملاحظاتك هنا...">{{ old('note', $note->note) }}
-                </textarea>
+                <textarea name="note" class="form-control custom-input custom-textarea @error('note') is-invalid @enderror"placeholder="اكتب ملاحظاتك هنا...">{{ old('note', $note->note) }}</textarea>
                 @error('note')
                 <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
@@ -57,7 +49,9 @@
         </form>
     </div>
 </div>
+@endsection
 @push('scripts')
+<script src="{{ asset('script.js') }}"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         const textarea = document.querySelector('.custom-textarea');
@@ -76,4 +70,3 @@
     });
 </script>
 @endpush
-@endsection

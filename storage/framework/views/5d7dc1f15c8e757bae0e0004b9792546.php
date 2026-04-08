@@ -19,6 +19,11 @@
           <?php echo e(session('success')); ?>
 
       </div>
+    <?php elseif(session('warning')): ?>
+      <div id="warning-message" class="warning-message">
+          <?php echo e(session('warning')); ?>
+
+      </div>
     <?php endif; ?>
   <?php echo $__env->yieldContent('content'); ?>
   <script src="https://cdn.jsdelivr.net/npm/tom-select@2.3.1/dist/js/tom-select.complete.min.js"></script>

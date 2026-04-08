@@ -127,6 +127,7 @@
             </div>
 
         </div>
-        <script src="{{ asset('script.js') }}"></script>
-
 @endsection
+@push("scripts")
+<script src="{{ asset('script.js') }}"></script>
+@endpush

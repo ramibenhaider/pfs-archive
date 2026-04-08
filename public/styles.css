@@ -33,6 +33,7 @@ body {
   width: fit-content; /* على قد المحتوى */
   max-width: 400px; /* حد أقصى */
   text-align: center;
+  z-index: 9999;
 }
 
 .warning-message {
@@ -51,6 +52,7 @@ body {
   width: fit-content; /* على قد المحتوى */
   max-width: 400px; /* حد أقصى */
   text-align: center;
+  z-index: 9999;
 }
 
 /*#############index################################################
