@@ -42,28 +42,39 @@ endif;
 unset($__errorArgs, $__bag); ?>
                 </div>
 
-                <br>
+                <div class="form-group management-field">
+                    <label>خطوط الطيران</label>
+                    <select name="airline_id">
+                        <?php $__currentLoopData = $airlines; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $airline): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <option value="<?php echo e($airline->id); ?>"><?php echo e($airline->airline_name); ?></option>
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                    </select>
+                </div>
 
-                
-                <div class="management-row">
-                    <div class="form-group management-field">
-                        <label>الإدارة</label>
-                        <select name="management_id">
-                            <?php $__currentLoopData = $management; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $management_names): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                <option value="<?php echo e($management_names->id); ?>"><?php echo e($management_names->management_name); ?></option>
-                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                        </select>
-                    </div>
+                <div class="form-group management-field">
+                    <label>المسمى الوظيفي</label>
+                    <select name="job_title_id">
+                        <?php $__currentLoopData = $job_titles; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $job_title): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <option value="<?php echo e($job_title->id); ?>"><?php echo e($job_title->job_title_name); ?></option>
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                    </select>
+                </div>
 
-                    <br>
+                <div class="form-group management-field">
+                    <label>الإدارة</label>
+                    <select name="management_id">
+                        <?php $__currentLoopData = $management; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $management_names): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <option value="<?php echo e($management_names->id); ?>"><?php echo e($management_names->management_name); ?></option>
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                    </select>
+                </div>
 
-                    <div class="form-group status-inline">
-                        <label>الحالة (موظف - غير موظف)</label>
-                        <label class="switch-container">
-                            <input type="checkbox" name="is_active" value="1" <?php echo e(old('is_active') == '1' ? 'checked' : ''); ?>>
-                            <span class="slider"></span>
-                        </label>
-                    </div>
+                <div class="form-group status-inline">
+                    <label>الحالة (موظف - غير موظف)</label>
+                    <label class="switch-container">
+                        <input type="checkbox" name="is_active" value="1" <?php echo e(old('is_active') == '1' ? 'checked' : ''); ?>>
+                        <span class="slider"></span>
+                    </label>
                 </div>
             </div>
 

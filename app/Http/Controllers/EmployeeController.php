@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Airline;
 use App\Models\Employee;
+use App\Models\Job_title;
 use Illuminate\Http\Request;
 use App\Models\Document_type;
 use App\Models\Management;
@@ -29,8 +31,9 @@ class EmployeeController extends Controller
         $management = Management::all();
         $nationalities = Nationality::all();
         $document_types = Document_type::all();
-        $documents = Document::all();
-        return view('employee.create', compact('management', 'nationalities', 'document_types'));
+        $airlines = Airline::all();
+        $job_titles = Job_title::all();
+        return view('employee.create', compact('management', 'nationalities', 'document_types', 'airlines', 'job_titles'));
     }
 
     /**
@@ -53,7 +56,9 @@ class EmployeeController extends Controller
             'expiry_date_id'  => ['nullable', 'date', 'after:today'],
             'phone_number'    => ['nullable', 'digits:10', 'unique:employees,phone_number'],
             'nationality_id'  => ['nullable', 'integer'],
-            'is_active'       => 'nullable'
+            'is_active'       => 'nullable',
+            'airline_id'      => 'nullable',
+            'job_title_id'    => 'nullable'
         ],
         [
             'name.required' => 'يجب إدخال الاسم!',
@@ -83,13 +88,15 @@ class EmployeeController extends Controller
     public function show(Employee $employee)
     {   $managements = Management::all();
         $nationalities = Nationality::all();
+        $airlines = Airline::all();
+        $job_titles = Job_title::all();
         $documents = Document::where('employee_id', $employee->id)->orderByDesc('created_at')->get();
         $notes = Note::where('employee_id', $employee->id)->orderByDesc('created_at')->get();
         $documentTypes = Document_type::withCount(['documents' => function ($query) use ($employee) {
             $query->where('employee_id', $employee->id);
         }])->orderByDesc('created_at')->get();
 
-        return view('employee.show', compact('employee', 'documents', 'notes', 'managements', 'nationalities', 'documentTypes'));
+        return view('employee.show', compact('employee', 'documents', 'notes', 'managements', 'nationalities', 'documentTypes', 'job_titles', 'airlines'));
     }
 
     /**

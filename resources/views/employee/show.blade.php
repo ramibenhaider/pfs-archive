@@ -6,17 +6,14 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
 @endpush
 
-@section('title')
-بيانات الموظف
-@endsection
+@section('title', 'بيانات الموظف')
 
 @section('content')
 @if (session('success'))
     <div id="success-message" class="success-message">
         {{ session('success') }}
     </div>
-@endif
-@if (session('warning'))
+@elseif (session('warning'))
     <div id="warning" class="warning-message">
         {{ session('warning') }}
     </div>
@@ -114,11 +111,33 @@
                         </li>
                         <li class="list-group-item d-flex justify-content-between align-items-center">
                             <strong>الإدارة:</strong>
-                            <select name="management_id" class="form-select w-50 text-muted" >
-                            @foreach ($managements as $management)
-                                <option value="{{ $management->id }}"
-                                    {{ old('management_id', $management->id) == $employee->management_id ? 'selected':''}}>
-                                    {{ $management->management_name }}
+                            <select name="airline_id" class="form-select w-50 text-muted" >
+                            @foreach ($airlines as $airline)
+                                <option value="{{ $airline->id }}"
+                                    {{ old('airline_id', $airline->id) == $employee->airline_id ? 'selected':''}}>
+                                    {{ $airline->airline_name }}
+                                </option>
+                            @endforeach
+                            </select>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <strong>المسمى الوظيفي:</strong>
+                            <select name="job_title" class="form-select w-50 text-muted" >
+                            @foreach ($job_titles as $job_title)
+                                <option value="{{ $job_title->id }}"
+                                    {{ old('job_title_id', $job_title->id) == $employee->job_title_id ? 'selected':''}}>
+                                    {{ $job_title->job_title_name }}
+                                </option>
+                            @endforeach
+                            </select>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <strong>خطوط الطيران:</strong>
+                            <select name="airline_id" class="form-select w-50 text-muted" >
+                            @foreach ($airlines as $airline)
+                                <option value="{{ $airline->id }}"
+                                    {{ old('airline_id', $airline->id) == $employee->airline_id ? 'selected':''}}>
+                                    {{ $airline->airline_name }}
                                 </option>
                             @endforeach
                             </select>
@@ -152,55 +171,58 @@
         </div>
 <!-- ###################################################################################################################-->
        <div class="col-md-5">
-    <div class="card side-card-unique mb-4">
-        <div class="side-card-header d-flex justify-content-between align-items-center">
-            <span class="side-title">المستندات</span>
-            <span class="total-count-badge">{{ $employee->documents->count() ?? 0 }}</span>
-        </div>
-        <div class="card-body p-0">
-            <ul class="list-group list-group-flush nags-doc-container">
-                @forelse($documentTypes as $document_type)
-                <li class="list-group-item p-0 nags-doc-wrapper position-relative">
-                    <a href="{{ route('documents.show', [$employee->id, $document_type]) }}" 
-                       class="nags-doc-title-link d-flex justify-content-between align-items-center w-100 p-3 text-decoration-none">
-                        <div class="d-flex align-items-center">
-                            <i class="fas fa-folder-open me-2"></i> 
-                            <span>{{ $document_type->type }}</span>
-                        </div>
-                        <span class="nags-count-square">{{ $document_type->documents_count ?? 0 }}</span>
-                    </a>
-                </li>
-                @empty
-                <li class="list-group-item text-center text-muted">لا توجد مستندات</li>
-                @endforelse
-            </ul>
-        </div>
-        <div class="card-footer text-center bg-white border-0">
-            <a href="#" class="view-all-link">مشاهدة الكل</a>
-        </div>
-    </div>
+            <div class="card side-card-unique mb-4">
+                <div class="side-card-header d-flex justify-content-between align-items-center">
+                    <span class="side-title">المستندات</span>
+                    <span class="total-count-badge">{{ $employee->documents->count() ?? 0 }}</span>
+                </div>
+                <div class="card-body p-0">
+                    <ul class="list-group list-group-flush nags-doc-container">
+                        @forelse($documentTypes as $document_type)
+                        <li class="list-group-item p-0 nags-doc-wrapper position-relative">
+                            <a href="{{ route('documentType.show', [$employee->id, $document_type]) }}" 
+                            class="nags-doc-title-link d-flex justify-content-between align-items-center w-100 p-3 text-decoration-none">
+                                <div class="d-flex align-items-center">
+                                    <i class="fas fa-folder-open me-2"></i> 
+                                    <span>{{ $document_type->type }}</span>
+                                </div>
+                                <span class="nags-count-square">{{ $document_type->documents_count ?? 0 }}</span>
+                            </a>
+                        </li>
+                        @empty
+                        <li class="list-group-item text-center text-muted">لا توجد مستندات</li>
+                        @endforelse
+                    </ul>
+                </div>
+                <div class="card-footer text-center bg-white border-0">
+                    <a href="{{ route('documents.show', $employee->id) }}" class="view-all-link">مشاهدة الكل</a>
+                </div>
+            </div>
 
-    <div class="card side-card-unique mb-4">
-        <div class="side-card-header d-flex justify-content-between align-items-center">
-            <span class="side-title">الملاحظات</span>
-            <span class="total-count-badge">{{ $employee->notes->count() ?? 0 }}</span>
-        </div>
-        <div class="card-body p-0">
-            <ul class="list-group list-group-flush side-list">
-                @forelse($employee->notes as $note)
-                <li class="list-group-item p-0 side-item position-relative">
-                    <a href="{{ route('note.edit', $note->id) }}" 
-                       class="text-decoration-none text-reset d-flex align-items-center w-100 p-3">
-                        <span class="text-truncate" style="max-width: 90%;">{{ $note->title }}</span>
-                    </a>
-                </li>
-                @empty
-                <li class="list-group-item text-center text-muted">لا توجد ملاحظات</li>
-                @endforelse
-            </ul>
+            <div class="card side-card-unique mb-4">
+                <div class="side-card-header d-flex justify-content-between align-items-center">
+                    <span class="side-title">الملاحظات</span>
+                    <span class="total-count-badge">{{ $employee->notes->count() ?? 0 }}</span>
+                </div>
+                <div class="card-body p-0">
+                    <ul class="list-group list-group-flush side-list">
+                        @forelse($employee->notes as $note)
+                        <li class="list-group-item p-0 side-item position-relative">
+                            <a href="{{ route('note.edit', $note->id) }}" 
+                            class="text-decoration-none text-reset d-flex align-items-center w-100 p-3">
+                                <span class="text-truncate" style="max-width: 90%;">{{ $note->title }}</span>
+                            </a>
+                        </li>
+                        @empty
+                        <li class="list-group-item text-center text-muted">لا توجد ملاحظات</li>
+                        @endforelse
+                    </ul>
+                </div>
+            </div>
         </div>
     </div>
 </div>
+    <div class="text-center move-this">
+        <a href="{{ route('library.index') }}" class="view-all-link">قم بإضافة مستند جديد أو ملاحظة من هنا</a>
     </div>
-</div>
 @endsection

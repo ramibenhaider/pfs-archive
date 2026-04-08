@@ -946,3 +946,7 @@ select.form-select {
 .nags-doc-wrapper:last-child {
     border-bottom: none !important;
 }
+
+.move-this {
+    padding-bottom: 20px;
+}

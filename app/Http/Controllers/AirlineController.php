@@ -2,12 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Document_type;
-use App\Models\Document;
-use App\Models\Employee;
+use App\Models\Airline;
 use Illuminate\Http\Request;
 
-class DocumentTypeController extends Controller
+class AirlineController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -36,18 +34,15 @@ class DocumentTypeController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Employee $employee, Document_type $document_type)
+    public function show(Airline $airline)
     {
-        $documents = Document::where('employee_id', $employee->id)
-                             ->where('document_type_id', $document_type->id)
-                             ->orderByDesc('created_at')->get();
-        return view('library.document.show', compact('documents', 'employee'));
+        //
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Document_type $document_type)
+    public function edit(Airline $airline)
     {
         //
     }
@@ -55,7 +50,7 @@ class DocumentTypeController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Document_type $document_type)
+    public function update(Request $request, Airline $airline)
     {
         //
     }
@@ -63,7 +58,7 @@ class DocumentTypeController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Document_type $document_type)
+    public function destroy(Airline $airline)
     {
         //
     }

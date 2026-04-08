@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Document;
+use App\Models\Employee;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\support\Facades\Storage;
@@ -80,9 +81,10 @@ class DocumentController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Document $document)
+    public function show(Employee $employee)
     {
-        //
+        $documents = Document::where('employee_id', $employee->id)->orderByDesc('created_at')->get();
+        return view('library.document.show', compact('documents', 'employee'));
     }
 
     /**
@@ -98,7 +100,20 @@ class DocumentController extends Controller
      */
     public function update(Request $request, Document $document)
     {
-        //
+        $new_comment = $request->validate([
+            'comment' => 'nullable|string|max:255'
+        ],
+        [
+            'comment.max' => 'تم تجاوز الحد المسموح من الأحرف'
+        ]);
+
+        if (!$document->fill($new_comment)->isDirty()) {
+            return back()->with('warning', 'لم تقم بأي تعديل');
+        }
+
+        $document->save();
+        return redirect()->back()
+             ->with('success', 'تم التعديل بنجاح!');
     }
 
     /**

@@ -28,28 +28,39 @@
                     @enderror
                 </div>
 
-                <br>
+                <div class="form-group management-field">
+                    <label>خطوط الطيران</label>
+                    <select name="airline_id">
+                        @foreach ($airlines as $airline)
+                            <option value="{{ $airline->id }}">{{ $airline->airline_name }}</option>
+                        @endforeach
+                    </select>
+                </div>
 
-                {{-- حاوية تجمع الإدارة والحالة بجانب بعض --}}
-                <div class="management-row">
-                    <div class="form-group management-field">
-                        <label>الإدارة</label>
-                        <select name="management_id">
-                            @foreach ($management as $management_names)
-                                <option value="{{ $management_names->id }}">{{ $management_names->management_name }}</option>
-                            @endforeach
-                        </select>
-                    </div>
+                <div class="form-group management-field">
+                    <label>المسمى الوظيفي</label>
+                    <select name="job_title_id">
+                        @foreach ($job_titles as $job_title)
+                            <option value="{{ $job_title->id }}">{{ $job_title->job_title_name }}</option>
+                        @endforeach
+                    </select>
+                </div>
 
-                    <br>
+                <div class="form-group management-field">
+                    <label>الإدارة</label>
+                    <select name="management_id">
+                        @foreach ($management as $management_names)
+                            <option value="{{ $management_names->id }}">{{ $management_names->management_name }}</option>
+                        @endforeach
+                    </select>
+                </div>
 
-                    <div class="form-group status-inline">
-                        <label>الحالة (موظف - غير موظف)</label>
-                        <label class="switch-container">
-                            <input type="checkbox" name="is_active" value="1" {{ old('is_active') == '1' ? 'checked' : '' }}>
-                            <span class="slider"></span>
-                        </label>
-                    </div>
+                <div class="form-group status-inline">
+                    <label>الحالة (موظف - غير موظف)</label>
+                    <label class="switch-container">
+                        <input type="checkbox" name="is_active" value="1" {{ old('is_active') == '1' ? 'checked' : '' }}>
+                        <span class="slider"></span>
+                    </label>
                 </div>
             </div>
 
