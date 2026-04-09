@@ -118,9 +118,33 @@
         background-color: #497033 !important;
         transform: translateY(-2px);
     }
+    .success-message {
+        position: fixed;
+        right: 80px;
+        top: 80px;
+        background-color: #e8fff3;
+        border: 2px solid #28a745;
+        padding: 14px 18px;
+        border-radius: 10px; /* زودنا الانحناء */
+        color: #155724;
+        font-size: 16px;
+        margin: 15px auto; /* يخليها في النص */
+        font-weight: bold;
+        transition: opacity 0.5s ease;
+        width: fit-content; /* على قد المحتوى */
+        max-width: 400px; /* حد أقصى */
+        text-align: center;
+        z-index: 9999;
+    }
 </style>
 </head>
 <body>
+    @if (session('success'))
+      <div id="success-message" class="success-message">
+          {{ session('success') }}
+      </div>
+    @endif
+
     <h1 class="page-main-title">@yield('loginForWho')</h1>
 
     <div class="login-card-unique">
@@ -154,5 +178,6 @@
             @enderror
         </form>
     </div>
+<script src="{{ asset('script.js') }}"></script>
 </body>
 </html>

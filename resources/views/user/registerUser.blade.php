@@ -2,12 +2,17 @@
 
 @section('title', 'تسجيل موظف جديد')
 
+@push('styles')
+<link rel="stylesheet" href="{{ asset('styles.css') }}">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+@endpush
+
 @section('content')
 <div class="container-createEmployee">
 
     <div class="section-title">تسجيل مستخدم جديد</div>
 
-    <form method="POST" action="#">
+    <form method="POST" action="{{ route('user.store') }}">
         @csrf
 
         <div class="form-grid">
@@ -41,27 +46,19 @@
                     <span class="invalid-feedback">{{ $message }}</span>
                 @enderror
             </div>
-
-            {{-- المستخدم الفعال --}}
+<br>
             <div class="form-group">
-                <label>الحالة</label>
-                <div class="status-container-under">
-                    <label class="switch-container">
-                        <input type="hidden" name="is_active" value="0">
-                        <input type="checkbox" name="is_active" value="1"
-                            {{ old('is_active', 1) ? 'checked' : '' }}>
-                        <span class="slider"></span>
-                    </label>
-                    <span>مستخدم فعال</span>
-                </div>
+                <label>تأكيد كلمة المرور</label>
+                <input type="password" name="password_confirmation"
+                    class="{{ $errors->has('password') ? 'is-invalid' : '' }}">
             </div>
 
         </div>
 
         {{-- الأزرار --}}
         <div class="bottom-buttons">
-            <a href="{{ route('admin.dashboard') }}" class="cancel-btn">رجوع</a>
-            <button type="submit" class="save-btn">تسجيل المستخدم</button>
+            <a href="{{ route('login') }}" class="cancel-btn">رجوع</a>
+            <button type="submit" class="save-btn">تقديم طلب التسجيل</button>
         </div>
 
     </form>

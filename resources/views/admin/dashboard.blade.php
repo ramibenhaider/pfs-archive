@@ -1,3 +1,5 @@
 <h1>Hiiiiiiii</h1>
 
-<a href="{{ route('admin.user.create') }}">تسجيل مستخدم جديد</a>
+<a href="{{ route('admin.showRequests') }}">مشاهدة سجل الطلبات</a>
+<br><br>
+<a href="{{ route('admin.logout') }}">تسجيل الخروج</a>

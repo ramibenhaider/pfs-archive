@@ -12,7 +12,7 @@ Route::middleware('guest.admin')->group(function () {
 
 Route::middleware('auth.admin')->group(function () {       
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard'); 
-    Route::post('/logout', [AdminLoginController::class, 'logout'])->name('logout');
+    Route::get('/logout', [AdminLoginController::class, 'logout'])->name('logout');
 
-    Route::post('/registerUser',[UserController::Class, 'create'])->name('user.create');      
+    Route::get('/registerationRequests',[UserController::Class, 'showRequests'])->name('showRequests');      
 });

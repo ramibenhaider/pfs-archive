@@ -13,10 +13,12 @@ Route::prefix('/')->group(function() {
     Route::middleware('guest:web')->group(function () {
         Route::get('/login', [UserLoginController::class, 'showLoginForm'])->name('login');
         Route::post('/login', [UserLoginController::class, 'login'])->name('doLogin');
+        Route::get('/user/registerUser', [DashboardController::class, 'register'])->name('user.register');
+        Route::post('/user/login', [DashboardController::class, 'store'])->name('user.store');
     });
 
     Route::middleware('auth:web')->group(function () {
-        Route::get('/', [DashboardController::class, 'home'])->name('index');
+        Route::get('/', [DashboardController::class, 'index'])->name('index');
         Route::get('/search', [DashboardController::class, 'makeSearch'])->name('search');
 
         Route::get('/employee/create', [EmployeeController::class, 'create'])->name('employee.create');
