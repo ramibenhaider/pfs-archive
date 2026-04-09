@@ -1,0 +1,30 @@
+<?php
+
+namespace App\Http\Controllers\Admin;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
+
+class AdminLoginController extends Controller
+{
+    public function showLoginForm()
+    {
+        return view('admin.login');
+    }
+
+    public function login(Request $request)
+    {
+        $credentials = $request->validate([
+            'username' => 'required|string',
+            'password' => 'required|string'
+        ]);
+
+        if (Auth::guard('admin')->attempt($credentials)) {
+            $request->session()->regenerate();
+            return redirect()->route('admin.dashboard');
+        }
+
+        return back()->withErrors(['username' => 'اسم المستخدم أو كلمة المرور غير صحيحة!'])->onlyInput('username');
+    }
+}

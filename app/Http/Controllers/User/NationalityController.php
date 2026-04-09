@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\User;
 
-use App\Models\Airline;
+use App\Http\Controllers\Controller;
+use App\Models\Nationality;
 use Illuminate\Http\Request;
 
-class AirlineController extends Controller
+class NationalityController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -34,7 +35,7 @@ class AirlineController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Airline $airline)
+    public function show(Nationality $nationality)
     {
         //
     }
@@ -42,7 +43,7 @@ class AirlineController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Airline $airline)
+    public function edit(Nationality $nationality)
     {
         //
     }
@@ -50,7 +51,7 @@ class AirlineController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Airline $airline)
+    public function update(Request $request, Nationality $nationality)
     {
         //
     }
@@ -58,7 +59,7 @@ class AirlineController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Airline $airline)
+    public function destroy(Nationality $nationality)
     {
         //
     }

@@ -121,16 +121,16 @@
 </style>
 </head>
 <body>
-    <h1 class="page-main-title">@yield('loginForWho')</h1>
+    <h1 class="page-main-title"><?php echo $__env->yieldContent('loginForWho'); ?></h1>
 
     <div class="login-card-unique">
         
         <div class="card-logo-area">
-            <img src="{{ asset('logo.png') }}">
+            <img src="<?php echo e(asset('logo.png')); ?>">
         </div>
 
-        <form action="@yield('action')" method="POST">
-            @csrf
+        <form action="<?php echo $__env->yieldContent('action'); ?>" method="POST">
+            <?php echo csrf_field(); ?>
             <div class="form-group">
                 <label class="form-label-custom">اسم المستخدم</label>
                 <input type="text" name="username" placeholder="أدخل اسم المستخدم" required class="form-control custom-input">
@@ -142,17 +142,24 @@
             </div>
 
             <div class="sub-link-wrapper">
-                <a href="@yield('goTo')" class="admin-link">@yield('goTo-text')</a>
+                <a href="<?php echo $__env->yieldContent('goTo'); ?>" class="admin-link"><?php echo $__env->yieldContent('goTo-text'); ?></a>
             </div>
 
             <div class="text-center">
                 <button type="submit" class="login-btn-full">تسجيل الدخول</button>
             </div>
-            @error('username')
+            <?php $__errorArgs = ['username'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
                 <br>
-                <span style="color: red;">{{ $message }}</span>
-            @enderror
+                <span style="color: red;"><?php echo e($message); ?></span>
+            <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
         </form>
     </div>
 </body>
-</html>
+</html><?php /**PATH C:\xampp\htdocs\archive-nags\resources\views/layouts/login.blade.php ENDPATH**/ ?>

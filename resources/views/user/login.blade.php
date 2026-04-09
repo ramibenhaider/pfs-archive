@@ -4,6 +4,6 @@
 
 @section('action')
 
-@section('goTo')
+@section('goTo', route('admin.login'))
 
 @section('goTo-text', 'انتقل للأدمن')
