@@ -10,7 +10,7 @@
 @section('content')
 <div class="container py-4">
     
-    <a href="{{ route('index') }}" class="btn btn-back-note">
+    <a href="{{ route('user.index') }}" class="btn btn-back-note">
         <i class="bi bi-x-circle"></i> عودة للرئيسية
     </a>
             <br><br>
@@ -18,7 +18,7 @@
     <div class="notes-toolbar">
         <h5 class="notes-toolbar__title">سجل الملاحظات</h5>
 
-        <form method="GET" action="{{ route('search_notes') }}" class="notes-toolbar__form">
+        <form method="GET" action="{{ route('user.search_notes') }}" class="notes-toolbar__form">
             <select name="employee_id" id="employee_id_search_notes" class="notes-toolbar__select form-select">
                 @foreach ($employees as $employee)
                     <option value="{{ $employee->id }}">{{ $employee->name }}</option>
@@ -49,8 +49,8 @@
                     <td>{{ $note->created_at->format('Y-m-d') }}</td>
                     <td>
                         <div class="d-flex justify-content-center gap-2">
-                            <a href="{{ route('note.edit', $note->id) }}" class="btn btn-edit-sm">عرض</a>
-                            <form method="POST" action="{{ route('note.destroy', $note->id) }}" onsubmit="return confirm('هل أنت متأكدة من حذف؟')">
+                            <a href="{{ route('user.note.edit', encodeId($note->id)) }}" class="btn btn-edit-sm">عرض</a>
+                            <form method="POST" action="{{ route('user.note.destroy', $note->id) }}" onsubmit="return confirm('هل أنت متأكدة من حذف؟')">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-delete-sm">حذف</button>
@@ -71,7 +71,7 @@
     <div class="col-md-6">
         <div class="note-section-card">
             <h5 class="section-header">رفع المستندات</h5>
-            <form action="{{ route('documents.store') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('user.documents.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="mb-3">
                     <label class="form-label">الموظف</label>
@@ -120,7 +120,7 @@
     <div class="col-md-6">
         <div class="note-section-card">
             <h5 class="section-header">إضافة ملاحظة جديدة</h5>
-            <form action="{{ route('note.store') }}" method="POST">
+            <form action="{{ route('user.note.store') }}" method="POST">
                 @csrf
                 <div class="mb-3">
                     <label class="form-label">الموظف</label>

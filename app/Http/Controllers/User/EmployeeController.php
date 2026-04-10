@@ -34,7 +34,7 @@ class EmployeeController extends Controller
         $document_types = Document_type::all();
         $airlines = Airline::all();
         $job_titles = Job_title::all();
-        return view('employee.create', compact('management', 'nationalities', 'document_types', 'airlines', 'job_titles'));
+        return view('user.employee.create', compact('management', 'nationalities', 'document_types', 'airlines', 'job_titles'));
     }
 
     /**
@@ -80,14 +80,21 @@ class EmployeeController extends Controller
             'phone_number.unique' => 'رقم الجوال مكرر!'
         ]);
         Employee::create($data);
-        return redirect()->route('index')->with('success', 'تمت إضافة الموظف بنجاح!');
+        return redirect()->route('user.index')->with('success', 'تمت إضافة الموظف بنجاح!');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Employee $employee)
-    {   $managements = Management::all();
+    public function show(string $employeeHash)
+    {
+        $employeeId = decodeId($employeeHash);
+        if (!$employeeId) {
+            abort(404);
+        }
+        $employee = Employee::findOrFail($employeeId);
+
+        $managements = Management::all();
         $nationalities = Nationality::all();
         $airlines = Airline::all();
         $job_titles = Job_title::all();
@@ -97,7 +104,7 @@ class EmployeeController extends Controller
             $query->where('employee_id', $employee->id);
         }])->orderByDesc('created_at')->get();
 
-        return view('employee.show', compact('employee', 'documents', 'notes', 'managements', 'nationalities', 'documentTypes', 'job_titles', 'airlines'));
+        return view('user.employee.show', compact('employee', 'documents', 'notes', 'managements', 'nationalities', 'documentTypes', 'job_titles', 'airlines'));
     }
 
     /**
@@ -163,7 +170,7 @@ class EmployeeController extends Controller
 
         $employee->update($new_data);
 
-        return redirect()->route('employee.show', $employee->id)->with('success', 'تم التعديل بنجاح!');
+        return redirect()->route('user.employee.show', encodeId($employee->id))->with('success', 'تم التعديل بنجاح!');
     }
 
     /**

@@ -17,7 +17,7 @@
 
       <!-- زر الملاحظات -->
       <div class="btn-wrapper">
-        <a href="{{ route('library.index') }}" class="main-btn">
+        <a href="{{ route('user.library.index') }}" class="main-btn">
           <svg class="icon" width="22" height="22" viewBox="0 0 24 24" fill="#ffffff">
             <path d="M10 4l2 2h8a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V4h8z"/>
           </svg>
@@ -26,14 +26,14 @@
       </div>
  
       <!-- مربع البحث -->
-      <form action="{{ url('search') }}" method="GET" class="search-form">
+      <form action="{{ route('user.search') }}" method="GET" class="search-form">
         <input type="search" name="search" placeholder="البحث عن موظف (الاسم - رقم الهوية - الرقم الوظيفي)"/>
         <button type="submit" value="Search" class="search-submit">ابحث</button>
       </form>
 
       <!-- زر إضافة موظف -->
       <div class="btn-wrapper">
-        <a href="{{ route('employee.create') }}" class="main-btn">
+        <a href="{{ route('user.employee.create') }}" class="main-btn">
           <span class="icon" style="font-size:26px;">+</span>
         </a>
         <div class="tooltip">إضافة موظف</div>
@@ -61,7 +61,7 @@
             </div>
 
             <div class="emp-action">
-              <a href="{{ route('employee.show', $emp->id) }}" class="view-btn-row">عرض بيانات الموظف</a>
+              <a href="{{ route('user.employee.show', encodeId($emp->id)) }}" class="view-btn-row">عرض بيانات الموظف</a>
             </div>
         </div>
     @endforeach

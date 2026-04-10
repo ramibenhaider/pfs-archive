@@ -8,7 +8,7 @@
 @section('content')
 <div class="container-createEmployee">
     <div class="mb-3">
-        <a href="{{ route('employee.show', $employee->id) }}" class="btn-back-note" style="text-decoration: none; display: inline-flex; align-items: center; gap: 8px;">
+        <a href="{{ route('user.employee.show', encodeId($employee->id)) }}" class="btn-back-note" style="text-decoration: none; display: inline-flex; align-items: center; gap: 8px;">
             <span>&larr;</span> رجوع
         </a>
     </div>
@@ -19,7 +19,7 @@
             <h1>تعديل بيانات المستند</h1>
         </div>
 
-        <form action="{{ route('documents.update', $document->id) }}" method="POST">
+        <form action="{{ route('user.documents.update', $document->id) }}" method="POST">
             @csrf
             @method('PUT')
 
@@ -49,7 +49,7 @@
                 <button type="submit" class="btn-save-note">حفظ التعديلات</button>
         </form>
 
-                <form action="{{ route('documents.destroy', $document->id) }}" method="POST" onsubmit="return confirm('هل أنت متأكد من حذف هذا المستند نهائياً؟');">
+                <form action="{{ route('user.documents.destroy', $document->id) }}" method="POST" onsubmit="return confirm('هل أنت متأكد من حذف هذا المستند نهائياً؟');">
                     @csrf
                     @method('DELETE')
                     <button type="submit" class="btn-delete-sm" style="padding: 10px 30px !important; height: 100%; cursor: pointer;">

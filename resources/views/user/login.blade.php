@@ -2,7 +2,7 @@
 
 @section('loginForWho', "تسجيل دخول المستخدمين")
 
-@section('action', route('doLogin'))
+@section('action', route('user.doLogin'))
 
 @section('goTo', route('admin.login'))
 

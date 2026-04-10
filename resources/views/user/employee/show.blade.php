@@ -17,7 +17,7 @@
                 <div class="card-header-unique">
                     <h5 class="mb-0">بيانات الموظف</h5>
                 </div>
-                <form method="POST" action="{{ route('employee.update', $employee->id) }}">
+                <form method="POST" action="{{ route('user.employee.update', $employee->id) }}">
                     @csrf
                     @method('PUT')
                     <ul class="list-group list-group-flush">
@@ -154,7 +154,7 @@
                         </li>
                     </ul>
                     <div class="card-footer d-flex justify-content-between border-top-0 bg-white">
-                        <a href="{{ route('index') }}" class="btn btn-secondary btn-sm">رجوع</a>
+                        <a href="{{ route('user.index') }}" class="btn btn-secondary btn-sm">رجوع</a>
                         <button type="submit" class="btn btn-save-custom btn-sm">حفظ التعديلات</button>
                     </div>
                 </form>
@@ -171,7 +171,7 @@
                     <ul class="list-group list-group-flush nags-doc-container">
                         @forelse($documentTypes as $document_type)
                         <li class="list-group-item p-0 nags-doc-wrapper position-relative">
-                            <a href="{{ route('documentType.show', [$employee->id, $document_type]) }}" 
+                            <a href="{{ route('user.documentType.show', [encodeId($employee->id), encodeId($document_type->id)]) }}" 
                             class="nags-doc-title-link d-flex justify-content-between align-items-center w-100 p-3 text-decoration-none">
                                 <div class="d-flex align-items-center">
                                     <i class="fas fa-folder-open me-2"></i> 
@@ -186,7 +186,7 @@
                     </ul>
                 </div>
                 <div class="card-footer text-center bg-white border-0">
-                    <a href="{{ route('documents.show', $employee->id) }}" class="view-all-link">مشاهدة الكل</a>
+                    <a href="{{ route('user.documents.show', encodeId($employee->id)) }}" class="view-all-link">مشاهدة الكل</a>
                 </div>
             </div>
 
@@ -199,7 +199,7 @@
                     <ul class="list-group list-group-flush side-list">
                         @forelse($employee->notes as $note)
                         <li class="list-group-item p-0 side-item position-relative">
-                            <a href="{{ route('note.edit', $note->id) }}" 
+                            <a href="{{ route('user.note.edit', encodeId($note->id)) }}" 
                             class="text-decoration-none text-reset d-flex align-items-center w-100 p-3">
                                 <span class="text-truncate" style="max-width: 90%;">{{ $note->title }}</span>
                             </a>
@@ -214,7 +214,7 @@
     </div>
 </div>
     <div class="text-center move-this">
-        <a href="{{ route('library.index') }}" class="view-all-link">قم بإضافة مستند جديد أو ملاحظة من هنا</a>
+        <a href="{{ route('user.library.index') }}" class="view-all-link">قم بإضافة مستند جديد أو ملاحظة من هنا</a>
     </div>
 @endsection
 @push('scripts')

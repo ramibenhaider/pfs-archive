@@ -11,7 +11,7 @@
 
 @section('content')
 
-    <form action="{{ route('employee.store') }}" method="post">
+    <form action="{{ route('user.employee.store') }}" method="post">
         @csrf
         <div class="container-createEmployee">
 
@@ -123,7 +123,7 @@
 
             <div class="bottom-buttons">
                 <button type="submit" class="save-btn">حفظ</button>
-                <a href='{{ route('index') }}' class="cancel-btn">إغلاق</a>
+                <a href='{{ route('user.index') }}' class="cancel-btn">إغلاق</a>
             </div>
 
         </div>

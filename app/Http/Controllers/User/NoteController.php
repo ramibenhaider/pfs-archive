@@ -20,7 +20,7 @@ class NoteController extends Controller
         $notes = Note::orderBy('created_at', 'desc')->paginate(5);
         $documents = Document::all();
         $document_types = Document_type::all();
-        return view('library.index', compact('documents', 'notes', 'employees', 'document_types'));
+        return view('user.library.index', compact('documents', 'notes', 'employees', 'document_types'));
     }
 
     /**
@@ -65,9 +65,14 @@ class NoteController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Note $note)
+    public function edit(string $noteHash)
     {
-        return view('library.notes.edit', compact('note'));
+        $hashedNote = decodeId($noteHash);
+        if (!$hashedNote) {
+            abort(404);
+        }
+        $note = Note::findOrFail($hashedNote);
+        return view('user.notes.edit', compact('note'));
     }
 
     /**
@@ -91,7 +96,7 @@ class NoteController extends Controller
         }
 
         $note->save();
-        return redirect()->route('employee.show', $note->employee)->with('success', 'تم التعديل بنجاح!');
+        return redirect()->route('user.employee.show', encodeId($note->employee->id))->with('success', 'تم التعديل بنجاح!');
     }
 
     /**
@@ -107,7 +112,7 @@ class NoteController extends Controller
     public function doSearch(Request $request)
     {
         if(!$request->filled('employee_id')) {
-            return redirect()->route('library.index');
+            return redirect()->route('user.library.index');
         }
         $request->validate([
             'employee_id' => 'required|exists:employees,id'
@@ -124,7 +129,7 @@ class NoteController extends Controller
         $employees = Employee::orderByDesc('created_at')->get();
         $documents = Document::all();
         $document_types = Document_type::all();
-        return view('library.index', compact('notes', 'employees', 'documents', 'document_types'))
+        return view('user.library.index', compact('notes', 'employees', 'documents', 'document_types'))
                ->with('success');
     }
 }

@@ -20,6 +20,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'auth.admin' => \App\Http\Middleware\RedirectIfNotAdmin::class,
             'guest.admin' => \App\Http\Middleware\RedirectIfAdmin::class,
+            'prevent-back' => \App\Http\Middleware\PreventBackHistory::class
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {

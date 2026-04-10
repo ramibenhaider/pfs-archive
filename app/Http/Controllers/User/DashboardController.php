@@ -15,7 +15,7 @@ class DashboardController extends Controller
     public function index()
     {
         $employee = Employee::orderBy('created_at', 'desc')->paginate(6);
-        return view('index', compact('employee'));
+        return view('user.index', compact('employee'));
     }
 
     public function register()
@@ -65,6 +65,6 @@ class DashboardController extends Controller
             })
             ->orderBy('created_at', 'desc')
             ->paginate(5);
-        return view('index', compact('employee'));
+        return view('user.index', compact('employee'));
     }
 }

@@ -82,10 +82,15 @@ class DocumentController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Employee $employee)
+    public function show($employeeHash)
     {
+        $employeeId = decodeId($employeeHash);
+        if (!$employeeId) {
+            abort(404);
+        }
+        $employee = Employee::findOrFail($employeeId);
         $documents = Document::where('employee_id', $employee->id)->orderByDesc('created_at')->get();
-        return view('library.document.show', compact('documents', 'employee'));
+        return view('user.document.show', compact('documents', 'employee'));
     }
 
     /**

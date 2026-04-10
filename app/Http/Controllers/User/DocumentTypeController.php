@@ -37,12 +37,24 @@ class DocumentTypeController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Employee $employee, Document_type $document_type)
+    public function show($employeeHash,$document_typeHash)
     {
+        $employeeId = decodeId($employeeHash);
+        if (!$employeeId) {
+            return abort(404);
+        }
+        $employee = Employee::findOrFail($employeeId);
+
+        $document_typeId = decodeId($document_typeHash);
+        if (!$document_typeId) {
+            return abort(404);
+        }
+        $document_type = Document_type::findOrFail($document_typeId);
+
         $documents = Document::where('employee_id', $employee->id)
                              ->where('document_type_id', $document_type->id)
                              ->orderByDesc('created_at')->get();
-        return view('library.document.show', compact('documents', 'employee'));
+        return view('user.document.show', compact('documents', 'employee'));
     }
 
     /**

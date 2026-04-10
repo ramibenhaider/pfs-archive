@@ -2,7 +2,7 @@
 
 <?php $__env->startSection('loginForWho', "تسجيل دخول المستخدمين"); ?>
 
-<?php $__env->startSection('action', route('doLogin')); ?>
+<?php $__env->startSection('action', route('user.doLogin')); ?>
 
 <?php $__env->startSection('goTo', route('admin.login')); ?>
 

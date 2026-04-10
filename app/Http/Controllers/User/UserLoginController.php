@@ -24,9 +24,17 @@ class UserLoginController extends Controller
         if (Auth::guard('web')->attempt($credentials)) {
             $request->session()->regenerate();
             $data = User::all();
-            return redirect()->route('index', compact('data'))->with('success', 'تم تسجيل الدخول بنجاح');
+            return redirect()->route('user.index', compact('data'))->with('success', 'تم تسجيل الدخول بنجاح');
         }
 
         return back()->withErrors(['username' => 'اسم المستخدم أو كلمة المرور غير صحيحة!'])->onlyInput('username');
+    }
+
+    public function logout(Request $request)
+    {
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        return redirect()->route('login');
     }
 }
