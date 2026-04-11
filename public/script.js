@@ -119,3 +119,14 @@ if(document.getElementById('employee_id_search_notes')) {
         placeholder: 'ابحث عن ملاحظات موظف...',
     });
 }
+
+//###############################################################################################
+
+function deleteUser(fullRoute) {
+    if (confirm('هل أنت متأكد من حذف هذا المستخدم؟')) {
+        let form = document.getElementById('global-delete-form');
+        // تأكد من أن المسار هنا يطابق الـ Route لديك
+        form.action = fullRoute; 
+        form.submit();
+    }
+}

@@ -14,6 +14,10 @@ class DashboardController extends Controller
 
     public function index()
     {
+        if (auth()->user() && !auth()->user()->is_active) {
+            return redirect()->route('user.unactivated');
+        }
+        
         $employee = Employee::orderBy('created_at', 'desc')->paginate(6);
         return view('user.employee.index', compact('employee'));
     }
@@ -66,5 +70,10 @@ class DashboardController extends Controller
             ->orderBy('created_at', 'desc')
             ->paginate(5);
         return view('user.employee.index', compact('employee'));
+    }
+
+    public function unactivated()
+    {
+        return view('user.unactivated');
     }
 }

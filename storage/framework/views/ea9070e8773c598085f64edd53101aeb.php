@@ -1,9 +1,9 @@
-@extends('layouts.user-layout')
 
-@section('title', 'الصفحة الرئيسية')
 
-@push('styles')
-<link rel="stylesheet" href="{{ asset('styles.css') }}">
+<?php $__env->startSection('title', 'الصفحة الرئيسية'); ?>
+
+<?php $__env->startPush('styles'); ?>
+<link rel="stylesheet" href="<?php echo e(asset('styles.css')); ?>">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
 <style>
     .pending-approval-alert {
@@ -47,9 +47,9 @@
         opacity: 0.9;
     }
 </style>
-@endpush
+<?php $__env->stopPush(); ?>
 
-@section('content')
+<?php $__env->startSection('content'); ?>
 <div class="pending-approval-alert">
     <div class="alert-icon">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
@@ -59,4 +59,5 @@
         <p class="alert-message">عذراً، لا يمكنك القيام بأي إجراء حالياً. يرجى الانتظار حتى يتم تفعيل حسابك من قبل الإدارة.</p>
     </div>
 </div>
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.user-layout', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\xampp\htdocs\archive-nags\resources\views/user/unactivated.blade.php ENDPATH**/ ?>

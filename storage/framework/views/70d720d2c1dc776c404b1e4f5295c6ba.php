@@ -24,7 +24,7 @@
     </nav>
 
     <div class="sidebar-footer">
-        <a href="#" class="logout-link">
+        <a href="<?php echo e(route('admin.logout')); ?>" class="logout-link">
             <span class="icon">🚪</span> 
             <span class="text">تسجيل الخروج</span>
         </a>

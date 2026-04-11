@@ -230,15 +230,11 @@
                             <span class="slider-perm"></span>
                         </label>
                     </li>
-
                     <li>
-                        <form action="<?php echo e(route('admin.user.destroy', encodeId($user->id))); ?>" method="POST" onclick="return confirm('هل أنت متأكد من حذف هذا المستخدم؟')">
-                            <?php echo csrf_field(); ?>
-                            <?php echo method_field('DELETE'); ?>
-                            <button type="submit" class="btn-delete-perm" title="حذف المستخدم">
-                                حذف
-                            </button>
-                        </form>
+                        <button type="button" class="btn-delete-perm" title="حذف المستخدم" 
+                                onclick="deleteUser('<?php echo e(route('admin.user.destroy', encodeId($user->id))); ?>')">
+                            حذف
+                        </button>
                     </li>
                 </ul>
                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
@@ -252,6 +248,10 @@
 
     </div>
 </div>
+<form id="global-delete-form" action="" method="POST" style="display: none;">
+    <?php echo csrf_field(); ?>
+    <?php echo method_field('DELETE'); ?>
+</form>
 <script src="<?php echo e(asset('script.js')); ?>"></script>
 <?php $__env->stopSection(); ?>
 <?php echo $__env->make('layouts.admin-layout', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\xampp\htdocs\archive-nags\resources\views/admin/permissions.blade.php ENDPATH**/ ?>

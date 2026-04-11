@@ -10,7 +10,7 @@ Route::middleware('guest.admin')->group(function () {
     Route::post('/login', [AdminLoginController::class, 'login'])->name('doLogin');
 });
 
-Route::middleware('auth.admin')->group(function () {       
+Route::middleware(['auth.admin', 'prevent-back'])->group(function () {       
     Route::get('/permissions', [DashboardController::class, 'permissions'])->name('permissions');
     Route::get('/fields', [DashboardController::class, 'fields'])->name('fields');
     Route::put('/permissions', [UserController::class, 'update'])->name('user.update');

@@ -42,6 +42,7 @@ Route::prefix('/')->group(function() {
         Route::put('/library/note/{note}/edit', [NoteController::class, 'update'])->name('user.note.update');
         Route::get('/search-notes', [NoteController::class, 'doSearch'])->name('user.search_notes');
 
+        Route::get('/user/unactivated', [DashboardController::class, 'unactivated'])->name('user.unactivated');
         Route::post('/logout', [UserLoginController::class, 'logout'])->name('user.logout');
     });
 });

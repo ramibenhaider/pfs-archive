@@ -230,15 +230,11 @@
                             <span class="slider-perm"></span>
                         </label>
                     </li>
-
                     <li>
-                        <form action="{{ route('admin.user.destroy', encodeId($user->id)) }}" method="POST" onclick="return confirm('هل أنت متأكد من حذف هذا المستخدم؟')">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn-delete-perm" title="حذف المستخدم">
-                                حذف
-                            </button>
-                        </form>
+                        <button type="button" class="btn-delete-perm" title="حذف المستخدم" 
+                                onclick="deleteUser('{{ route('admin.user.destroy', encodeId($user->id)) }}')">
+                            حذف
+                        </button>
                     </li>
                 </ul>
                 @endforeach
@@ -252,5 +248,9 @@
 
     </div>
 </div>
+<form id="global-delete-form" action="" method="POST" style="display: none;">
+    @csrf
+    @method('DELETE')
+</form>
 <script src="{{ asset('script.js') }}"></script>
 @endsection
