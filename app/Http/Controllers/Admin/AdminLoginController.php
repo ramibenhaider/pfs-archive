@@ -22,7 +22,7 @@ class AdminLoginController extends Controller
 
         if (Auth::guard('admin')->attempt($credentials)) {
             $request->session()->regenerate();
-            return redirect()->route('admin.dashboard');
+            return redirect()->route('admin.permissions');
         }
 
         return back()->withErrors(['username' => 'اسم المستخدم أو كلمة المرور غير صحيحة!'])->onlyInput('username');

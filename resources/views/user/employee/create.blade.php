@@ -1,4 +1,4 @@
-@extends('layouts.index-layout')
+@extends('layouts.user-layout')
 
 @section('title')
     إضافة موظف
@@ -123,7 +123,7 @@
 
             <div class="bottom-buttons">
                 <button type="submit" class="save-btn">حفظ</button>
-                <a href='{{ route('user.index') }}' class="cancel-btn">إغلاق</a>
+                <a href='{{ route('user.employee.index') }}' class="cancel-btn">إغلاق</a>
             </div>
 
         </div>

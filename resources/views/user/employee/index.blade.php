@@ -1,4 +1,4 @@
-@extends('layouts.index-layout')
+@extends('layouts.user-layout')
 
 @section('title')
   الصفحة الرئيسية

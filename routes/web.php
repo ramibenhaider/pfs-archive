@@ -18,7 +18,7 @@ Route::prefix('/')->group(function() {
     });
 
     Route::middleware(['auth:web', 'prevent-back'])->group(function () {
-        Route::get('/', [DashboardController::class, 'index'])->name('user.index');
+        Route::get('/', [DashboardController::class, 'index'])->name('user.employee.index');
         Route::get('/search', [DashboardController::class, 'makeSearch'])->name('user.search');
 
         Route::get('/employee/create', [EmployeeController::class, 'create'])->name('user.employee.create');

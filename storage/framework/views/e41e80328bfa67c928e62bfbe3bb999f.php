@@ -98,4 +98,4 @@ unset($__errorArgs, $__bag); ?>
     });
 </script>
 <?php $__env->stopPush(); ?>
-<?php echo $__env->make('layouts.index-layout', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\xampp\htdocs\archive-nags\resources\views/user/notes/edit.blade.php ENDPATH**/ ?>
+<?php echo $__env->make('layouts.user-layout', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\xampp\htdocs\archive-nags\resources\views/user/notes/edit.blade.php ENDPATH**/ ?>

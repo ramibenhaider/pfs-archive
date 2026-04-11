@@ -11,8 +11,10 @@ Route::middleware('guest.admin')->group(function () {
 });
 
 Route::middleware('auth.admin')->group(function () {       
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard'); 
-    Route::get('/logout', [AdminLoginController::class, 'logout'])->name('logout');
+    Route::get('/permissions', [DashboardController::class, 'permissions'])->name('permissions');
+    Route::get('/fields', [DashboardController::class, 'fields'])->name('fields');
+    Route::put('/permissions', [UserController::class, 'update'])->name('user.update');
+    Route::delete('/permissions/{idHashed}', [UserController::class, 'destroy'])->name('user.destroy');
 
-    Route::get('/registerationRequests',[UserController::Class, 'showRequests'])->name('showRequests');      
+    Route::get('/logout', [AdminLoginController::class, 'logout'])->name('logout');
 });

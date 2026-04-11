@@ -90,28 +90,92 @@
             .logo-area { order: 1; }
             .logo-area img { max-width: 90%; }
         }
+        /* تنسيقات الـ Sidebar */
+        .custom-sidebar {
+            width: 260px;
+            height: 100vh;
+            background-color: #3B524A;
+            position: fixed;
+            right: 0;
+            top: 0;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            z-index: 1000;
+            box-shadow: -2px 0 10px rgba(0,0,0,0.1);
+            font-family: "Cairo", sans-serif;
+        }
+
+        .sidebar-header {
+            padding: 30px 20px;
+            text-align: center;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .sidebar-nav {
+            flex: 1;
+            padding-top: 20px;
+        }
+
+        .sidebar-link {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px 25px;
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            transition: 0.3s;
+            font-weight: 600;
+        }
+
+        .sidebar-link:hover {
+            background-color: #497033;
+            color: white;
+        }
+
+        /* حالة العنصر المختار حالياً */
+        .sidebar-link.active {
+            background-color: #e8e8e8; /* يندمج مع خلفية الصفحة */
+            color: #3B524A;
+            border-radius: 30px 0 0 30px;
+            margin-right: 0;
+        }
+
+        /* تذييل القائمة وزر الخروج */
+        .sidebar-footer {
+            padding: 20px 0;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .logout-link {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px 25px;
+            color: #ffbaba;
+            text-decoration: none;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .logout-link:hover {
+            background-color: #D20E00;
+            color: white;
+        }
+
+        /* التجاوب مع الجوال */
+        @media (max-width: 768px) {
+            .custom-sidebar { width: 70px; }
+            .custom-sidebar .text, .custom-sidebar .header-text { display: none; }
+            .sidebar-link, .logout-link { justify-content: center; padding: 15px 0; }
+        }
     </style>
     @stack('styles')
 </head>
 
 <body>
-
-    <div class="header-wrapper">
-        <div class="logo-area">
-            <img src="{{ asset('logo.png') }}" alt="Company Logo">
-        </div>
-        @auth
-          <div class="user-card-abs">
-              <span class="username">{{ Str::limit(auth()->user()->username, 20) }}</span>
-              <span class="full-name">{{ Str::limit(auth()->user()->name, 25) }}</span>
-              
-              <form action="{{ route('user.logout') }}" method="POST" style="margin: 0;">
-                  @csrf
-                  <button type="submit" class="logout-btn-custom">تسجيل الخروج</button>
-              </form>
-          </div>
-        @endauth
-    </div>
 
     @if (session('success'))
       <div id="success-message" class="success-message">
@@ -123,6 +187,13 @@
       </div>
     @endif
 
+    <div class="header-wrapper">
+        <div class="logo-area">
+            <img src="{{ asset('logo.png') }}" alt="Company Logo">
+        </div>
+    @yield('auth')
+    </div>
+    @yield('sidebar')
     @yield('content')
     
     <script src="https://cdn.jsdelivr.net/npm/tom-select@2.3.1/dist/js/tom-select.complete.min.js"></script>

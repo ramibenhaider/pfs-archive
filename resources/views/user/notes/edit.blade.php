@@ -1,4 +1,4 @@
-@extends('layouts.index-layout')
+@extends('layouts.user-layout')
 
 @push('styles')
 <link rel="stylesheet" href="{{ asset('styles.css') }}">

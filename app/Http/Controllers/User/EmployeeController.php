@@ -80,7 +80,7 @@ class EmployeeController extends Controller
             'phone_number.unique' => 'رقم الجوال مكرر!'
         ]);
         Employee::create($data);
-        return redirect()->route('user.index')->with('success', 'تمت إضافة الموظف بنجاح!');
+        return redirect()->route('user.employee.index')->with('success', 'تمت إضافة الموظف بنجاح!');
     }
 
     /**

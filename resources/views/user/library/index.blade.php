@@ -1,4 +1,4 @@
-@extends('layouts.index-layout')
+@extends('layouts.user-layout')
 
 @section('title', 'دار الوثائق')
 
@@ -10,7 +10,7 @@
 @section('content')
 <div class="container py-4">
     
-    <a href="{{ route('user.index') }}" class="btn btn-back-note">
+    <a href="{{ route('user.employee.index') }}" class="btn btn-back-note">
         <i class="bi bi-x-circle"></i> عودة للرئيسية
     </a>
             <br><br>

@@ -1,5 +1,5 @@
 
-@extends('layouts.index-layout')
+@extends('layouts.user-layout')
 
 @push('styles')
 <link rel="stylesheet" href="{{ asset('styles.css') }}">
@@ -154,7 +154,7 @@
                         </li>
                     </ul>
                     <div class="card-footer d-flex justify-content-between border-top-0 bg-white">
-                        <a href="{{ route('user.index') }}" class="btn btn-secondary btn-sm">رجوع</a>
+                        <a href="{{ route('user.employee.index') }}" class="btn btn-secondary btn-sm">رجوع</a>
                         <button type="submit" class="btn btn-save-custom btn-sm">حفظ التعديلات</button>
                     </div>
                 </form>
