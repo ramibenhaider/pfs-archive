@@ -207,7 +207,7 @@ unset($__errorArgs, $__bag); ?>
 
             <div class="bottom-buttons">
                 <button type="submit" class="save-btn">حفظ</button>
-                <a href='<?php echo e(route('user.index')); ?>' class="cancel-btn">إغلاق</a>
+                <a href='<?php echo e(route('user.employee.index')); ?>' class="cancel-btn">إغلاق</a>
             </div>
 
         </div>
@@ -215,4 +215,4 @@ unset($__errorArgs, $__bag); ?>
 <?php $__env->startPush("scripts"); ?>
 <script src="<?php echo e(asset('script.js')); ?>"></script>
 <?php $__env->stopPush(); ?>
-<?php echo $__env->make('layouts.index-layout', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\xampp\htdocs\archive-nags\resources\views/user/employee/create.blade.php ENDPATH**/ ?>
+<?php echo $__env->make('layouts.user-layout', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\xampp\htdocs\archive-nags\resources\views/user/employee/create.blade.php ENDPATH**/ ?>

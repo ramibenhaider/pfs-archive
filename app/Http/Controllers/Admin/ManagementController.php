@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\User;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Management;
@@ -29,7 +29,15 @@ class ManagementController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            'management_name' => 'required|string|max:30'
+        ],[
+            'management_name.reqired' => 'الاسم مطلوب!',
+            'management_name.max' => 'لقد تجاوزت العدد المسموح به من عدد الحروف!'
+        ]);
+
+        Management::create($data);
+        return redirect()->back()->with('success', 'تم إضافة اسم الإدارة بنجاح');
     }
 
     /**

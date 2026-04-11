@@ -12,12 +12,12 @@
     </div>
 
     <nav class="sidebar-nav" style="display: flex; flex-direction: column; justify-content: center;">
-        <a href="#" class="sidebar-link active">
+        <a href="{{ route('admin.permissions') }}" class="sidebar-link active">
             <span class="icon">🔐</span> 
             <span class="text">المستخدمين والصلاحيات</span>
         </a>
 
-        <a href="#" class="sidebar-link">
+        <a href="{{ route('admin.fields') }}" class="sidebar-link">
             <span class="icon">📊</span> 
             <span class="text">البيانات المدخلة</span>
         </a>

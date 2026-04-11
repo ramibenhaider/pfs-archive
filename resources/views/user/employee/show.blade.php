@@ -171,7 +171,7 @@
                     <ul class="list-group list-group-flush nags-doc-container">
                         @forelse($documentTypes as $document_type)
                         <li class="list-group-item p-0 nags-doc-wrapper position-relative">
-                            <a href="{{ route('user.documentType.show', [encodeId($employee->id), encodeId($document_type->id)]) }}" 
+                            <a href="{{ route('user.showFilesType', [encodeId($employee->id), encodeId($document_type->id)]) }}" 
                             class="nags-doc-title-link d-flex justify-content-between align-items-center w-100 p-3 text-decoration-none">
                                 <div class="d-flex align-items-center">
                                     <i class="fas fa-folder-open me-2"></i> 
@@ -186,7 +186,7 @@
                     </ul>
                 </div>
                 <div class="card-footer text-center bg-white border-0">
-                    <a href="{{ route('user.documents.show', encodeId($employee->id)) }}" class="view-all-link">مشاهدة الكل</a>
+                    <a href="{{ route('user.showFilesType', encodeId($employee->id)) }}" class="view-all-link">مشاهدة الكل</a>
                 </div>
             </div>
 

@@ -242,7 +242,7 @@ unset($__errorArgs, $__bag); ?>
                         </li>
                     </ul>
                     <div class="card-footer d-flex justify-content-between border-top-0 bg-white">
-                        <a href="<?php echo e(route('user.index')); ?>" class="btn btn-secondary btn-sm">رجوع</a>
+                        <a href="<?php echo e(route('user.employee.index')); ?>" class="btn btn-secondary btn-sm">رجوع</a>
                         <button type="submit" class="btn btn-save-custom btn-sm">حفظ التعديلات</button>
                     </div>
                 </form>
@@ -259,7 +259,7 @@ unset($__errorArgs, $__bag); ?>
                     <ul class="list-group list-group-flush nags-doc-container">
                         <?php $__empty_1 = true; $__currentLoopData = $documentTypes; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $document_type): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
                         <li class="list-group-item p-0 nags-doc-wrapper position-relative">
-                            <a href="<?php echo e(route('user.documentType.show', [encodeId($employee->id), encodeId($document_type->id)])); ?>" 
+                            <a href="<?php echo e(route('user.showFilesType', [encodeId($employee->id), encodeId($document_type->id)])); ?>" 
                             class="nags-doc-title-link d-flex justify-content-between align-items-center w-100 p-3 text-decoration-none">
                                 <div class="d-flex align-items-center">
                                     <i class="fas fa-folder-open me-2"></i> 
@@ -274,7 +274,7 @@ unset($__errorArgs, $__bag); ?>
                     </ul>
                 </div>
                 <div class="card-footer text-center bg-white border-0">
-                    <a href="<?php echo e(route('user.documents.show', encodeId($employee->id))); ?>" class="view-all-link">مشاهدة الكل</a>
+                    <a href="<?php echo e(route('user.showFilesType', encodeId($employee->id))); ?>" class="view-all-link">مشاهدة الكل</a>
                 </div>
             </div>
 

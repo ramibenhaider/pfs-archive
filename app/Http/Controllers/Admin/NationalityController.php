@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\User;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Airline;
+use App\Models\Nationality;
 use Illuminate\Http\Request;
 
-class AirlineController extends Controller
+class NationalityController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -29,13 +29,21 @@ class AirlineController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            'nationality_name' => 'required|string|max:30'
+        ],[
+            'nationality_name.reqired' => 'الاسم مطلوب!',
+            'nationality_name.max' => 'لقد تجاوزت العدد المسموح به من عدد الحروف!'
+        ]);
+
+        nationality::create($data);
+        return redirect()->back()->with('success', 'تم إضافة اسم الجنسية بنجاح');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Airline $airline)
+    public function show(Nationality $nationality)
     {
         //
     }
@@ -43,7 +51,7 @@ class AirlineController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Airline $airline)
+    public function edit(Nationality $nationality)
     {
         //
     }
@@ -51,7 +59,7 @@ class AirlineController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Airline $airline)
+    public function update(Request $request, Nationality $nationality)
     {
         //
     }
@@ -59,7 +67,7 @@ class AirlineController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Airline $airline)
+    public function destroy(Nationality $nationality)
     {
         //
     }

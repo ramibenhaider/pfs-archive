@@ -34,7 +34,7 @@ Route::prefix('/')->group(function() {
         Route::put('/library/document/{document}/show', [DocumentController::class, 'update'])->name('user.documents.update');
         Route::get('/library/documents/{employeeHash}/show', [DocumentController::class, 'show'])->name('user.documents.show');
 
-        Route::get('/library/document/{employeeHash}/{document_typeHash}/show', [DocumentTypeController::Class, 'show'])->name('user.documentType.show');
+        Route::get('/library/document/{employeeHash}/{document_typeHash}/show', [DocumentController::Class, 'showFilesType'])->name('user.showFilesType');
 
         Route::post('/library/index', [NoteController::class, 'store'])->name('user.note.store');
         Route::delete('/library/index/{id}', [NoteController::class, 'destroy'])->name('user.note.destroy');

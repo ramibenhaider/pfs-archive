@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\User;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Nationality;
+use App\Models\Job_title;
 use Illuminate\Http\Request;
 
-class NationalityController extends Controller
+class JobTitleController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -29,13 +29,20 @@ class NationalityController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            'job_title_name' => 'required|string|max:70'
+        ],[
+            'job_title_name.reqired' => 'الاسم مطلوب!',
+            'job_title_name.max' => 'لقد تجاوزت العدد المسموح به من عدد الحروف!'
+        ]);
+        Job_title::create($data);
+        return redirect()->back()->with('success', 'تم إضافة اسم المسمى الوظيفي بنجاح');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Nationality $nationality)
+    public function show(Job_title $job_title)
     {
         //
     }
@@ -43,7 +50,7 @@ class NationalityController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Nationality $nationality)
+    public function edit(Job_title $job_title)
     {
         //
     }
@@ -51,7 +58,7 @@ class NationalityController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Nationality $nationality)
+    public function update(Request $request, Job_title $job_title)
     {
         //
     }
@@ -59,7 +66,7 @@ class NationalityController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Nationality $nationality)
+    public function destroy(Job_title $job_title)
     {
         //
     }

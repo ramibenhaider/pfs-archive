@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Models\Document_type;
 use App\Models\Document;
 use App\Models\Employee;
 use Illuminate\Http\Request;
@@ -138,5 +139,25 @@ class DocumentController extends Controller
         $document->delete();
 
         return back()->with('success', 'تم حذف الملف بنجاح!');
+    }
+
+        public function showFilesType($employeeHash,$document_typeHash)
+    {
+        $employeeId = decodeId($employeeHash);
+        if (!$employeeId) {
+            return abort(404);
+        }
+        $employee = Employee::findOrFail($employeeId);
+
+        $document_typeId = decodeId($document_typeHash);
+        if (!$document_typeId) {
+            return abort(404);
+        }
+        $document_type = Document_type::findOrFail($document_typeId);
+
+        $documents = Document::where('employee_id', $employee->id)
+                             ->where('document_type_id', $document_type->id)
+                             ->orderByDesc('created_at')->get();
+        return view('user.document.show', compact('documents', 'employee'));
     }
 }

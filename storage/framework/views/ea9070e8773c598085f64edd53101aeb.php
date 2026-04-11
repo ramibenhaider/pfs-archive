@@ -50,6 +50,9 @@
 <?php $__env->stopPush(); ?>
 
 <?php $__env->startSection('content'); ?>
+<?php if(auth()->user()->is_active): ?>
+<script>window.location.href = '<?php echo e(route('user.employee.index')); ?>'</script>
+<?php endif; ?>
 <div class="pending-approval-alert">
     <div class="alert-icon">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
