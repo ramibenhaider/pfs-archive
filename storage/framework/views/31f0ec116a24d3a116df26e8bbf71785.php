@@ -6,7 +6,6 @@
 <link rel="stylesheet" href="<?php echo e(asset('styles.css')); ?>">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
 <style>
-    /* الحاوية الكبيرة */
     .perm-container-unique {
         width: calc(100% - 250px);
         margin-right: 250px;
@@ -22,10 +21,9 @@
         overflow: hidden;
     }
 
-    /* هيكل الجدول (الرأس) */
     .perm-table-header, .perm-row-item {
         display: grid;
-        grid-template-columns: 2fr repeat(7, 1fr) 0.5fr; /* تقسيم 9 أعمدة */
+        grid-template-columns: 2fr repeat(7, 1fr) 0.5fr;
         list-style: none;
         padding: 15px;
         margin: 0;
@@ -60,7 +58,6 @@
         margin-top: 3px;
     }
 
-    /* --- تصميم زر الـ Switch (نفس الستايل القديم) --- */
     .switch-perm {
         position: relative;
         display: inline-block;
@@ -74,7 +71,7 @@
         position: absolute;
         cursor: pointer;
         top: 0; left: 0; right: 0; bottom: 0;
-        background-color: #D30E00; /* أحمر */
+        background-color: #D30E00;
         transition: .4s;
         border-radius: 34px;
     }
@@ -90,14 +87,13 @@
     }
 
     input:checked + .slider-perm {
-        background-color: #28a745; /* أخضر */
+        background-color: #28a745;
     }
 
     input:checked + .slider-perm:before {
         transform: translateX(20px);
     }
 
-    /* زر الحذف الصغير */
     .btn-delete-perm {
         background: none;
         border: none;
@@ -105,11 +101,11 @@
         cursor: pointer;
         font-size: 18px;
         transition: transform 0.2s;
+        text-decoration: none;
     }
 
     .btn-delete-perm:hover { transform: scale(1.2); }
 
-    /* فوتر الحفظ */
     .perm-footer-actions {
         padding: 20px;
         text-align: left;
@@ -132,7 +128,6 @@
         transform: translateY(-2px);
     }
 
-    /* للتجاوب مع الشاشات الصغيرة */
     @media (max-width: 900px) {
         .perm-table-header { display: none; }
         .perm-row-item {
@@ -143,10 +138,6 @@
             margin-bottom: 10px;
             border-radius: 10px;
         }
-    }
-
-    .btn-delete-perm {
-        text-decoration: none;
     }
 </style>
 <?php $__env->stopPush(); ?>
@@ -184,54 +175,28 @@
 
                     <li>
                         <label class="switch-perm">
-                            <input type="checkbox" name="users[<?php echo e($loop->index); ?>][is_active]" value="1" <?php echo e($user->is_active ? 'checked' : ''); ?>>
+                            <input type="checkbox" 
+                                name="users[<?php echo e($loop->index); ?>][is_active]" 
+                                value="1" 
+                                <?php echo e($user->is_active ? 'checked' : ''); ?>>
                             <span class="slider-perm"></span>
                         </label>
                     </li>
 
+                    <?php $__currentLoopData = $permissions; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $permission): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                     <li>
                         <label class="switch-perm">
-                            <input type="checkbox" name="users[<?php echo e($loop->index); ?>][createEmployee]" value="1" <?php echo e($user->createEmployee ?? false ? 'checked' : ''); ?>>
+                            <input type="checkbox"
+                                name="users[<?php echo e($loop->parent->index); ?>][<?php echo e($permission->name); ?>]"
+                                value="1"
+                                <?php echo e($user->permissions->contains('id', $permission->id) ? 'checked' : ''); ?>>
                             <span class="slider-perm"></span>
                         </label>
                     </li>
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
                     <li>
-                        <label class="switch-perm">
-                            <input type="checkbox" name="users[<?php echo e($loop->index); ?>][deleteEmployee]" value="1" <?php echo e($user->deleteEmployee ?? false ? 'checked' : ''); ?>>
-                            <span class="slider-perm"></span>
-                        </label>
-                    </li>
-
-                    <li>
-                        <label class="switch-perm">
-                            <input type="checkbox" name="users[<?php echo e($loop->index); ?>][updateEmployee]" value="1" <?php echo e($user->updateEmployee ?? false ? 'checked' : ''); ?>>
-                            <span class="slider-perm"></span>
-                        </label>
-                    </li>
-
-                    <li>
-                        <label class="switch-perm">
-                            <input type="checkbox" name="users[<?php echo e($loop->index); ?>][createDoc]" value="1" <?php echo e($user->createDoc ?? false ? 'checked' : ''); ?>>
-                            <span class="slider-perm"></span>
-                        </label>
-                    </li>
-
-                    <li>
-                        <label class="switch-perm">
-                            <input type="checkbox" name="users[<?php echo e($loop->index); ?>][showDoc]" value="1" <?php echo e($user->showDoc ?? false ? 'checked' : ''); ?>>
-                            <span class="slider-perm"></span>
-                        </label>
-                    </li>
-
-                    <li>
-                        <label class="switch-perm">
-                            <input type="checkbox" name="users[<?php echo e($loop->index); ?>][deleteDoc]" value="1" <?php echo e($user->deleteDoc ?? false ? 'checked' : ''); ?>>
-                            <span class="slider-perm"></span>
-                        </label>
-                    </li>
-                    <li>
-                        <button type="button" class="btn-delete-perm" title="حذف المستخدم" 
+                        <button type="button" class="btn-delete-perm" title="حذف المستخدم"
                                 onclick="deleteUser('<?php echo e(route('admin.user.destroy', encodeId($user->id))); ?>')">
                             حذف
                         </button>
@@ -248,10 +213,12 @@
 
     </div>
 </div>
+
 <form id="global-delete-form" action="" method="POST" style="display: none;">
     <?php echo csrf_field(); ?>
     <?php echo method_field('DELETE'); ?>
 </form>
+
 <script src="<?php echo e(asset('script.js')); ?>"></script>
 <?php $__env->stopSection(); ?>
 <?php echo $__env->make('layouts.admin-layout', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\xampp\htdocs\archive-nags\resources\views/admin/permissions.blade.php ENDPATH**/ ?>

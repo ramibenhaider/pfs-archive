@@ -23,17 +23,17 @@ class User extends Authenticatable
         'password',
         'admin_id',
         'is_active',
-        'createEmployee',
-        'deleteEmployee',
-        'updateEmployee',
-        'createDoc',
-        'showDoc',
-        'deleteDoc',
+        'myNotes'
     ];
 
-    public function admin()
+    public function permissions()
     {
-        return $this->belongsTo(Admin::Class);
+        return $this->belongsToMany(Permission::Class, 'user_permissions');
+    }
+
+    public function hasPermission(string $permission)
+    {
+        return $this->is_active && $this->permissions->contains('name', $permission);
     }
 
     /**

@@ -10,7 +10,7 @@
 <?php $__env->startSection('content'); ?>
 <div class="container py-4">
     
-    <a href="<?php echo e(route('user.index')); ?>" class="btn btn-back-note">
+    <a href="<?php echo e(route('user.employee.index')); ?>" class="btn btn-back-note">
         <i class="bi bi-x-circle"></i> عودة للرئيسية
     </a>
             <br><br>
@@ -157,8 +157,11 @@ if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
                 </div>
-
-                <button type="submit" class="btn-main w-100">بدء الرفع</button>
+                <?php if($currentUser->hasPermission('createDoc')): ?>
+                    <button type="submit" class="btn-main w-100">بدء الرفع</button>
+                <?php else: ?>
+                    <button type="button" class="btn-main w-100 disabled-btn">غير مصرح لك برفع ملف</button>
+                <?php endif; ?>
             </form>
         </div>
     </div>
@@ -262,4 +265,4 @@ unset($__errorArgs, $__bag); ?>
         });
     </script>
 <?php $__env->stopPush(); ?>
-<?php echo $__env->make('layouts.index-layout', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\xampp\htdocs\archive-nags\resources\views/user/library/index.blade.php ENDPATH**/ ?>
+<?php echo $__env->make('layouts.user-layout', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\xampp\htdocs\archive-nags\resources\views/user/library/index.blade.php ENDPATH**/ ?>

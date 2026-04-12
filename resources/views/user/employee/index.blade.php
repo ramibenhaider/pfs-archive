@@ -32,12 +32,21 @@
       </form>
 
       <!-- زر إضافة موظف -->
-      <div class="btn-wrapper">
-        <a href="{{ route('user.employee.create') }}" class="main-btn">
-          <span class="icon" style="font-size:26px;">+</span>
-        </a>
-        <div class="tooltip">إضافة موظف</div>
-      </div>
+      @if($currentUser->hasPermission('createEmployee'))
+          <div class="btn-wrapper">
+              <a href="{{ route('user.employee.create') }}" class="main-btn">
+                  <span class="icon" style="font-size:26px;">+</span>
+              </a>
+              <div class="tooltip">إضافة موظف</div>
+          </div>
+      @else
+          <div class="btn-wrapper">
+              <span class="main-btn disabled-btn">
+                  <span class="icon" style="font-size:26px;">+</span>
+              </span>
+              <div class="tooltip">لست مصرحاً بالإضافة</div>
+          </div>
+      @endif
 
     </div>
 

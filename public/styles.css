@@ -55,6 +55,13 @@ body {
   z-index: 9999;
 }
 
+.disabled-btn {
+    opacity: 0.4;
+    cursor: not-allowed;
+    filter: grayscale(1);
+}
+
+
 /*#############index################################################
 /* الحاوية */
 .container {

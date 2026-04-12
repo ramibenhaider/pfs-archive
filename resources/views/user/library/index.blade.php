@@ -111,8 +111,11 @@
                         <div class="invalid-feedback d-block">{{ $message }}</div>
                     @enderror
                 </div>
-
-                <button type="submit" class="btn-main w-100">بدء الرفع</button>
+                @if($currentUser->hasPermission('createDoc'))
+                    <button type="submit" class="btn-main w-100">بدء الرفع</button>
+                @else
+                    <button type="button" class="btn-main w-100 disabled-btn">غير مصرح لك برفع ملف</button>
+                @endif
             </form>
         </div>
     </div>

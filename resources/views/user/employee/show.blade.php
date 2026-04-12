@@ -105,7 +105,7 @@
                             <select name="management_id" class="form-select w-50 text-muted" >
                             @foreach ($managements as $management)
                                 <option value="{{ $management->id }}"
-                                    {{ old('management_id', $management->id) == $employee->management_id ? 'selected':''}}>
+                                    {{ old('management_id', $employee->management_id) == $management->id ? 'selected':''}}>
                                     {{ $management->management_name }}
                                 </option>
                             @endforeach
@@ -116,7 +116,7 @@
                             <select name="job_title_id" class="form-select w-50 text-muted" >
                             @foreach ($job_titles as $job_title)
                                 <option value="{{ $job_title->id }}"
-                                    {{ old('job_title_id', $job_title->id) == $employee->job_title_id ? 'selected':''}}>
+                                    {{ old('job_title_id', $employee->job_title_id) == $job_title->id ? 'selected':''}}>
                                     {{ $job_title->job_title_name }}
                                 </option>
                             @endforeach
@@ -127,7 +127,7 @@
                             <select name="airline_id" class="form-select w-50 text-muted" >
                             @foreach ($airlines as $airline)
                                 <option value="{{ $airline->id }}"
-                                    {{ old('airline_id', $airline->id) == $employee->airline_id ? 'selected':''}}>
+                                    {{ old('airline_id',$employee->airline_id) == $airline->id ? 'selected':''}}>
                                     {{ $airline->airline_name }}
                                 </option>
                             @endforeach
@@ -138,7 +138,7 @@
                             <select name="nationality_id" class="form-select w-50 text-muted">
                             @foreach ($nationalities as $nationality)
                                 <option value="{{ $nationality->id }}"
-                                    {{ old('nationality_id', $nationality->id) == $employee->nationality_id ? 'selected':'' }}>
+                                    {{ old('nationality_id', $employee->nationality_id) == $nationality->id ? 'selected':'' }}>
                                     {{ $nationality->nationality_name }}
                                 </option>
                             @endforeach
@@ -155,8 +155,12 @@
                     </ul>
                     <div class="card-footer d-flex justify-content-between border-top-0 bg-white">
                         <a href="{{ route('user.employee.index') }}" class="btn btn-secondary btn-sm">رجوع</a>
-                        <button type="submit" class="btn btn-save-custom btn-sm">حفظ التعديلات</button>
-                    </div>
+                        @if($currentUser->hasPermission('updateEmployee'))
+                            <button type="submit" class="btn btn-save-custom btn-sm">حفظ التعديلات</button>
+                        @else
+                            <button type="button" class="btn btn-save-custom disabled-btn btn-sm">غير مصرح لك بإجراء تعديلات</button>
+                        @endif
+                    </div>                        
                 </form>
             </div>
         </div>
@@ -179,14 +183,14 @@
                                 </div>
                                 <span class="nags-count-square">{{ $document_type->documents_count ?? 0 }}</span>
                             </a>
+                                            <div class="card-footer text-center bg-white border-0">
+                    <a href="{{ route('user.showFilesType', [encodeId($employee->id), encodeId($document_type->id)]) }}" class="view-all-link">مشاهدة الكل</a>
+                </div>
                         </li>
                         @empty
                         <li class="list-group-item text-center text-muted">لا توجد مستندات</li>
                         @endforelse
                     </ul>
-                </div>
-                <div class="card-footer text-center bg-white border-0">
-                    <a href="{{ route('user.showFilesType', encodeId($employee->id)) }}" class="view-all-link">مشاهدة الكل</a>
                 </div>
             </div>
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Airline;
 use App\Models\Document_type;
+use App\Models\Permission;
 use App\Models\User;
 use App\Models\Management;
 use App\Models\Job_title;
@@ -15,9 +16,10 @@ class DashboardController extends Controller
 {
     public function permissions () {
 
-        $users = User::orderByDesc('created_at')->get();
+        $users = User::with('permissions')->orderByDesc('created_at')->get();
+        $permissions = Permission::all();
 
-        return view('admin.permissions', compact('users'));
+        return view('admin.permissions', compact('users', 'permissions'));
     }
 
     public function fields()

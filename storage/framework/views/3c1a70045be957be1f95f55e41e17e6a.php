@@ -32,12 +32,21 @@
       </form>
 
       <!-- زر إضافة موظف -->
-      <div class="btn-wrapper">
-        <a href="<?php echo e(route('user.employee.create')); ?>" class="main-btn">
-          <span class="icon" style="font-size:26px;">+</span>
-        </a>
-        <div class="tooltip">إضافة موظف</div>
-      </div>
+      <?php if($currentUser->hasPermission('createEmployee')): ?>
+          <div class="btn-wrapper">
+              <a href="<?php echo e(route('user.employee.create')); ?>" class="main-btn">
+                  <span class="icon" style="font-size:26px;">+</span>
+              </a>
+              <div class="tooltip">إضافة موظف</div>
+          </div>
+      <?php else: ?>
+          <div class="btn-wrapper">
+              <span class="main-btn disabled-btn">
+                  <span class="icon" style="font-size:26px;">+</span>
+              </span>
+              <div class="tooltip">لست مصرحاً بالإضافة</div>
+          </div>
+      <?php endif; ?>
 
     </div>
 

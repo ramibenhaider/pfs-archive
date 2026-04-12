@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Models\Permission;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -18,47 +19,43 @@ class UserController extends Controller
             'users.*.id.exists' => 'المستخدم المراد تعديله غير موجود!'
         ]);
 
+        $permissions = Permission::pluck('id', 'name');
         $hasChanged = false;
 
-        foreach ($request->users as $userData) {
-            $user = User::find($userData['id']);
+        foreach($request->users as $userData)
+            {
+                $user = User::find($userData['id']);
+                $isActive = isset($userData['is_active']) ? 1 : 0;
 
-        $isActive = isset($userData['is_active']) ? 1 : 0;
+                if ($user->is_active != $isActive)
+                    {
+                        $hasChanged = true;
+                        $user->update(['is_active' => $isActive]);
+                    }
 
-            $columns = [
-                'createEmployee', 
-                'updateEmployee', 
-                'deleteEmployee', 
-                'createDoc', 
-                'showDoc', 
-                'deleteDoc'
-            ];
+                $newPermissionIds = [];
+                if ($isActive == 1)
+                    {
+                        foreach ($permissions as $name => $id)
+                            if (isset($userData[$name]))
+                                {
+                                    $newPermissionIds[] = $id;
+                                }
+                    }
+                $oldPermissionIds = $user->permissions->pluck('id')->sort()->values()->toArray();
+                $newPermissionIds = collect($newPermissionIds)->sort()->values()->toArray();
 
-            $updateData = ['is_active' => $isActive];
-
-            foreach ($columns as $col) {
-
-                $newValue = ($isActive == 1) ? (isset($userData[$col]) ? 1 : 0) : 0;
-
-                if ($user->$col != $newValue) {
-                    $hasChanged = true;
+                if ($newPermissionIds != $oldPermissionIds)
+                    {
+                        $hasChanged = true;
+                        $user->permissions()->sync($newPermissionIds);
+                    }
+            }
+            if (!$hasChanged)
+                {
+                    return redirect()->back()->with('warning', 'لم يتم إجراء أي تعديلات!');
                 }
-
-                $updateData[$col] = $newValue;
-            }
-
-            if ($user->is_active != $isActive) {
-                $hasChanged = true;
-            }
-
-            $user->update($updateData);
-        }
-
-        if (!$hasChanged) {
-            return redirect()->back()->with('warning', 'لم يتم إجراء أي تعديلات!');
-        }
-
-        return redirect()->back()->with('success', 'تم حفظ الصلاحيات بنجاح');
+            return redirect()->back()->with('success', 'تم حفظ الصلاحيات بنجاح');
     }
 
     public function destroy($idHashed)

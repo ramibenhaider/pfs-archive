@@ -189,7 +189,7 @@ unset($__errorArgs, $__bag); ?>
                             <select name="management_id" class="form-select w-50 text-muted" >
                             <?php $__currentLoopData = $managements; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $management): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                 <option value="<?php echo e($management->id); ?>"
-                                    <?php echo e(old('management_id', $management->id) == $employee->management_id ? 'selected':''); ?>>
+                                    <?php echo e(old('management_id', $employee->management_id) == $management->id ? 'selected':''); ?>>
                                     <?php echo e($management->management_name); ?>
 
                                 </option>
@@ -201,7 +201,7 @@ unset($__errorArgs, $__bag); ?>
                             <select name="job_title_id" class="form-select w-50 text-muted" >
                             <?php $__currentLoopData = $job_titles; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $job_title): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                 <option value="<?php echo e($job_title->id); ?>"
-                                    <?php echo e(old('job_title_id', $job_title->id) == $employee->job_title_id ? 'selected':''); ?>>
+                                    <?php echo e(old('job_title_id', $employee->job_title_id) == $job_title->id ? 'selected':''); ?>>
                                     <?php echo e($job_title->job_title_name); ?>
 
                                 </option>
@@ -213,7 +213,7 @@ unset($__errorArgs, $__bag); ?>
                             <select name="airline_id" class="form-select w-50 text-muted" >
                             <?php $__currentLoopData = $airlines; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $airline): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                 <option value="<?php echo e($airline->id); ?>"
-                                    <?php echo e(old('airline_id', $airline->id) == $employee->airline_id ? 'selected':''); ?>>
+                                    <?php echo e(old('airline_id',$employee->airline_id) == $airline->id ? 'selected':''); ?>>
                                     <?php echo e($airline->airline_name); ?>
 
                                 </option>
@@ -225,7 +225,7 @@ unset($__errorArgs, $__bag); ?>
                             <select name="nationality_id" class="form-select w-50 text-muted">
                             <?php $__currentLoopData = $nationalities; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $nationality): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                 <option value="<?php echo e($nationality->id); ?>"
-                                    <?php echo e(old('nationality_id', $nationality->id) == $employee->nationality_id ? 'selected':''); ?>>
+                                    <?php echo e(old('nationality_id', $employee->nationality_id) == $nationality->id ? 'selected':''); ?>>
                                     <?php echo e($nationality->nationality_name); ?>
 
                                 </option>
@@ -243,8 +243,12 @@ unset($__errorArgs, $__bag); ?>
                     </ul>
                     <div class="card-footer d-flex justify-content-between border-top-0 bg-white">
                         <a href="<?php echo e(route('user.employee.index')); ?>" class="btn btn-secondary btn-sm">رجوع</a>
-                        <button type="submit" class="btn btn-save-custom btn-sm">حفظ التعديلات</button>
-                    </div>
+                        <?php if($currentUser->hasPermission('updateEmployee')): ?>
+                            <button type="submit" class="btn btn-save-custom btn-sm">حفظ التعديلات</button>
+                        <?php else: ?>
+                            <button type="button" class="btn btn-save-custom disabled-btn btn-sm">غير مصرح لك بإجراء تعديلات</button>
+                        <?php endif; ?>
+                    </div>                        
                 </form>
             </div>
         </div>
@@ -267,14 +271,14 @@ unset($__errorArgs, $__bag); ?>
                                 </div>
                                 <span class="nags-count-square"><?php echo e($document_type->documents_count ?? 0); ?></span>
                             </a>
+                                            <div class="card-footer text-center bg-white border-0">
+                    <a href="<?php echo e(route('user.showFilesType', [encodeId($employee->id), encodeId($document_type->id)])); ?>" class="view-all-link">مشاهدة الكل</a>
+                </div>
                         </li>
                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
                         <li class="list-group-item text-center text-muted">لا توجد مستندات</li>
                         <?php endif; ?>
                     </ul>
-                </div>
-                <div class="card-footer text-center bg-white border-0">
-                    <a href="<?php echo e(route('user.showFilesType', encodeId($employee->id))); ?>" class="view-all-link">مشاهدة الكل</a>
                 </div>
             </div>
 

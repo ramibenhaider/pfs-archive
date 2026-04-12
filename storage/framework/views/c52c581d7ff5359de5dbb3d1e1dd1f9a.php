@@ -18,7 +18,6 @@
             <h2 class="section-title">بيانات العمل</h2>
 
             <div class="form-grid">
-                
                 <div class="form-group">
                     <label>الرقم الوظيفي</label>
                     <input type="text" placeholder="أدخل 5 أو 6 أرقام..." name="job_number"

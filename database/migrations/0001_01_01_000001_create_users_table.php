@@ -22,13 +22,8 @@ return new class extends Migration
                   ->constrained('admins')
                   ->cascadeOnUpdate()
                   ->nullOnDelete();
-            $table->boolean('is_active')->default(true);
-            $table->boolean('createEmployee')->default(false);
-            $table->boolean('deleteEmployee')->default(false);
-            $table->boolean('updateEmployee')->default(false);
-            $table->boolean('createDoc')->default(false);
-            $table->boolean('showDoc')->default(false);
-            $table->boolean('deleteDoc')->default(false);
+            $table->string('myNotes')->nullable();
+            $table->boolean('is_active')->default(false);
             $table->rememberToken();
             $table->timestamps();
         });

@@ -25,7 +25,7 @@ class AppServiceProvider extends ServiceProvider
         Paginator::useBootstrap();
 
         View::composer('*', function($view) {
-            $view->with('currentUser', Auth::user());
+            $view->with('currentUser', Auth::check() ? Auth::user()->fresh() : null);
         });
     }
 }
