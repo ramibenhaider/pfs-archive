@@ -68,6 +68,6 @@ class UserController extends Controller
         $user = User::findOrFail($id);
         $user->delete();
 
-        return back()->with('success', 'تم حذف الموظف بنجاح');
+        return back()->with('success', 'تم حذف المستخدم بنجاح');
     }
 }

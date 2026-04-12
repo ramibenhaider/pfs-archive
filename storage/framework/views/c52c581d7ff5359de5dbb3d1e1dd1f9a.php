@@ -11,7 +11,7 @@
 
 <?php $__env->startSection('content'); ?>
 
-    <form action="<?php echo e(route('user.employee.store')); ?>" method="post">
+    <form action="<?php echo e(route('employee.store')); ?>" method="post">
         <?php echo csrf_field(); ?>
         <div class="container-createEmployee">
 
@@ -206,7 +206,7 @@ unset($__errorArgs, $__bag); ?>
 
             <div class="bottom-buttons">
                 <button type="submit" class="save-btn">حفظ</button>
-                <a href='<?php echo e(route('user.employee.index')); ?>' class="cancel-btn">إغلاق</a>
+                <a href='<?php echo e(route('employee.index')); ?>' class="cancel-btn">إغلاق</a>
             </div>
 
         </div>

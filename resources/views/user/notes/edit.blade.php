@@ -13,7 +13,7 @@
             <h1>تعديل ملاحظة: {{ $note->employee->name }}</h1>
         </div>
 
-        <form method="POST" action="{{ route('user.note.update', $note->id) }}">
+        <form method="POST" action="{{ route('note.update', $note->id) }}">
             @csrf
             @method('PUT')
 
@@ -40,7 +40,7 @@
                 <button type="submit" class="btn btn-save-note">
                     <i class="bi bi-check-lg"></i> حفظ التعديلات
                 </button>
-                <a href="{{ route('user.employee.show', encodeId($note->employee->id)) }}" 
+                <a href="{{ route('employee.edit', encodeId($note->employee->id)) }}" 
                    class="btn btn-back-note" 
                    onclick="return confirm('هل أنت متأكد؟ لم تقم بحفظ التعديلات!')">
                     <i class="bi bi-arrow-right"></i> رجوع

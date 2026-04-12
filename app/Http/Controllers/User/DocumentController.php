@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\User;
 
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\Document_type;
 use App\Models\Document;
@@ -33,6 +34,10 @@ class DocumentController extends Controller
      */
     public function store(Request $request)
     {
+        if (!Auth::user()->hasPermission('createDoc')) {
+            return back()->with('warning', 'غير مصرح لك بإضافة موظف!');
+        }
+        
         $request->validateWithBag('doc_errors',
             [
                 'files' => 'required|array',
@@ -128,6 +133,9 @@ class DocumentController extends Controller
      */
     public function destroy($id)
     {
+        if (!Auth::user()->hasPermission('deleteDoc')) {
+            return back()->with('warning', 'غير مصرح لك بحذف المستند');
+        }
         $document = Document::findOrFail($id);
 
         // حذف الملف من Storage أولاً
@@ -141,8 +149,12 @@ class DocumentController extends Controller
         return back()->with('success', 'تم حذف الملف بنجاح!');
     }
 
-        public function showFilesType($employeeHash,$document_typeHash)
+        public function showTypeFiles($employeeHash,$document_typeHash)
     {
+        if (!Auth::user()->hasPermission('showDoc')) {
+            return redirect()->back()->with('warning', 'غير مصرح لك بالإطلاع على المستندات!');
+        }
+
         $employeeId = decodeId($employeeHash);
         if (!$employeeId) {
             return abort(404);

@@ -51,7 +51,7 @@
 
 @section('content')
 @if(auth()->user()->is_active)
-<script>window.location.href = '{{ route('user.employee.index') }}'</script>
+<script>window.location.href = '{{ route('employee.index') }}'</script>
 @endif
 <div class="pending-approval-alert">
     <div class="alert-icon">

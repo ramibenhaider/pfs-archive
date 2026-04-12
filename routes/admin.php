@@ -22,10 +22,10 @@ Route::middleware(['auth.admin', 'prevent-back'])->group(function () {
     Route::delete('/permissions/{idHashed}', [UserController::class, 'destroy'])->name('user.destroy');
 
     Route::resource('airline', AirlineController::class)->only(['store', 'update', 'destroy']);
-    Route::resource('document_type', DocumentTypeController::class,)->only(['store', 'update', 'destroy']);
-    Route::resource('management', ManagementController::class,)->only(['store', 'update', 'destroy']);
-    Route::resource('nationality', NationalityController::class,)->only(['store', 'update', 'destroy']);
-    Route::resource('job_title', JobTitleController::class,)->only(['store', 'update', 'destroy']);
+    Route::resource('document_type', DocumentTypeController::class)->only(['store', 'update', 'destroy']);
+    Route::resource('management', ManagementController::class)->only(['store', 'update', 'destroy']);
+    Route::resource('nationality', NationalityController::class)->only(['store', 'update', 'destroy']);
+    Route::resource('job_title', JobTitleController::class)->only(['store', 'update', 'destroy']);
 
     Route::get('/logout', [AdminLoginController::class, 'logout'])->name('logout');
 });

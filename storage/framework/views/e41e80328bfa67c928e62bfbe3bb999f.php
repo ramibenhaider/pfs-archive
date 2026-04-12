@@ -13,7 +13,7 @@
             <h1>تعديل ملاحظة: <?php echo e($note->employee->name); ?></h1>
         </div>
 
-        <form method="POST" action="<?php echo e(route('user.note.update', $note->id)); ?>">
+        <form method="POST" action="<?php echo e(route('note.update', $note->id)); ?>">
             <?php echo csrf_field(); ?>
             <?php echo method_field('PUT'); ?>
 
@@ -68,7 +68,7 @@ unset($__errorArgs, $__bag); ?>
                 <button type="submit" class="btn btn-save-note">
                     <i class="bi bi-check-lg"></i> حفظ التعديلات
                 </button>
-                <a href="<?php echo e(route('user.employee.show', encodeId($note->employee->id))); ?>" 
+                <a href="<?php echo e(route('employee.edit', encodeId($note->employee->id))); ?>" 
                    class="btn btn-back-note" 
                    onclick="return confirm('هل أنت متأكد؟ لم تقم بحفظ التعديلات!')">
                     <i class="bi bi-arrow-right"></i> رجوع

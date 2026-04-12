@@ -1,1 +1,0 @@
-<?php /**PATH C:\xampp\htdocs\archive-nags\resources\views/admin/registerationRequests.blade.php ENDPATH**/ ?>

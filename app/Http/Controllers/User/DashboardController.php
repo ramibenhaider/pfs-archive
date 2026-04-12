@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\Employee;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Validattion\Rule;
 
 class DashboardController extends Controller
@@ -14,12 +13,7 @@ class DashboardController extends Controller
 
     public function index()
     {
-        if (auth()->user() && !auth()->user()->is_active) {
-            return redirect()->route('user.unactivated');
-        }
-        
-        $employee = Employee::orderBy('created_at', 'desc')->paginate(6);
-        return view('user.employee.index', compact('employee'));
+        //
     }
 
     public function register()
@@ -56,24 +50,4 @@ class DashboardController extends Controller
         return redirect()->route('login')->with('success', 'تم إرسال طلبك بنجاح، في انتظار موافقة الأدمن!');
     }
 
-    public function makeSearch(Request $request)
-    {
-        $search = $request->search;
-        $normalizedSearch = str_replace(['آ', 'أ', 'إ'], 'ا', $search);
-        $employee = DB::table('employees')
-            ->where(function ($query) use ($normalizedSearch, $search) {
-                $query->whereRaw("REPLACE(REPLACE(REPLACE(
-                            name,'آ','ا'), 'أ','ا'), 'إ','ا') LIKE ?", ["%$normalizedSearch%"])
-                    ->orWhere('job_number', 'LIKE', $search . '%')
-                    ->orWhere('id_number', 'LIKE', $search . '%');
-            })
-            ->orderBy('created_at', 'desc')
-            ->paginate(5);
-        return view('user.employee.index', compact('employee'));
-    }
-
-    public function unactivated()
-    {
-        return view('user.unactivated');
-    }
 }

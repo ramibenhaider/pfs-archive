@@ -17,7 +17,7 @@
                 <div class="card-header-unique">
                     <h5 class="mb-0">بيانات الموظف</h5>
                 </div>
-                <form method="POST" action="<?php echo e(route('user.employee.update', $employee->id)); ?>">
+                <form method="POST" action="<?php echo e(route('employee.update', $employee->id)); ?>">
                     <?php echo csrf_field(); ?>
                     <?php echo method_field('PUT'); ?>
                     <ul class="list-group list-group-flush">
@@ -242,7 +242,7 @@ unset($__errorArgs, $__bag); ?>
                         </li>
                     </ul>
                     <div class="card-footer d-flex justify-content-between border-top-0 bg-white">
-                        <a href="<?php echo e(route('user.employee.index')); ?>" class="btn btn-secondary btn-sm">رجوع</a>
+                        <a href="<?php echo e(route('employee.index')); ?>" class="btn btn-secondary btn-sm">رجوع</a>
                         <?php if($currentUser->hasPermission('updateEmployee')): ?>
                             <button type="submit" class="btn btn-save-custom btn-sm">حفظ التعديلات</button>
                         <?php else: ?>
@@ -253,35 +253,47 @@ unset($__errorArgs, $__bag); ?>
             </div>
         </div>
 <!-- ###################################################################################################################-->
-       <div class="col-md-5">
-            <div class="card side-card-unique mb-4">
-                <div class="side-card-header d-flex justify-content-between align-items-center">
-                    <span class="side-title">المستندات</span>
-                    <span class="total-count-badge"><?php echo e($employee->documents->count() ?? 0); ?></span>
+            <div class="col-md-5">
+                <div class="card side-card-unique mb-4">
+                    <?php if($currentUser->hasPermission('showDoc')): ?>
+                        <div class="side-card-header d-flex justify-content-between align-items-center">
+                            <span class="side-title">المستندات</span>
+                            <span class="total-count-badge"><?php echo e($employee->documents->count() ?? 0); ?></span>
+                        </div>
+                        <div class="card-body p-0">
+                            <ul class="list-group list-group-flush nags-doc-container">
+                                <?php $__empty_1 = true; $__currentLoopData = $documentTypes; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $document_type): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
+                                <li class="list-group-item p-0 nags-doc-wrapper position-relative">
+                                    <a href="<?php echo e(route('documents.showTypeFiles', [encodeId($employee->id), encodeId($document_type->id)])); ?>" 
+                                        class="nags-doc-title-link d-flex justify-content-between align-items-center w-100 p-3 text-decoration-none">
+                                        <div class="d-flex align-items-center">
+                                            <i class="fas fa-folder-open me-2"></i> 
+                                            <span><?php echo e($document_type->type); ?></span>
+                                        </div>
+                                        <span class="nags-count-square"><?php echo e($document_type->documents_count ?? 0); ?></span>
+                                    </a>
+                                    <div class="card-footer text-center bg-white border-0">
+                                        <a href="<?php echo e(route('documents.showTypeFiles', [encodeId($employee->id), encodeId($document_type->id)])); ?>" class="view-all-link">مشاهدة الكل</a>
+                                    </div>
+                                </li>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
+                                <li class="list-group-item text-center text-muted">لا توجد مستندات</li>
+                                <?php endif; ?>
+                            </ul>
+                        </div>
+                    <?php else: ?>
+                        <div class="side-card-header d-flex justify-content-between align-items-center">
+                            <span class="side-title">المستندات</span>
+                            <span class="total-count-badge"></span>
+                        </div>
+                        <div class="card-body p-0">
+                            <br>
+                            <li class="list-group-item text-center text-muted">غير مصرح لك بالوصول للمستندات</li>
+                            <br>
+                        </div>
+                    <?php endif; ?>
                 </div>
-                <div class="card-body p-0">
-                    <ul class="list-group list-group-flush nags-doc-container">
-                        <?php $__empty_1 = true; $__currentLoopData = $documentTypes; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $document_type): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
-                        <li class="list-group-item p-0 nags-doc-wrapper position-relative">
-                            <a href="<?php echo e(route('user.showFilesType', [encodeId($employee->id), encodeId($document_type->id)])); ?>" 
-                            class="nags-doc-title-link d-flex justify-content-between align-items-center w-100 p-3 text-decoration-none">
-                                <div class="d-flex align-items-center">
-                                    <i class="fas fa-folder-open me-2"></i> 
-                                    <span><?php echo e($document_type->type); ?></span>
-                                </div>
-                                <span class="nags-count-square"><?php echo e($document_type->documents_count ?? 0); ?></span>
-                            </a>
-                                            <div class="card-footer text-center bg-white border-0">
-                    <a href="<?php echo e(route('user.showFilesType', [encodeId($employee->id), encodeId($document_type->id)])); ?>" class="view-all-link">مشاهدة الكل</a>
-                </div>
-                        </li>
-                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
-                        <li class="list-group-item text-center text-muted">لا توجد مستندات</li>
-                        <?php endif; ?>
-                    </ul>
-                </div>
-            </div>
-
+<!-- ###################################################################################################################-->
             <div class="card side-card-unique mb-4">
                 <div class="side-card-header d-flex justify-content-between align-items-center">
                     <span class="side-title">الملاحظات</span>
@@ -291,7 +303,7 @@ unset($__errorArgs, $__bag); ?>
                     <ul class="list-group list-group-flush side-list">
                         <?php $__empty_1 = true; $__currentLoopData = $employee->notes; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $note): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
                         <li class="list-group-item p-0 side-item position-relative">
-                            <a href="<?php echo e(route('user.note.edit', encodeId($note->id))); ?>" 
+                            <a href="<?php echo e(route('note.edit', encodeId($note->id))); ?>" 
                             class="text-decoration-none text-reset d-flex align-items-center w-100 p-3">
                                 <span class="text-truncate" style="max-width: 90%;"><?php echo e($note->title); ?></span>
                             </a>
@@ -306,10 +318,8 @@ unset($__errorArgs, $__bag); ?>
     </div>
 </div>
     <div class="text-center move-this">
-        <a href="<?php echo e(route('user.library.index')); ?>" class="view-all-link">قم بإضافة مستند جديد أو ملاحظة من هنا</a>
+        <a href="<?php echo e(route('note.index')); ?>" class="view-all-link">قم بإضافة مستند جديد أو ملاحظة من هنا</a>
     </div>
-<?php $__env->stopSection(); ?>
-<?php $__env->startPush('scripts'); ?>
 <script src="<?php echo e(asset('script.js')); ?>"></script>
-<?php $__env->stopPush(); ?>
+<?php $__env->stopSection(); ?>
 <?php echo $__env->make('layouts.user-layout', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\xampp\htdocs\archive-nags\resources\views/user/employee/show.blade.php ENDPATH**/ ?>

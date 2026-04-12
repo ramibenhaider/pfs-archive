@@ -10,7 +10,7 @@
 <?php $__env->startSection('content'); ?>
 <div class="container py-4">
     
-    <a href="<?php echo e(route('user.employee.index')); ?>" class="btn btn-back-note">
+    <a href="<?php echo e(route('employee.index')); ?>" class="btn btn-back-note">
         <i class="bi bi-x-circle"></i> عودة للرئيسية
     </a>
             <br><br>
@@ -18,7 +18,7 @@
     <div class="notes-toolbar">
         <h5 class="notes-toolbar__title">سجل الملاحظات</h5>
 
-        <form method="GET" action="<?php echo e(route('user.search_notes')); ?>" class="notes-toolbar__form">
+        <form method="GET" action="<?php echo e(route('note.search')); ?>" class="notes-toolbar__form">
             <select name="employee_id" id="employee_id_search_notes" class="notes-toolbar__select form-select">
                 <?php $__currentLoopData = $employees; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $employee): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                     <option value="<?php echo e($employee->id); ?>"><?php echo e($employee->name); ?></option>
@@ -49,8 +49,8 @@
                     <td><?php echo e($note->created_at->format('Y-m-d')); ?></td>
                     <td>
                         <div class="d-flex justify-content-center gap-2">
-                            <a href="<?php echo e(route('user.note.edit', encodeId($note->id))); ?>" class="btn btn-edit-sm">عرض</a>
-                            <form method="POST" action="<?php echo e(route('user.note.destroy', $note->id)); ?>" onsubmit="return confirm('هل أنت متأكدة من حذف؟')">
+                            <a href="<?php echo e(route('note.edit', encodeId($note->id))); ?>" class="btn btn-edit-sm">عرض</a>
+                            <form method="POST" action="<?php echo e(route('note.destroy', $note->id)); ?>" onsubmit="return confirm('هل أنت متأكدة من حذف؟')">
                                 <?php echo csrf_field(); ?>
                                 <?php echo method_field('DELETE'); ?>
                                 <button type="submit" class="btn btn-delete-sm">حذف</button>
@@ -72,7 +72,7 @@
     <div class="col-md-6">
         <div class="note-section-card">
             <h5 class="section-header">رفع المستندات</h5>
-            <form action="<?php echo e(route('user.documents.store')); ?>" method="POST" enctype="multipart/form-data">
+            <form action="<?php echo e(route('documents.store')); ?>" method="POST" enctype="multipart/form-data">
                 <?php echo csrf_field(); ?>
                 <div class="mb-3">
                     <label class="form-label">الموظف</label>
@@ -129,11 +129,11 @@ unset($__errorArgs, $__bag); ?>
                 <div class="mb-3">
                     <label class="form-label">الملفات</label>
                     <input type="file" id="fileInput"
-                    class="form-control custom-input <?php if($errors->doc_errors->has('files') || $errors->doc_errors->has('files.*')): ?> is-invalid <?php unset($message);
+                        class="form-control custom-input <?php if($errors->doc_errors->has('files') || $errors->doc_errors->has('files.*')): ?> is-invalid <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>"
-                    multiple accept=".pdf,.doc,.docx,.xls,.xlsx">
+                        multiple accept=".pdf,.doc,.docx,.xls,.xlsx">
                     <div id="fileList" class="mt-2"></div>
                     <input type="file" name="files[]" id="hiddenFiles" multiple style="display:none">
                     <?php $__errorArgs = ['files', 'doc_errors'];
@@ -159,7 +159,7 @@ unset($__errorArgs, $__bag); ?>
                 </div>
                 <?php if($currentUser->hasPermission('createDoc')): ?>
                     <button type="submit" class="btn-main w-100">بدء الرفع</button>
-                <?php else: ?>
+                <?php elseif(!$currentUser->is_ac): ?>
                     <button type="button" class="btn-main w-100 disabled-btn">غير مصرح لك برفع ملف</button>
                 <?php endif; ?>
             </form>
@@ -169,7 +169,7 @@ unset($__errorArgs, $__bag); ?>
     <div class="col-md-6">
         <div class="note-section-card">
             <h5 class="section-header">إضافة ملاحظة جديدة</h5>
-            <form action="<?php echo e(route('user.note.store')); ?>" method="POST">
+            <form action="<?php echo e(route('note.store')); ?>" method="POST">
                 <?php echo csrf_field(); ?>
                 <div class="mb-3">
                     <label class="form-label">الموظف</label>

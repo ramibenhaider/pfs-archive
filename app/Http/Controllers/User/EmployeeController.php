@@ -12,7 +12,9 @@ use App\Models\Management;
 use App\Models\Nationality;
 use App\Models\Document;
 use App\Models\Note;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\DB;
 
 class EmployeeController extends Controller
 {
@@ -21,12 +23,14 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-        //
+        if (auth()->user() && !auth()->user()->is_active) {
+            return redirect()->route('user.unactivated');
+        }
+        
+        $employee = Employee::orderBy('created_at', 'desc')->paginate(6);
+        return view('user.employee.index', compact('employee'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         $management = Management::all();
@@ -42,6 +46,10 @@ class EmployeeController extends Controller
      */
     public function store(Request $request)
     {
+        if (!Auth::user()->hasPermission('createEmployee')) {
+            return back()->with('warning', 'غير مصرح لك بإضافة موظف');
+        }
+
         $is_active = $request->has('is_active') ? 1 : 0;
         
         if ($request->filled('passport_number'))
@@ -80,13 +88,13 @@ class EmployeeController extends Controller
             'phone_number.unique' => 'رقم الجوال مكرر!'
         ]);
         Employee::create($data);
-        return redirect()->route('user.employee.index')->with('success', 'تمت إضافة الموظف بنجاح!');
+        return redirect()->route('employee.index')->with('success', 'تمت إضافة الموظف بنجاح!');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $employeeHash)
+    public function edit(string $employeeHash)
     {
         $employeeId = decodeId($employeeHash);
         if (!$employeeId) {
@@ -107,10 +115,7 @@ class EmployeeController extends Controller
         return view('user.employee.show', compact('employee', 'documents', 'notes', 'managements', 'nationalities', 'documentTypes', 'job_titles', 'airlines'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Employee $employee)
+    public function show(Employee $employee)
     {
         //
     }
@@ -120,6 +125,10 @@ class EmployeeController extends Controller
      */
     public function update(Request $request, Employee $employee)
     {
+        if (!Auth::user()->hasPermission('updateEmployee')) {
+            return back()->with('warning', 'غير مصرح لك بالتعديل على موظف');
+        }
+
         $is_active = $request->has('is_active') ? 1 : 0;
         
         if ($request->filled('passport_number'))
@@ -170,7 +179,7 @@ class EmployeeController extends Controller
 
         $employee->update($new_data);
 
-        return redirect()->route('user.employee.show', encodeId($employee->id))->with('success', 'تم التعديل بنجاح!');
+        return redirect()->route('employee.edit', encodeId($employee->id))->with('success', 'تم التعديل بنجاح!');
     }
 
     /**
@@ -178,6 +187,24 @@ class EmployeeController extends Controller
      */
     public function destroy(Employee $employee)
     {
-        //
+        if (!Auth::user()->hasPermission('deleteEmployee')) {
+            return back()->with('warning', 'غير مصرح لك بحذف موظف');
+        }
+    }
+
+    public function doSearch(Request $request)
+    {
+        $search = $request->search;
+        $normalizedSearch = str_replace(['آ', 'أ', 'إ'], 'ا', $search);
+        $employee = DB::table('employees')
+            ->where(function ($query) use ($normalizedSearch, $search) {
+                $query->whereRaw("REPLACE(REPLACE(REPLACE(
+                            name,'آ','ا'), 'أ','ا'), 'إ','ا') LIKE ?", ["%$normalizedSearch%"])
+                    ->orWhere('job_number', 'LIKE', $search . '%')
+                    ->orWhere('id_number', 'LIKE', $search . '%');
+            })
+            ->orderBy('created_at', 'desc')
+            ->paginate(5);
+        return view('user.employee.index', compact('employee'));
     }
 }

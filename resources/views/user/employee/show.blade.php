@@ -17,7 +17,7 @@
                 <div class="card-header-unique">
                     <h5 class="mb-0">بيانات الموظف</h5>
                 </div>
-                <form method="POST" action="{{ route('user.employee.update', $employee->id) }}">
+                <form method="POST" action="{{ route('employee.update', $employee->id) }}">
                     @csrf
                     @method('PUT')
                     <ul class="list-group list-group-flush">
@@ -154,7 +154,7 @@
                         </li>
                     </ul>
                     <div class="card-footer d-flex justify-content-between border-top-0 bg-white">
-                        <a href="{{ route('user.employee.index') }}" class="btn btn-secondary btn-sm">رجوع</a>
+                        <a href="{{ route('employee.index') }}" class="btn btn-secondary btn-sm">رجوع</a>
                         @if($currentUser->hasPermission('updateEmployee'))
                             <button type="submit" class="btn btn-save-custom btn-sm">حفظ التعديلات</button>
                         @else
@@ -165,35 +165,47 @@
             </div>
         </div>
 <!-- ###################################################################################################################-->
-       <div class="col-md-5">
-            <div class="card side-card-unique mb-4">
-                <div class="side-card-header d-flex justify-content-between align-items-center">
-                    <span class="side-title">المستندات</span>
-                    <span class="total-count-badge">{{ $employee->documents->count() ?? 0 }}</span>
+            <div class="col-md-5">
+                <div class="card side-card-unique mb-4">
+                    @if($currentUser->hasPermission('showDoc'))
+                        <div class="side-card-header d-flex justify-content-between align-items-center">
+                            <span class="side-title">المستندات</span>
+                            <span class="total-count-badge">{{ $employee->documents->count() ?? 0 }}</span>
+                        </div>
+                        <div class="card-body p-0">
+                            <ul class="list-group list-group-flush nags-doc-container">
+                                @forelse($documentTypes as $document_type)
+                                <li class="list-group-item p-0 nags-doc-wrapper position-relative">
+                                    <a href="{{ route('documents.showTypeFiles', [encodeId($employee->id), encodeId($document_type->id)]) }}" 
+                                        class="nags-doc-title-link d-flex justify-content-between align-items-center w-100 p-3 text-decoration-none">
+                                        <div class="d-flex align-items-center">
+                                            <i class="fas fa-folder-open me-2"></i> 
+                                            <span>{{ $document_type->type }}</span>
+                                        </div>
+                                        <span class="nags-count-square">{{ $document_type->documents_count ?? 0 }}</span>
+                                    </a>
+                                    <div class="card-footer text-center bg-white border-0">
+                                        <a href="{{ route('documents.showTypeFiles', [encodeId($employee->id), encodeId($document_type->id)]) }}" class="view-all-link">مشاهدة الكل</a>
+                                    </div>
+                                </li>
+                                @empty
+                                <li class="list-group-item text-center text-muted">لا توجد مستندات</li>
+                                @endforelse
+                            </ul>
+                        </div>
+                    @else
+                        <div class="side-card-header d-flex justify-content-between align-items-center">
+                            <span class="side-title">المستندات</span>
+                            <span class="total-count-badge"></span>
+                        </div>
+                        <div class="card-body p-0">
+                            <br>
+                            <li class="list-group-item text-center text-muted">غير مصرح لك بالوصول للمستندات</li>
+                            <br>
+                        </div>
+                    @endif
                 </div>
-                <div class="card-body p-0">
-                    <ul class="list-group list-group-flush nags-doc-container">
-                        @forelse($documentTypes as $document_type)
-                        <li class="list-group-item p-0 nags-doc-wrapper position-relative">
-                            <a href="{{ route('user.showFilesType', [encodeId($employee->id), encodeId($document_type->id)]) }}" 
-                            class="nags-doc-title-link d-flex justify-content-between align-items-center w-100 p-3 text-decoration-none">
-                                <div class="d-flex align-items-center">
-                                    <i class="fas fa-folder-open me-2"></i> 
-                                    <span>{{ $document_type->type }}</span>
-                                </div>
-                                <span class="nags-count-square">{{ $document_type->documents_count ?? 0 }}</span>
-                            </a>
-                                            <div class="card-footer text-center bg-white border-0">
-                    <a href="{{ route('user.showFilesType', [encodeId($employee->id), encodeId($document_type->id)]) }}" class="view-all-link">مشاهدة الكل</a>
-                </div>
-                        </li>
-                        @empty
-                        <li class="list-group-item text-center text-muted">لا توجد مستندات</li>
-                        @endforelse
-                    </ul>
-                </div>
-            </div>
-
+<!-- ###################################################################################################################-->
             <div class="card side-card-unique mb-4">
                 <div class="side-card-header d-flex justify-content-between align-items-center">
                     <span class="side-title">الملاحظات</span>
@@ -203,7 +215,7 @@
                     <ul class="list-group list-group-flush side-list">
                         @forelse($employee->notes as $note)
                         <li class="list-group-item p-0 side-item position-relative">
-                            <a href="{{ route('user.note.edit', encodeId($note->id)) }}" 
+                            <a href="{{ route('note.edit', encodeId($note->id)) }}" 
                             class="text-decoration-none text-reset d-flex align-items-center w-100 p-3">
                                 <span class="text-truncate" style="max-width: 90%;">{{ $note->title }}</span>
                             </a>
@@ -218,9 +230,7 @@
     </div>
 </div>
     <div class="text-center move-this">
-        <a href="{{ route('user.library.index') }}" class="view-all-link">قم بإضافة مستند جديد أو ملاحظة من هنا</a>
+        <a href="{{ route('note.index') }}" class="view-all-link">قم بإضافة مستند جديد أو ملاحظة من هنا</a>
     </div>
-@endsection
-@push('scripts')
 <script src="{{ asset('script.js') }}"></script>
-@endpush
+@endsection

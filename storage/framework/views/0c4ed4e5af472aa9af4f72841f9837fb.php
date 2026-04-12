@@ -8,7 +8,7 @@
 <?php $__env->startSection('content'); ?>
 <div class="container-createEmployee">
     <div class="mb-3">
-        <a href="<?php echo e(route('user.employee.show', encodeId($employee->id))); ?>" class="btn-back-note" style="text-decoration: none; display: inline-flex; align-items: center; gap: 8px;">
+        <a href="<?php echo e(route('employee.edit', encodeId($employee->id))); ?>" class="btn-back-note" style="text-decoration: none; display: inline-flex; align-items: center; gap: 8px;">
             <span>&larr;</span> رجوع
         </a>
     </div>
@@ -19,7 +19,7 @@
             <h1>تعديل بيانات المستند</h1>
         </div>
 
-        <form action="<?php echo e(route('user.documents.update', $document->id)); ?>" method="POST">
+        <form action="<?php echo e(route('documents.update', $document->id)); ?>" method="POST">
             <?php echo csrf_field(); ?>
             <?php echo method_field('PUT'); ?>
 
@@ -44,12 +44,12 @@
                     <textarea name="comment" class="form-control custom-input custom-textarea auto-resize" placeholder="أدخل ملاحظاتك هنا..."><?php echo e($document->comment); ?></textarea>
                 </div>
             </div>
-
             <div class="edit-actions">
                 <button type="submit" class="btn-save-note">حفظ التعديلات</button>
         </form>
-
-                <form action="<?php echo e(route('user.documents.destroy', $document->id)); ?>" method="POST" onsubmit="return confirm('هل أنت متأكد من حذف هذا المستند نهائياً؟');">
+        <?php if($currentUser->hasPermission('deleteDoc')): ?>
+            <div class="edit-actions">
+                <form action="<?php echo e(route('documents.destroy', $document->id)); ?>" method="POST" onsubmit="return confirm('هل أنت متأكد من حذف هذا المستند نهائياً؟');">
                     <?php echo csrf_field(); ?>
                     <?php echo method_field('DELETE'); ?>
                     <button type="submit" class="btn-delete-sm" style="padding: 10px 30px !important; height: 100%; cursor: pointer;">
@@ -57,13 +57,17 @@
                     </button>
                 </form>
             </div>
+        <?php else: ?>       
+                <button type="button" class="btn-delete-sm disabled-btn" style="padding: 10px 30px !important; height: 100%; cursor: pointer;" disabled>
+                    غير مصرح لك بحذف المستندات
+                </button>
+            </div>
+        <?php endif; ?>
     </div>
     <hr>
     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
 </div>
-<?php $__env->stopSection(); ?>
-<?php $__env->startPush('scripts'); ?>
 <script src="<?php echo e(asset('script.js')); ?>"></script>
-<?php $__env->stopPush(); ?>
+<?php $__env->stopSection(); ?>
 <?php echo $__env->make('layouts.user-layout', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\xampp\htdocs\archive-nags\resources\views/user/document/show.blade.php ENDPATH**/ ?>

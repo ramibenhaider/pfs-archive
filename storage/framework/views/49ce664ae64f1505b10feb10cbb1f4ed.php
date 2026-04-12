@@ -9,7 +9,7 @@
     
     <link rel="stylesheet" href="style.css"> 
     
-    <style>
+<style>
     body {
         display: flex;
         flex-direction: column;
@@ -136,12 +136,35 @@
         text-align: center;
         z-index: 9999;
     }
+    .warning-message {
+        position: fixed;
+        right: 80px;
+        top: 80px;
+        background-color: #fcebd3;
+        border: 2px solid #f5712f;
+        padding: 14px 18px;
+        border-radius: 10px; /* زودنا الانحناء */
+        color: #a37b3e;
+        font-size: 16px;
+        margin: 15px auto; /* يخليها في النص */
+        font-weight: bold;
+        transition: opacity 0.5s ease;
+        width: fit-content; /* على قد المحتوى */
+        max-width: 400px; /* حد أقصى */
+        text-align: center;
+        z-index: 9999;
+    }
 </style>
 </head>
 <body>
     <?php if(session('success')): ?>
       <div id="success-message" class="success-message">
           <?php echo e(session('success')); ?>
+
+      </div>
+    <?php elseif(session('warning')): ?>
+      <div id="warning-message" class="warning-message">
+          <?php echo e(session('warning')); ?>
 
       </div>
     <?php endif; ?>

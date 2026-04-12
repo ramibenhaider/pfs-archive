@@ -96,7 +96,7 @@ class NoteController extends Controller
         }
 
         $note->save();
-        return redirect()->route('user.employee.show', encodeId($note->employee->id))->with('success', 'تم التعديل بنجاح!');
+        return redirect()->route('employee.edit', encodeId($note->employee->id))->with('success', 'تم التعديل بنجاح!');
     }
 
     /**
@@ -112,7 +112,7 @@ class NoteController extends Controller
     public function doSearch(Request $request)
     {
         if(!$request->filled('employee_id')) {
-            return redirect()->route('user.library.index');
+            return redirect()->route('note.index');
         }
         $request->validate([
             'employee_id' => 'required|exists:employees,id'
