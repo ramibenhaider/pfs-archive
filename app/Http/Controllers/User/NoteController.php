@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
-use App\Models\myNote;
+use App\Models\MyNote;
 use App\Models\Note;
 use App\Models\Document;
 use App\Models\Employee;
