@@ -1,14 +1,7 @@
 @extends('layouts.user-layout')
 
-@section('title')
-    إضافة موظف
-@endsection
-
-@push('styles')
-    <link rel="stylesheet" href="{{ asset('styles.css') }}">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-@endpush
-
+@section('title', 'إضافة موظف')
+   
 @section('content')
 
     <form action="{{ route('employee.store') }}" method="post">
@@ -127,6 +120,3 @@
 
         </div>
 @endsection
-@push("scripts")
-<script src="{{ asset('script.js') }}"></script>
-@endpush

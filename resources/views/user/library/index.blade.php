@@ -2,11 +2,6 @@
 
 @section('title', 'دار الوثائق')
 
-@push('styles')
-    <link rel="stylesheet" href="{{ asset('styles.css') }}">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-@endpush
-
 @section('content')
 <div class="container py-4">
     
@@ -16,45 +11,34 @@
             <br><br>
    <div class="note-section-card">
     <div class="notes-toolbar">
-        <h5 class="notes-toolbar__title">سجل الملاحظات</h5>
-
-        <form method="GET" action="{{ route('note.search') }}" class="notes-toolbar__form">
-            <select name="employee_id" id="employee_id_search_notes" class="notes-toolbar__select form-select">
-                @foreach ($employees as $employee)
-                    <option value="{{ $employee->id }}">{{ $employee->name }}</option>
-                @endforeach
-            </select>
-
-            <button type="submit" class="notes-toolbar__btn btn">بحث</button>
-        </form>
+        <h5 class="notes-toolbar__title">ملاحظاتي الشخصية</h5>
+        <a href="{{ route('myNote.create') }}"
+           class="btn-main d-flex justify-content-center align-items-center text-decoration-none"
+           style="width: 250px; height: 45px; margin: 0 auto;">إضافة ملاحظة شخصية +
+        </a>
     </div>
 
     <div class="table-responsive">
         <table class="custom-table">
             <thead>
                 <tr>
-                    <th>الموظف</th>
-                    <th>العنوان</th>
-                    <th>الملاحظة</th>
-                    <th>تاريخ الإضافة</th>
-                    <th>إجراءات</th>
+                    <th><strong>العنوان</strong></th>
+                    <th><strong>الملاحظة</strong></th>
+                    <th><strong>تاريخ الإضافة</strong></th>
+                    <th><strong>تاريخ آخر تعديل</strong></th>
+                    <th><strong>إجراءات</strong></th>
                 </tr>
             </thead>
             <tbody>
-            @foreach ($notes as $note)
+            @foreach ($myNotes as $myNote)
                 <tr>
-                    <td><strong>{{ $note->employee->name }}</strong></td>
-                    <td>{{ $note->title }}</td>
-                    <td>{{ Str::limit($note->note, 50) }}</td>
-                    <td>{{ $note->created_at->format('Y-m-d') }}</td>
+                    <td>{{ Str::limit($myNote->title, 50) }}</td>
+                    <td>{{ Str::limit($myNote->note, 50) }}</td>
+                    <td>{{ $myNote->created_at->format('Y-m-d') }}</td>
+                    <td>{{ $myNote->updated_at }}</td>
                     <td>
                         <div class="d-flex justify-content-center gap-2">
-                            <a href="{{ route('note.edit', encodeId($note->id)) }}" class="btn btn-edit-sm">عرض</a>
-                            <form method="POST" action="{{ route('note.destroy', $note->id) }}" onsubmit="return confirm('هل أنت متأكدة من حذف؟')">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-delete-sm">حذف</button>
-                            </form>
+                            <a href="{{ route('myNote.edit', encodeId($myNote->id)) }}" class="btn btn-edit-sm">عرض</a>
                         </div>
                     </td>
                 </tr>
@@ -63,10 +47,10 @@
         </table>
     </div>
     <div class="pagination-wrapper">
-        {{ $notes->links() }}
+        {{ $myNotes->links() }}
     </div>
 </div>
-
+<!--############################################################################################################################-->
 <div class="row">
     <div class="col-md-6">
         <div class="note-section-card">
@@ -111,7 +95,7 @@
                         <div class="invalid-feedback d-block">{{ $message }}</div>
                     @enderror
                 </div>
-                @if($currentUser->hasPermission('createDoc'))
+                @if($currentUser->hasPermission('createDocuments'))
                     <button type="submit" class="btn-main w-100">بدء الرفع</button>
                 @elseif(!$currentUser->is_ac)
                     <button type="button" class="btn-main w-100 disabled-btn">غير مصرح لك برفع ملف</button>
@@ -147,10 +131,7 @@
 
                 <div class="mb-3">
                     <label class="form-label">نص الملاحظة</label>
-                    <textarea name="note" 
-                          class="form-control custom-input @error('note', 'note_errors') is-invalid @enderror" rows="3"
-                          placeholder="اكتب ملاحظاتك هنا...">{{ old('note') }}
-                    </textarea>
+                    <textarea name="note" class="form-control custom-input @error('note', 'note_errors') is-invalid @enderror" rows="3"placeholder="اكتب ملاحظاتك هنا...">{{ old('note') }}</textarea>
                     @error('note', 'note_errors')
                         <div class="invalid-feedback d-block">{{ $message }}</div>
                     @enderror
@@ -162,17 +143,3 @@
     </div>
 </div>
 @endsection
-@push('scripts')
-    {{-- استدعاء ملف السكريبت الخاص بك --}}
-    <script src="{{ asset('script.js') }}"></script>
-    
-    {{-- سكريبت إضافي بسيط لتنسيق الـ textarea تلقائياً --}}
-    <script>
-        document.querySelectorAll('textarea').forEach(el => {
-            el.addEventListener('input', () => {
-                el.style.height = 'auto';
-                el.style.height = el.scrollHeight + 'px';
-            });
-        });
-    </script>
-@endpush

@@ -28,7 +28,7 @@ class EmployeeController extends Controller
         }
         
         $employee = Employee::orderBy('created_at', 'desc')->paginate(6);
-        return view('user.employee.index', compact('employee'));
+        return view('user.index', compact('employee'));
     }
 
     public function create()
@@ -46,8 +46,8 @@ class EmployeeController extends Controller
      */
     public function store(Request $request)
     {
-        if (!Auth::user()->hasPermission('createEmployee')) {
-            return back()->with('warning', 'غير مصرح لك بإضافة موظف');
+        if (!Auth::user()->hasPermission('createEmployees')) {
+            return redirect()->route('employee.index')->with('warning', 'غير مصرح لك بإضافة موظف');
         }
 
         $is_active = $request->has('is_active') ? 1 : 0;
@@ -125,7 +125,7 @@ class EmployeeController extends Controller
      */
     public function update(Request $request, Employee $employee)
     {
-        if (!Auth::user()->hasPermission('updateEmployee')) {
+        if (!Auth::user()->hasPermission('updateEmployees')) {
             return back()->with('warning', 'غير مصرح لك بالتعديل على موظف');
         }
 
@@ -187,7 +187,7 @@ class EmployeeController extends Controller
      */
     public function destroy(Employee $employee)
     {
-        if (!Auth::user()->hasPermission('deleteEmployee')) {
+        if (!Auth::user()->hasPermission('deleteEmployees')) {
             return back()->with('warning', 'غير مصرح لك بحذف موظف');
         }
     }
@@ -205,6 +205,6 @@ class EmployeeController extends Controller
             })
             ->orderBy('created_at', 'desc')
             ->paginate(5);
-        return view('user.employee.index', compact('employee'));
+        return view('user.index', compact('employee'));
     }
 }

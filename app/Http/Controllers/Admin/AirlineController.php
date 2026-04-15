@@ -29,11 +29,14 @@ class AirlineController extends Controller
      */
     public function store(Request $request)
     {
-        $data = $request->validate([
-            'airline_name' => 'required|string|max:70'
-        ],[
+        $data = $request->validateWithBag('airline_name.create',
+        [
+            'airline_name' => 'required|string|max:70|unique:airlines,airline_name'
+        ],
+        [
             'airline_name.reqired' => 'الاسم مطلوب!',
-            'airline_name.max' => 'لقد تجاوزت العدد المسموح به من عدد الحروف!'
+            'airline_name.max' => 'لقد تجاوزت العدد المسموح به من عدد الحروف!',
+            'airline_name.unique' => 'اسم خط الطيران مكرر!'
         ]);
 
         Airline::create($data);
@@ -59,16 +62,50 @@ class AirlineController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Airline $airline)
+    public function update(Request $request, $airlineHashed)
     {
-        //
+        $airlineHashed = decodeId($airlineHashed);
+        if(!$airlineHashed) {
+            abort(404);
+        }
+        $airline = airline::findOrFail($airlineHashed);
+        $new_data = $request->validateWithBag('airline_name.edit',
+        [
+            'airline_name' => 'required|string|max:70|unique:airlines,airline_name',
+        ],
+        [
+            'airline_name.required' => 'لا يمكن ترك هذه الخانة فارغ فارغة!',
+            'airline_name.max' => 'لقد تجاوزت عدد الأحرف المسموحة!',
+            'airline_name.unique' => 'اسم خط الطيران مكرر!'
+        ]);
+
+        if (!$airline->fill($new_data)->isDirty()) {
+            return back()->with('warning', 'لم تقم بأي تعديل!');
+        }
+
+        $airline->save();
+        return redirect()->back()->with('success', 'تم التعديل بنجاح!');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Airline $airline)
+    public function destroy($airlineHashed)
     {
-        //
+        $airlineHashed = decodeId($airlineHashed);
+
+        if(!$airlineHashed) {
+            abort(404);
+        }
+        
+        $airline = airline::findOrFail($airlineHashed);
+        
+        if ($airline->employees()->exists()) {
+            return back()->with('warning', 'يجب أن لا يكون هناك موظف مرتبط بخط الطيران هذا!');
+        }
+
+        $airline->delete();
+
+        return back()->with('success', 'تم حذف خط الطيران بنجاح');
     }
 }

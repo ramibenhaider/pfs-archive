@@ -894,7 +894,7 @@ select.form-select {
 }
 
 /* الحاوية الأساسية للقائمة */
-.nags-doc-container {
+.pfs-doc-container {
     direction: rtl;
     border: none !important;
     background: transparent;
@@ -903,12 +903,12 @@ select.form-select {
 /* تغليف السطر الواحد */
 
 
-.nags-doc-wrapper:hover {
+.pfs-doc-wrapper:hover {
     background-color: #f9fafb;
 }
 
 /* الرابط واللون المطلوب (95BF30) */
-.nags-doc-title-link {
+.pfs-doc-title-link {
     color: #000000 !important;
     text-decoration: none !important;
     font-weight: 700;
@@ -918,7 +918,7 @@ select.form-select {
 
 /*#7da128*/
 /* المربع الصغير لحساب عدد الملفات */
-.nags-count-square {
+.pfs-count-square {
     background-color: #f1f5f9;
     color: #64748b;
     font-size: 0.7rem;
@@ -934,28 +934,32 @@ select.form-select {
 }
 
 /* مجموعة أزرار التحكم */
-.nags-action-group a {
+.pfs-action-group a {
     color: #cbd5e0;
     font-size: 0.85rem;
     margin: 0 6px;
     transition: all 0.2s;
 }
 
-.nags-btn-edit:hover { 
+.pfs-btn-edit:hover { 
     color: #3b82f6 !important; 
     transform: scale(1.1);
 }
 
-.nags-btn-delete:hover { 
+.pfs-btn-delete:hover { 
     color: #ef4444 !important; 
     transform: scale(1.1);
 }
 
 /* إخفاء حدود آخر عنصر لتجنب الخطوط المزدوجة */
-.nags-doc-wrapper:last-child {
+.pfs-doc-wrapper:last-child {
     border-bottom: none !important;
 }
 
 .move-this {
     padding-bottom: 20px;
+}
+
+.sidebar-link.active {
+    border-radius: 0;
 }

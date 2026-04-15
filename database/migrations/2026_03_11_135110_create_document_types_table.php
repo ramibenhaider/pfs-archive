@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('document_types', function (Blueprint $table) {
             $table->id();
-            $table->string('type', '50')->nullable();
+            $table->string('type', 50);
             $table->timestamps();
         });
     }

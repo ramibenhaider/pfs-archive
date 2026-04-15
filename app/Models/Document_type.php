@@ -8,7 +8,8 @@ class Document_type extends Model
 {
     protected $fillable =
     [
-        'type'
+        'type',
+        'typeEn'
     ];
 
     public function documents()

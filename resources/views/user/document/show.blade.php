@@ -1,10 +1,5 @@
 @extends('layouts.user-layout')
 
-@push('styles')
-<link rel="stylesheet" href="{{ asset('styles.css') }}">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-@endpush
-
 @section('content')
 <div class="container-createEmployee">
     <div class="mb-3">
@@ -46,9 +41,18 @@
             </div>
             <div class="edit-actions">
                 <button type="submit" class="btn-save-note">حفظ التعديلات</button>
+                @if($currentUser->hasPermission('previewDocuments'))
+                    @php
+                        $signedUrl = URL::temporarySignedRoute('documents.preview', now()->addMinutes(60), ['path' => $document->file_path]);
+                    @endphp
+                    <button type="button" onclick="viewDocument('{{ $signedUrl }}', '{{ $document->original_name }}')" class="btn btn-primary">
+                        <i class="fa fa-eye"></i> معاينة المستند
+                    </button>
+                @else
+                    <button type="button" class="btn-delete-sm disabled-btn"><i class="fa fa-eye"></i>غير مصرح لك بمعاينة المستندات</button>                
+                @endif
         </form>
-        @if($currentUser->hasPermission('deleteDoc'))
-            <div class="edit-actions">
+        @if($currentUser->hasPermission('deleteDocuments'))
                 <form action="{{ route('documents.destroy', $document->id) }}" method="POST" onsubmit="return confirm('هل أنت متأكد من حذف هذا المستند نهائياً؟');">
                     @csrf
                     @method('DELETE')
@@ -68,5 +72,4 @@
     @endforeach
 
 </div>
-<script src="{{ asset('script.js') }}"></script>
 @endsection

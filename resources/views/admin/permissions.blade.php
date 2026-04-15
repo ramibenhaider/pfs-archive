@@ -1,6 +1,7 @@
 @extends('layouts.admin-layout')
 
 @section('title', 'لوحة التحكم')
+@section('sidebar-permissions', 'active')
 
 @push('styles')
 <link rel="stylesheet" href="{{ asset('styles.css') }}">
@@ -155,12 +156,12 @@
             <ul class="perm-table-header">
                 <li>اسم المستخدم</li>
                 <li>الحالة</li>
-                <li>إضافة موظف</li>
-                <li>حذف موظف</li>
-                <li>تعديل موظف</li>
-                <li>إضافة مستند</li>
-                <li>عرض مستند</li>
-                <li>حذف مستند</li>
+                <li>إضافة الموظفين</li>
+                <li>تعديل الموظفين</li>
+                <li>معاينة المستندات</li>
+                <li>إضافة مستندات</li>
+                <li>عرض مستندات</li>
+                <li>حذف مستندات</li>
                 <li>إجراء</li>
             </ul>
 

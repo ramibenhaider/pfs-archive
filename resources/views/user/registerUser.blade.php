@@ -2,11 +2,6 @@
 
 @section('title', 'تسجيل موظف جديد')
 
-@push('styles')
-<link rel="stylesheet" href="{{ asset('styles.css') }}">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-@endpush
-
 @section('content')
 <div class="container-createEmployee">
 
@@ -66,6 +61,3 @@
 </div>
 
 @endsection
-@push('scripts')
-<script src="{{ asset('script.js') }}"></script>
-@endpush

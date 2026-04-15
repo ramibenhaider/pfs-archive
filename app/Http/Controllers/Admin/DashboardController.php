@@ -24,11 +24,11 @@ class DashboardController extends Controller
 
     public function fields()
     {
-        $airlines = Airline::where('id', '>', 1)->orderByDesc('created_at')->get();
-        $document_types = Document_type::where('id', '>', 1)->orderByDesc('created_at')->get();
-        $management = Management::where('id', '>', 1)->orderByDesc('created_at')->get();
-        $job_titles = Job_title::where('id', '>', 1)->orderByDesc('created_at')->get();
-        $nationalities = Nationality::where('id', '>', 1)->orderByDesc('created_at')->get();
+        $airlines = Airline::orderByDesc('created_at')->get();
+        $document_types = Document_type::orderByDesc('created_at')->get();
+        $management = Management::orderByDesc('created_at')->get();
+        $job_titles = Job_title::orderByDesc('created_at')->get();
+        $nationalities = Nationality::orderByDesc('created_at')->get();
 
         return view('admin.fields', compact('airlines', 'document_types', 'job_titles', 'management', 'nationalities'));
     }

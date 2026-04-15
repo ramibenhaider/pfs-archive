@@ -18,3 +18,4 @@ class Note extends Model
         return $this->belongsTo(Employee::class);
     }
 }
+//########## Any user cann interaction with this notes ###############

@@ -1,11 +1,6 @@
 
 @extends('layouts.user-layout')
 
-@push('styles')
-<link rel="stylesheet" href="{{ asset('styles.css') }}">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-@endpush
-
 @section('title', 'بيانات الموظف')
 
 @section('content')
@@ -155,7 +150,7 @@
                     </ul>
                     <div class="card-footer d-flex justify-content-between border-top-0 bg-white">
                         <a href="{{ route('employee.index') }}" class="btn btn-secondary btn-sm">رجوع</a>
-                        @if($currentUser->hasPermission('updateEmployee'))
+                        @if($currentUser->hasPermission('updateEmployees'))
                             <button type="submit" class="btn btn-save-custom btn-sm">حفظ التعديلات</button>
                         @else
                             <button type="button" class="btn btn-save-custom disabled-btn btn-sm">غير مصرح لك بإجراء تعديلات</button>
@@ -167,31 +162,31 @@
 <!-- ###################################################################################################################-->
             <div class="col-md-5">
                 <div class="card side-card-unique mb-4">
-                    @if($currentUser->hasPermission('showDoc'))
+                    @if($currentUser->hasPermission('showDocuments'))
                         <div class="side-card-header d-flex justify-content-between align-items-center">
                             <span class="side-title">المستندات</span>
                             <span class="total-count-badge">{{ $employee->documents->count() ?? 0 }}</span>
                         </div>
                         <div class="card-body p-0">
-                            <ul class="list-group list-group-flush nags-doc-container">
+                            <ul class="list-group list-group-flush pfs-doc-container">
                                 @forelse($documentTypes as $document_type)
-                                <li class="list-group-item p-0 nags-doc-wrapper position-relative">
+                                <li class="list-group-item p-0 pfs-doc-wrapper position-relative">
                                     <a href="{{ route('documents.showTypeFiles', [encodeId($employee->id), encodeId($document_type->id)]) }}" 
-                                        class="nags-doc-title-link d-flex justify-content-between align-items-center w-100 p-3 text-decoration-none">
+                                        class="pfs-doc-title-link d-flex justify-content-between align-items-center w-100 p-3 text-decoration-none">
                                         <div class="d-flex align-items-center">
                                             <i class="fas fa-folder-open me-2"></i> 
                                             <span>{{ $document_type->type }}</span>
                                         </div>
-                                        <span class="nags-count-square">{{ $document_type->documents_count ?? 0 }}</span>
+                                        <span class="pfs-count-square">{{ $document_type->documents_count ?? 0 }}</span>
                                     </a>
-                                    <div class="card-footer text-center bg-white border-0">
-                                        <a href="{{ route('documents.showTypeFiles', [encodeId($employee->id), encodeId($document_type->id)]) }}" class="view-all-link">مشاهدة الكل</a>
-                                    </div>
                                 </li>
                                 @empty
                                 <li class="list-group-item text-center text-muted">لا توجد مستندات</li>
                                 @endforelse
                             </ul>
+                            <div class="card-footer text-center bg-white border-0">
+                                <a href="{{ route('documents.show', encodeId($employee->id)) }}" class="view-all-link">مشاهدة الكل</a>
+                            </div>
                         </div>
                     @else
                         <div class="side-card-header d-flex justify-content-between align-items-center">
@@ -232,5 +227,4 @@
     <div class="text-center move-this">
         <a href="{{ route('note.index') }}" class="view-all-link">قم بإضافة مستند جديد أو ملاحظة من هنا</a>
     </div>
-<script src="{{ asset('script.js') }}"></script>
 @endsection

@@ -9,6 +9,7 @@ use App\Models\Document;
 use App\Models\Employee;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\URL;
 use Illuminate\support\Facades\Storage;
 
 class DocumentController extends Controller
@@ -34,8 +35,13 @@ class DocumentController extends Controller
      */
     public function store(Request $request)
     {
-        if (!Auth::user()->hasPermission('createDoc')) {
+        if (!Auth::user()->hasPermission('createDocuments')) {
             return back()->with('warning', 'غير مصرح لك بإضافة موظف!');
+        }
+
+        $document_type = Document_type::find($request->document_type_id);
+        if (!$document_type) {
+            return back()->with('warning', 'نوع الملف هذا غير موجود!');
         }
         
         $request->validateWithBag('doc_errors',
@@ -63,14 +69,12 @@ class DocumentController extends Controller
             ]
         );
         
-        DB::transaction(function () use ($request) {
+        DB::transaction(function () use ($request, $document_type) {
 
             foreach ($request->file('files') as $index => $file) {
 
-                // حفظ الملف
-                $path = $file->store('uploads', 'public');
+                $path = $file->store($document_type->typeEn, 'public');
 
-                // إنشاء سجل لكل ملف
                 Document::create([
                     'file_path' => $path,
                     'original_name' => $file->getClientOriginalName(),
@@ -133,17 +137,16 @@ class DocumentController extends Controller
      */
     public function destroy($id)
     {
-        if (!Auth::user()->hasPermission('deleteDoc')) {
+        if (!Auth::user()->hasPermission('deleteDocuments')) {
             return back()->with('warning', 'غير مصرح لك بحذف المستند');
         }
+
         $document = Document::findOrFail($id);
 
-        // حذف الملف من Storage أولاً
         if (Storage::disk('public')->exists($document->file_path)) {
             Storage::disk('public')->delete($document->file_path);
         }
 
-        // ثم حذف الـ record من DB
         $document->delete();
 
         return back()->with('success', 'تم حذف الملف بنجاح!');
@@ -151,8 +154,8 @@ class DocumentController extends Controller
 
         public function showTypeFiles($employeeHash,$document_typeHash)
     {
-        if (!Auth::user()->hasPermission('showDoc')) {
-            return redirect()->back()->with('warning', 'غير مصرح لك بالإطلاع على المستندات!');
+        if (!Auth::user()->hasPermission('showDocuments')) {
+            return back()->with('warning', 'غير مصرح لك بالإطلاع على المستندات!');
         }
 
         $employeeId = decodeId($employeeHash);
@@ -171,5 +174,20 @@ class DocumentController extends Controller
                              ->where('document_type_id', $document_type->id)
                              ->orderByDesc('created_at')->get();
         return view('user.document.show', compact('documents', 'employee'));
+    }
+
+    public function preview($path)
+    {
+        if (!Auth::user()->hasPermission('previewDocuments')) {
+            return back()->with('warning', 'أنت غير مصرح لك بمعاينة المستندات');
+        }
+
+        $fullpath = storage_path('app/public/' . $path);
+
+        if (!file_exists($fullpath)) {
+            return back()->with('warning', 'المستند غير موجود!');
+        }
+
+        return response()->file($fullpath);
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Models\myNote;
 use App\Models\Note;
 use App\Models\Document;
 use App\Models\Employee;
@@ -16,11 +17,11 @@ class NoteController extends Controller
      */
     public function index()
     {
-        $employees = Employee::orderBy('created_at', 'desc')->get();
-        $notes = Note::orderBy('created_at', 'desc')->paginate(5);
+        $myNotes = MyNote::where('user_id', auth()->id())->orderByDesc('created_at')->paginate(5);
+        $employees = Employee::orderByDesc('created_at')->get();
         $documents = Document::all();
         $document_types = Document_type::all();
-        return view('user.library.index', compact('documents', 'notes', 'employees', 'document_types'));
+        return view('user.library.index', compact('documents', 'employees', 'document_types', 'myNotes'));
     }
 
     /**
@@ -51,7 +52,7 @@ class NoteController extends Controller
             'note' => 'لقد تجاوزت عدد الأحرف المسموحة'
         ]);
         Note::create($data);
-        return back()->with('sucsess', 'تمت إضافة الملاحظة بنجاح!');
+        return back()->with('success', 'تمت إضافة الملاحظة بنجاح!');
     }
 
     /**
@@ -105,31 +106,9 @@ class NoteController extends Controller
     public function destroy($id)
     {
         $note = Note::findOrFail($id);
+        $employee = $note->employee_id;
+
         $note->delete();
-        return back()->with('success', 'تم الحذف بنجاح!');
-    }
-
-    public function doSearch(Request $request)
-    {
-        if(!$request->filled('employee_id')) {
-            return redirect()->route('note.index');
-        }
-        $request->validate([
-            'employee_id' => 'required|exists:employees,id'
-        ],
-        [
-            'employee_id.required' => 'اسم الموظف مطلوب!',
-            'employee_id.exists'   => 'هذا الموظف غير مسجل على قاعدة البيانات!'
-        ]);
-
-        $notes = Note::with('employee')
-                      ->where('employee_id', $request->employee_id)
-                      ->orderByDesc('created_at')
-                      ->paginate(5);
-        $employees = Employee::orderByDesc('created_at')->get();
-        $documents = Document::all();
-        $document_types = Document_type::all();
-        return view('user.library.index', compact('notes', 'employees', 'documents', 'document_types'))
-               ->with('success');
+        return redirect()->route('employee.edit', encodeId($employee))->with('success', 'تم الحذف بنجاح!');
     }
 }
