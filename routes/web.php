@@ -18,6 +18,7 @@ Route::prefix('/')->group(function() {
         Route::post('/login', [UserLoginController::class, 'login'])->name('user.doLogin');
         Route::get('/user/registerUser', function() {return view('user.registerUser');})->name('user.register');
         Route::post('/user/login', [DashboardController::class, 'store'])->name('user.store');
+        Route::post('/logout', [UserLoginController::class, 'logout'])->name('user.logout');
     });
 
     Route::middleware(['auth:web', 'prevent-back', 'user-activation'])->group(function () {
@@ -38,8 +39,6 @@ Route::prefix('/')->group(function() {
         Route::resource('note', NoteController::class)->except(['create', 'show']);
 
         Route::resource('myNote', MyNoteController::class)->except(['index', 'show']);
-
-        Route::post('/logout', [UserLoginController::class, 'logout'])->name('user.logout');
         
     });
 });
