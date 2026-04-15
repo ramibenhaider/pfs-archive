@@ -13,12 +13,13 @@ Route::prefix('/')->group(function() {
 
     Route::get('/user/unactivated', function() {return view('user.unactivated');})->name('user.unactivated');
 
+    Route::post('/logout', [UserLoginController::class, 'logout'])->name('user.logout');
+
     Route::middleware('guest:web')->group(function () {
         Route::get('/login', [UserLoginController::class, 'showLoginForm'])->name('login');
         Route::post('/login', [UserLoginController::class, 'login'])->name('user.doLogin');
         Route::get('/user/registerUser', function() {return view('user.registerUser');})->name('user.register');
         Route::post('/user/login', [DashboardController::class, 'store'])->name('user.store');
-        Route::post('/logout', [UserLoginController::class, 'logout'])->name('user.logout');
     });
 
     Route::middleware(['auth:web', 'prevent-back', 'user-activation'])->group(function () {
