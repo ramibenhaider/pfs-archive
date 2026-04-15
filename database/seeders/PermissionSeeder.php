@@ -15,8 +15,8 @@ class PermissionSeeder extends Seeder
     {
         $permissions = 
         [
-            'createEmployee',
-            'updateEmployee',
+            'createEmployees',
+            'updateEmployees',
             'previewDocuments',
             'createDocuments',
             'showDocuments',
