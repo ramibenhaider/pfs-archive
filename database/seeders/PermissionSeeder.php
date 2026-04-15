@@ -16,11 +16,11 @@ class PermissionSeeder extends Seeder
         $permissions = 
         [
             'createEmployee',
-            'deleteEmployee',
             'updateEmployee',
-            'createDoc',
-            'showDoc',
-            'deleteDoc'
+            'previewDocuments',
+            'createDocuments',
+            'showDocuments',
+            'deleteDocuments'
         ];
 
         foreach ($permissions as $perm)
