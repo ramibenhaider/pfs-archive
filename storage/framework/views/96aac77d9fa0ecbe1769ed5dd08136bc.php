@@ -4,156 +4,236 @@
 <?php $__env->startSection('sidebar-permissions', 'active'); ?>
 
 <?php $__env->startPush('styles'); ?>
-    <style>
-        .perm-container { width: calc(100% - 250px); margin-right: 250px; margin-top: 24px; margin-bottom: 24px; padding: 0 30px; box-sizing: border-box; transition: all 0.3s ease; }
-        .section-title { font-size: 20px; font-weight: bold; color: #3B524A; margin-bottom: 18px; }
-        .perm-card { background: #fff; border-radius: 14px; box-shadow: 0 4px 15px rgba(0,0,0,0.06); overflow: hidden; }
-        .table-scroll-wrapper { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
-        .perm-table-header, .perm-row-desktop { 
-            display: grid; 
-            grid-template-columns: 2fr 1fr repeat(<?php echo e($permissions->count()); ?>, 1fr) 0.6fr; 
-            list-style: none; padding: 13px 16px; margin: 0; align-items: center; text-align: center; gap: 4px; min-width: 1000px; 
+<style>
+    .perm-container-unique {
+        width: calc(100% - 250px);
+        margin-right: 250px;
+        margin-top: 20px;
+        margin-bottom: 20px;
+        padding: 0 40px;
+        transition: all 0.3s;
+    }
+
+    .perm-card-wrapper {
+        background: #fff;
+        border-radius: 15px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        overflow-x: auto; /* للسماح بالتمرير إذا زادت الصلاحيات */
+    }
+
+    /* Desktop Grid */
+    .perm-table-header, .perm-row-item {
+        display: grid;
+        /* توزيع الأعمدة: اسم المستخدم (2) + الحالة (1) + 6 صلاحيات (6) + حذف (0.5) */
+        grid-template-columns: 2fr repeat(7, 1fr) 0.5fr;
+        list-style: none;
+        padding: 15px;
+        margin: 0;
+        align-items: center;
+        text-align: center;
+        min-width: 900px; /* لضمان عدم تداخل الحقول في الشاشات المتوسطة */
+    }
+
+    .perm-table-header {
+        background-color: #3B524A;
+        color: white;
+        font-weight: bold;
+        font-size: 14px;
+        position: sticky;
+        top: 0;
+    }
+
+    .perm-row-item {
+        border-bottom: 1px solid #eee;
+    }
+
+    .perm-row-item:hover { background-color: #f9f9f9; }
+
+    .emp-name-cell { text-align: right; color: #3B524A; }
+    .emp-username { font-size: 12px; color: #888; margin-top: 3px; }
+
+    /* Toggle Switch Style */
+    .switch-perm {
+        position: relative;
+        display: inline-block;
+        width: 40px;
+        height: 20px;
+    }
+    .switch-perm input { opacity: 0; width: 0; height: 0; }
+    .slider-perm {
+        position: absolute;
+        cursor: pointer;
+        top: 0; left: 0; right: 0; bottom: 0;
+        background-color: #D30E00;
+        transition: .4s;
+        border-radius: 34px;
+    }
+    .slider-perm:before {
+        position: absolute; content: "";
+        height: 14px; width: 14px;
+        left: 3px; bottom: 3px;
+        background-color: white;
+        transition: .4s;
+        border-radius: 50%;
+    }
+    input:checked + .slider-perm { background-color: #28a745; }
+    input:checked + .slider-perm:before { transform: translateX(20px); }
+
+    .btn-delete-perm { background: none; border: none; color: #D20E00; cursor: pointer; font-size: 14px; font-weight: bold; }
+
+    .perm-footer-actions { padding: 20px; text-align: left; background: #f8f9fa; }
+    .save-btn-perm { background-color: #3B524A; color: white; padding: 10px 35px; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; }
+
+    /* 📱 Mobile Responsive Code */
+    @media (max-width: 900px) {
+        .perm-container-unique {
+            width: 100%;
+            margin-right: 0;
+            padding: 10px;
         }
-        .perm-table-header { background-color: #3B524A; color: #fff; font-weight: bold; font-size: 13px; position: sticky; top: 0; z-index: 2; }
-        .perm-row-desktop { border-bottom: 1px solid #eee; transition: background 0.2s; }
-        .perm-row-desktop:hover { background-color: #f5f8f6; }
-        .emp-name-cell { text-align: right; }
-        .emp-name { font-weight: bold; color: #3B524A; font-size: 14px; }
-        .emp-username { font-size: 12px; color: #888; margin-top: 3px; }
-        .switch-perm { position: relative; display: inline-block; width: 40px; height: 22px; flex-shrink: 0; }
-        .switch-perm input { opacity: 0; width: 0; height: 0; position: absolute; }
-        .slider-perm { position: absolute; cursor: pointer; inset: 0; background-color: #D30E00; transition: .35s; border-radius: 34px; }
-        .slider-perm::before { content: ""; position: absolute; height: 15px; width: 15px; left: 3px; bottom: 3.5px; background: #fff; transition: .35s; border-radius: 50%; }
-        input:checked + .slider-perm { background-color: #28a745; }
-        input:checked + .slider-perm::before { transform: translateX(19px); }
-        .btn-delete { background: none; border: none; color: #D20E00; cursor: pointer; font-size: 12px; font-weight: bold; padding: 5px 8px; border-radius: 7px; transition: background 0.2s, transform 0.2s; white-space: nowrap; }
-        .btn-delete:hover { background: #fde8e8; transform: scale(1.05); }
-        .perm-footer { padding: 16px 20px; background: #f8f9fa; border-top: 1px solid #eee; display: flex; justify-content: flex-start; }
-        .save-btn { background-color: #3B524A; color: #fff; padding: 10px 35px; border: none; border-radius: 10px; font-weight: bold; font-size: 14px; cursor: pointer; transition: background 0.3s, transform 0.2s; }
-        .perm-cards-mobile { display: none; }
-        @media (max-width: 1100px) { .perm-container { width: calc(100% - 70px); margin-right: 70px; } }
-        @media (max-width: 768px) {
-            .perm-container { width: 100%; margin-right: 0; margin-top: 70px; padding: 0 12px; }
-            .perm-table-desktop { display: none; }
-            .perm-cards-mobile  { display: block; padding: 12px; }
-            .mobile-user-card { background: #fff; border: 1px solid #e0e0e0; border-radius: 13px; margin-bottom: 14px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
-            .mobile-card-header { background: #f0f4f2; padding: 12px 14px; border-bottom: 1px solid #e0e0e0; display: flex; align-items: center; justify-content: space-between; }
-            .mobile-perm-row { display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; border-bottom: 1px solid #f5f5f5; font-size: 13px; }
-            .mobile-card-footer { padding: 10px 14px; background: #fafafa; display: flex; justify-content: flex-end; }
-            .perm-footer { justify-content: center; }
-            .save-btn { width: 100%; }
+
+        .perm-card-wrapper { overflow: visible; }
+
+        .perm-table-header { display: none; } /* إخفاء الهيدر في الجوال */
+
+        .perm-row-item {
+            display: block; /* تحويل الشبكة إلى بلوك طولي */
+            min-width: auto;
+            border: 1px solid #ddd;
+            margin-bottom: 20px;
+            border-radius: 12px;
+            padding: 0;
+            background: #fff;
         }
-    </style>
+
+        .perm-row-item li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 15px;
+            border-bottom: 1px solid #f5f5f5;
+        }
+
+        .perm-row-item li:last-child { border-bottom: none; }
+
+        .emp-name-cell {
+            background: #f0f4f2;
+            border-radius: 11px 11px 0 0;
+            text-align: right !important;
+            display: block !important;
+        }
+
+        /* إضافة العناوين باللغة العربية قبل كل زر Toggle */
+        .perm-row-item li:not(.emp-name-cell):not(:last-child)::before {
+            font-weight: bold;
+            color: #555;
+            font-size: 13px;
+        }
+
+        /* ترتيب العناوين حسب ترتيب الـ li في الكود */
+        .perm-row-item li:nth-child(2)::before { content: "الحالة:"; }
+        .perm-row-item li:nth-child(3)::before { content: "إضافة الموظفين:"; }
+        .perm-row-item li:nth-child(4)::before { content: "تعديل الموظفين:"; }
+        .perm-row-item li:nth-child(5)::before { content: "معاينة المستندات:"; }
+        .perm-row-item li:nth-child(6)::before { content: "إضافة مستندات:"; }
+        .perm-row-item li:nth-child(7)::before { content: "عرض مستندات:"; }
+        .perm-row-item li:nth-child(8)::before { content: "حذف مستندات:"; }
+        
+        .btn-delete-perm {
+            width: 100%;
+            padding: 10px;
+            color: #D30E00;
+            text-align: center;
+        }
+        
+        .perm-footer-actions {
+            position: sticky;
+            bottom: 0;
+            z-index: 10;
+        }
+        
+        .save-btn-perm { width: 100%; }
+    }
+</style>
 <?php $__env->stopPush(); ?>
 
 <?php $__env->startSection('content'); ?>
-<div class="perm-container">
+<div class="perm-container-unique">
     <h2 class="section-title">إدارة صلاحيات المستخدمين</h2>
 
-    <div class="perm-card">
-        <form id="permissions-form" action="<?php echo e(route('admin.user.update')); ?>" method="POST">
+    <div class="perm-card-wrapper">
+
+        <form action="<?php echo e(route('admin.user.update')); ?>" method="POST">
             <?php echo csrf_field(); ?>
             <?php echo method_field('PUT'); ?>
 
-            
-            <div class="perm-table-desktop">
-                <div class="table-scroll-wrapper">
-                    <ul class="perm-table-header">
-                        <li>اسم المستخدم</li>
-                        <li>الحالة</li>
-                        <?php $__currentLoopData = $permissions; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $permission): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?> <li><?php echo e($permission->label ?? $permission->name); ?></li> <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                        <li>إجراء</li>
-                    </ul>
+            <ul class="perm-table-header">
+                <li>اسم المستخدم</li>
+                <li>الحالة</li>
+                <li>إضافة الموظفين</li>
+                <li>تعديل الموظفين</li>
+                <li>معاينة المستندات</li>
+                <li>إضافة مستندات</li>
+                <li>عرض مستندات</li>
+                <li>حذف مستندات</li>
+                <li>إجراء</li>
+            </ul>
 
-                    <?php $__currentLoopData = $users; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $user): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                    <ul class="perm-row-desktop">
-                        <li class="emp-name-cell">
-                            <div class="emp-name"><?php echo e($user->name); ?></div>
-                            <div class="emp-username"><?php echo e($user->username); ?></div>
-                            <input type="hidden" name="users[<?php echo e($user->id); ?>][id]" value="<?php echo e($user->id); ?>">
-                        </li>
-
-                        <li>
-                            <label class="switch-perm">
-                                <input type="hidden" name="users[<?php echo e($user->id); ?>][is_active]" value="0">
-                                <input type="checkbox" name="users[<?php echo e($user->id); ?>][is_active]" value="1" <?php echo e($user->is_active ? 'checked' : ''); ?>>
-                                <span class="slider-perm"></span>
-                            </label>
-                        </li>
-
-                        <?php $__currentLoopData = $permissions; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $permission): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                        <li>
-                            <label class="switch-perm">
-                                <input type="hidden" name="users[<?php echo e($user->id); ?>][<?php echo e($permission->name); ?>]" value="0">
-                                <input type="checkbox" name="users[<?php echo e($user->id); ?>][<?php echo e($permission->name); ?>]" value="1" <?php echo e($user->permissions->contains('id', $permission->id) ? 'checked' : ''); ?>>
-                                <span class="slider-perm"></span>
-                            </label>
-                        </li>
-                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                        <li><button type="button" class="btn-delete" onclick="deleteUser('<?php echo e(route('admin.user.destroy', encodeId($user->id))); ?>')">حذف</button></li>
-                    </ul>
-                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                </div>
-            </div>
-
-            
-            <div class="perm-cards-mobile">
+            <div class="perm-table-body">
                 <?php $__currentLoopData = $users; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $user): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                <div class="mobile-user-card">
-                    <div class="mobile-card-header">
-                        <div>
-                            <div class="emp-name"><?php echo e($user->name); ?></div>
-                            <input type="hidden" name="users[<?php echo e($user->id); ?>][id]" value="<?php echo e($user->id); ?>">
-                        </div>
+                <ul class="perm-row-item">
+                    <li class="emp-name-cell">
+                        <strong><?php echo e(Str::limit($user->name, 27)); ?></strong>
+                        <div class="emp-username"><?php echo e(Str::limit($user->username, 27)); ?></div>
+                        <input type="hidden" name="users[<?php echo e($loop->index); ?>][id]" value="<?php echo e($user->id); ?>">
+                    </li>
+
+                    <li>
                         <label class="switch-perm">
-                            <input type="hidden" name="users[<?php echo e($user->id); ?>][is_active]" value="0">
-                            <input type="checkbox" name="users[<?php echo e($user->id); ?>][is_active]" value="1" <?php echo e($user->is_active ? 'checked' : ''); ?>>
+                            <input type="checkbox" 
+                                name="users[<?php echo e($loop->index); ?>][is_active]" 
+                                value="1" 
+                                <?php echo e($user->is_active ? 'checked' : ''); ?>>
                             <span class="slider-perm"></span>
                         </label>
-                    </div>
-                    <div class="mobile-card-body">
-                        <?php $__currentLoopData = $permissions; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $permission): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                        <div class="mobile-perm-row">
-                            <span><?php echo e($permission->label ?? $permission->name); ?></span>
-                            <label class="switch-perm">
-                                <input type="hidden" name="users[<?php echo e($user->id); ?>][<?php echo e($permission->name); ?>]" value="0">
-                                <input type="checkbox" name="users[<?php echo e($user->id); ?>][<?php echo e($permission->name); ?>]" value="1" <?php echo e($user->permissions->contains('id', $permission->id) ? 'checked' : ''); ?>>
-                                <span class="slider-perm"></span>
-                            </label>
-                        </div>
-                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                    </div>
-                </div>
+                    </li>
+
+                    <?php $__currentLoopData = $permissions; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $permission): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                    <li>
+                        <label class="switch-perm">
+                            <input type="checkbox"
+                                name="users[<?php echo e($loop->parent->index); ?>][<?php echo e($permission->name); ?>]"
+                                value="1"
+                                <?php echo e($user->permissions->contains('id', $permission->id) ? 'checked' : ''); ?>>
+                            <span class="slider-perm"></span>
+                        </label>
+                    </li>
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+
+                    <li>
+                        <button type="button" class="btn-delete-perm" title="حذف المستخدم"
+                                onclick="deleteUser('<?php echo e(route('admin.user.destroy', encodeId($user->id))); ?>')">
+                            حذف
+                        </button>
+                    </li>
+                </ul>
                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
             </div>
 
-            <div class="perm-footer">
-                <button type="submit" class="save-btn">حفظ التغييرات</button>
+            <div class="perm-footer-actions">
+                <button type="submit" class="save-btn-perm">حفظ التغييرات</button>
             </div>
+
         </form>
+
     </div>
 </div>
 
-<form id="global-delete-form" action="" method="POST" style="display:none;"><?php echo csrf_field(); ?> <?php echo method_field('DELETE'); ?></form>
+<form id="global-delete-form" action="" method="POST" style="display: none;">
+    <?php echo csrf_field(); ?>
+    <?php echo method_field('DELETE'); ?>
+</form>
+
+<script src="<?php echo e(asset('script.js')); ?>"></script>
 <?php $__env->stopSection(); ?>
-
-<?php $__env->startPush('scripts'); ?>
-<script>
-    // عند الإرسال، نحذف القسم المخفي تماماً من الـ DOM
-    document.getElementById('permissions-form').addEventListener('submit', function(e) {
-        if (window.innerWidth <= 768) {
-            document.querySelector('.perm-table-desktop').remove();
-        } else {
-            document.querySelector('.perm-cards-mobile').remove();
-        }
-    });
-
-    function deleteUser(url) {
-        if (confirm('هل أنت متأكد؟')) {
-            const form = document.getElementById('global-delete-form');
-            form.action = url; form.submit();
-        }
-    }
-</script>
-<?php $__env->stopPush(); ?>
 <?php echo $__env->make('layouts.admin-layout', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\xampp\htdocs\pfs-archive\resources\views/admin/permissions.blade.php ENDPATH**/ ?>
