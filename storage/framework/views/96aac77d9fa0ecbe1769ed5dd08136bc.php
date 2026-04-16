@@ -39,14 +39,15 @@
         .perm-table-header,
         .perm-row-desktop {
             display: grid;
-            grid-template-columns: 2fr repeat(7, 1fr) 0.6fr;
+            /* يتم تحديد عدد الأعمدة ديناميكياً بناءً على عدد الصلاحيات + اسم المستخدم + الحالة + الإجراء */
+            grid-template-columns: 2fr 1fr repeat(<?php echo e($permissions->count()); ?>, 1fr) 0.6fr;
             list-style: none;
             padding: 13px 16px;
             margin: 0;
             align-items: center;
             text-align: center;
             gap: 4px;
-            min-width: 750px;
+            min-width: 1000px; /* زدنا العرض قليلاً ليتناسب مع عدد الصلاحيات */
         }
 
         .perm-table-header {
@@ -67,18 +68,8 @@
         .perm-row-desktop:hover { background-color: #f5f8f6; }
 
         .emp-name-cell { text-align: right; }
-
-        .emp-name {
-            font-weight: bold;
-            color: #3B524A;
-            font-size: 14px;
-        }
-
-        .emp-username {
-            font-size: 12px;
-            color: #888;
-            margin-top: 3px;
-        }
+        .emp-name { font-weight: bold; color: #3B524A; font-size: 14px; }
+        .emp-username { font-size: 12px; color: #888; margin-top: 3px; }
 
         /* ─── Toggle Switch ─── */
         .switch-perm {
@@ -89,12 +80,7 @@
             flex-shrink: 0;
         }
 
-        .switch-perm input {
-            opacity: 0;
-            width: 0;
-            height: 0;
-            position: absolute;
-        }
+        .switch-perm input { opacity: 0; width: 0; height: 0; position: absolute; }
 
         .slider-perm {
             position: absolute;
@@ -120,7 +106,6 @@
         input:checked + .slider-perm { background-color: #28a745; }
         input:checked + .slider-perm::before { transform: translateX(19px); }
 
-        /* ─── Delete Button ─── */
         .btn-delete {
             background: none;
             border: none;
@@ -134,12 +119,8 @@
             white-space: nowrap;
         }
 
-        .btn-delete:hover {
-            background: #fde8e8;
-            transform: scale(1.05);
-        }
+        .btn-delete:hover { background: #fde8e8; transform: scale(1.05); }
 
-        /* ─── Footer ─── */
         .perm-footer {
             padding: 16px 20px;
             background: #f8f9fa;
@@ -160,74 +141,24 @@
             transition: background 0.3s, transform 0.2s;
         }
 
-        .save-btn:hover {
-            background-color: #497033;
-            transform: translateY(-2px);
-        }
+        .save-btn:hover { background-color: #497033; transform: translateY(-2px); }
 
-        /* ─── Mobile Cards (hidden by default) ─── */
         .perm-cards-mobile { display: none; }
 
-        /* ─── Tablet ─── */
         @media (max-width: 1100px) {
-            .perm-container {
-                width: calc(100% - 70px);
-                margin-right: 70px;
-            }
+            .perm-container { width: calc(100% - 70px); margin-right: 70px; }
         }
 
-        /* ─── Mobile ─── */
         @media (max-width: 768px) {
-            .perm-container {
-                width: 100%;
-                margin-right: 0;
-                margin-top: 70px;
-                padding: 0 12px;
-            }
-
+            .perm-container { width: 100%; margin-right: 0; margin-top: 70px; padding: 0 12px; }
             .perm-table-desktop { display: none; }
             .perm-cards-mobile  { display: block; padding: 12px; }
-
-            .mobile-user-card {
-                background: #fff;
-                border: 1px solid #e0e0e0;
-                border-radius: 13px;
-                margin-bottom: 14px;
-                overflow: hidden;
-                box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-            }
-
-            .mobile-card-header {
-                background: #f0f4f2;
-                padding: 12px 14px;
-                border-bottom: 1px solid #e0e0e0;
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-            }
-
+            .mobile-user-card { background: #fff; border: 1px solid #e0e0e0; border-radius: 13px; margin-bottom: 14px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+            .mobile-card-header { background: #f0f4f2; padding: 12px 14px; border-bottom: 1px solid #e0e0e0; display: flex; align-items: center; justify-content: space-between; }
             .mobile-card-body { padding: 4px 0; }
-
-            .mobile-perm-row {
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-                padding: 10px 14px;
-                border-bottom: 1px solid #f5f5f5;
-                font-size: 13px;
-                color: #444;
-            }
-
+            .mobile-perm-row { display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; border-bottom: 1px solid #f5f5f5; font-size: 13px; color: #444; }
             .mobile-perm-row:last-child { border-bottom: none; }
-
-            .mobile-card-footer {
-                padding: 10px 14px;
-                background: #fafafa;
-                border-top: 1px solid #eee;
-                display: flex;
-                justify-content: flex-end;
-            }
-
+            .mobile-card-footer { padding: 10px 14px; background: #fafafa; border-top: 1px solid #eee; display: flex; justify-content: flex-end; }
             .perm-footer { justify-content: center; }
             .save-btn { width: 100%; text-align: center; }
         }
@@ -249,12 +180,10 @@
                     <ul class="perm-table-header">
                         <li>اسم المستخدم</li>
                         <li>الحالة</li>
-                        <li>إضافة الموظفين</li>
-                        <li>تعديل الموظفين</li>
-                        <li>معاينة المستندات</li>
-                        <li>إضافة مستندات</li>
-                        <li>عرض مستندات</li>
-                        <li>حذف مستندات</li>
+                        
+                        <?php $__currentLoopData = $permissions; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $permission): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <li><?php echo e($permission->label ?? $permission->name); ?></li>
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         <li>إجراء</li>
                     </ul>
 
@@ -314,6 +243,7 @@
                     <div class="mobile-card-body">
                         <?php $__currentLoopData = $permissions; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $permission): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                         <div class="mobile-perm-row">
+                            
                             <span><?php echo e($permission->label ?? $permission->name); ?></span>
                             <label class="switch-perm">
                                 <input type="hidden" name="users[<?php echo e($loop->parent->index); ?>][<?php echo e($permission->name); ?>]" value="0">
@@ -347,14 +277,13 @@
 <?php $__env->startPush('scripts'); ?>
 <script>
     document.getElementById('permissions-form').addEventListener('submit', function(e) {
-        // فحص عرض الشاشة عند الضغط على زر الحفظ
         const isMobile = window.innerWidth <= 768;
 
         if (isMobile) {
-            // نحن على الجوال: عطل مدخلات نسخة الكمبيوتر حتى لا ترفع بيانات قديمة
+            // تعطيل حقول الكمبيوتر لضمان إرسال بيانات الجوال فقط
             document.querySelectorAll('.perm-table-desktop input').forEach(el => el.disabled = true);
         } else {
-            // نحن على الكمبيوتر: عطل مدخلات نسخة الجوال
+            // تعطيل حقول الجوال لضمان إرسال بيانات الكمبيوتر فقط
             document.querySelectorAll('.perm-cards-mobile input').forEach(el => el.disabled = true);
         }
     });
