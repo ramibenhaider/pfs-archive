@@ -106,6 +106,6 @@ class JobTitleController extends Controller
 
         $job_title->delete();
 
-        return back()->with('success', 'تم حذف المسمى الوظيفي بنجاح بنجاح');
+        return back()->with('success', 'تم حذف المسمى الوظيفي بنجاح');
     }
 }
