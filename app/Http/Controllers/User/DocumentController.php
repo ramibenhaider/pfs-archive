@@ -185,7 +185,22 @@ class DocumentController extends Controller
         $fullpath = storage_path('app/public/' . $path);
 
         if (!file_exists($fullpath)) {
-            abort(404);
+            return back()->with('warning', 'المستند غير موجود!');
+        }
+
+        return response()->file($fullpath);
+    }
+
+        public function officePreview($path)
+    {
+        if (!Auth::user()->hasPermission('previewDocuments')) {
+            return back()->with('warning', 'أنت غير مصرح لك بمعاينة المستندات');
+        }
+
+        $fullpath = storage_path('app/public/' . $path);
+
+        if (!file_exists($fullpath)) {
+            return back()->with('warning', 'المستند غير موجود!');
         }
 
         return response()->file($fullpath);

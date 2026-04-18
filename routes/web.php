@@ -26,6 +26,11 @@ Route::prefix('/')->group(function() {
     ->name('documents.preview')
     ->where('path', '.*')
     ->middleware('signed');
+    
+    Route::get('documents/office-preview/{path}', [DocumentController::class, 'officePreview'])
+     ->name('documents.office.preview')
+     ->where('path', '.*')
+     ->middleware('signed');
 
     Route::middleware(['auth:web', 'prevent-back', 'user-activation'])->group(function () {
 
