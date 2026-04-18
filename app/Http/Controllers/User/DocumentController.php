@@ -193,10 +193,6 @@ class DocumentController extends Controller
 
         public function officePreview($path)
     {
-        if (!Auth::user()->hasPermission('previewDocuments')) {
-            return back()->with('warning', 'أنت غير مصرح لك بمعاينة المستندات');
-        }
-
         $fullpath = storage_path('app/public/' . $path);
 
         if (!file_exists($fullpath)) {
