@@ -109,7 +109,7 @@ function viewDocument(url, originalName, officeUrl) {
     const officeExtensions = ['doc', 'docx', 'xls', 'xlsx'];
 
     if (officeExtensions.includes(extension)) {
-        window.open(`https://view.officeapps.live.com/op/view.aspx?src=${encodeURIComponent(officeUrl)}`, '_blank');
+        window.open(`https://view.officeapps.live.com/op/embed.aspx?src=${encodeURIComponent(officeUrl)}`, '_blank');
     } else {
         window.open(url, '_blank');
     }
