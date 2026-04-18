@@ -1,6 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
 
-    // ======== رسالة النجاح ========
     const msg = document.getElementById("success-message");
     if (msg) {
         setTimeout(() => {
@@ -19,7 +18,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }, 5000);
     }
 
-    // ======== File Upload ========
     const fileInput   = document.getElementById('fileInput');
     const hiddenFiles = document.getElementById('hiddenFiles');
     const fileList    = document.getElementById('fileList');
@@ -77,7 +75,6 @@ document.addEventListener("DOMContentLoaded", function () {
         updateList();
     };
 
-    // ======== Textarea Auto Resize ========
     document.querySelectorAll('textarea').forEach(el => {
         el.addEventListener('input', () => {
             el.style.height = 'auto';
@@ -90,18 +87,12 @@ document.addEventListener("DOMContentLoaded", function () {
         customTextarea.style.height = customTextarea.scrollHeight + 'px';
     }
 
-    // ======== TomSelect ========
-    if (document.getElementById('employee_id')) {
-        new TomSelect('#employee_id', {
-            placeholder: 'ابحث عن موظف لإدراج مستنداته...',
+    document.querySelectorAll('.searchable-select').forEach((el) => {
+        new TomSelect(el, {
+            create: false,
+            sortField: { field: "text", order: "asc" }
         });
-    }
-
-    if (document.getElementById('employee_id_note')) {
-        new TomSelect('#employee_id_note', {
-            placeholder: 'ابحث عن موظف لإدراج ملاحظة عليه...',
-        });
-    }
+    });
 
 });
 

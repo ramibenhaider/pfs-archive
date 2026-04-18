@@ -6,7 +6,6 @@
     <title>@yield('title')</title>
 
     <style>
-        /* ─── Reset & Base ─── */
         *, *::before, *::after { box-sizing: border-box; }
 
         body {
@@ -16,7 +15,6 @@
             background-color: #f4f6f4;
         }
 
-        /* ─── Sidebar ─── */
         .custom-sidebar {
             width: 250px;
             height: 100vh;
@@ -87,7 +85,6 @@
             color: white;
         }
 
-        /* ─── Sidebar Toggle Button (mobile only) ─── */
         .sidebar-toggle {
             display: none;
             position: fixed;
@@ -106,7 +103,6 @@
             justify-content: center;
         }
 
-        /* Overlay for mobile */
         .sidebar-overlay {
             display: none;
             position: fixed;
@@ -117,7 +113,6 @@
 
         .sidebar-overlay.show { display: block; }
 
-        /* ─── Header ─── */
         .header-wrapper {
             margin-right: 250px;
             padding: 24px 30px 16px;
@@ -137,7 +132,6 @@
             height: auto;
         }
 
-        /* ─── User Card ─── */
         .user-card {
             background: #fff;
             padding: 12px 18px;
@@ -177,7 +171,6 @@
 
         .logout-btn-custom:hover { background-color: #a00a00; }
 
-        /* ─── Flash Messages ─── */
         .success-message,
         .warning-message {
             position: fixed;
@@ -202,7 +195,6 @@
             100% { opacity: 0; pointer-events: none; }
         }
 
-        /* ─── Tablet (769px – 1100px) ─── */
         @media (max-width: 1100px) {
             .custom-sidebar { width: 70px; }
 
@@ -218,16 +210,14 @@
             .header-wrapper { margin-right: 70px; }
         }
 
-        /* ─── Mobile (≤768px) ─── */
         @media (max-width: 768px) {
             .custom-sidebar {
                 width: 240px;
-                transform: translateX(100%); /* مخفي خارج الشاشة */
+                transform: translateX(100%);
             }
 
             .custom-sidebar.open { transform: translateX(0); }
 
-            /* أعد إظهار النصوص في الوضع المفتوح */
             .sidebar-header .header-text,
             .sidebar-link .text,
             .logout-link .text { display: inline; }
@@ -241,7 +231,7 @@
 
             .header-wrapper {
                 margin-right: 0;
-                margin-top: 60px; /* مسافة لزر الهامبرغر */
+                margin-top: 60px;
                 padding: 16px;
                 flex-direction: column;
                 align-items: center;
@@ -271,16 +261,12 @@
         <div id="warning-message" class="warning-message">{{ session('warning') }}</div>
     @endif
 
-    {{-- Mobile Toggle Button --}}
     <button class="sidebar-toggle" id="sidebarToggle" aria-label="فتح القائمة">☰</button>
 
-    {{-- Overlay --}}
     <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
-    {{-- Sidebar --}}
     @yield('sidebar')
 
-    {{-- Header --}}
     <div class="header-wrapper">
         <div class="logo-area">
             <img src="{{ asset('logo.png') }}" alt="Company Logo">
@@ -288,7 +274,6 @@
         @yield('auth')
     </div>
 
-    {{-- Main Content --}}
     @yield('content')
 
     <script>
@@ -312,7 +297,6 @@
 
         overlay.addEventListener('click', closeSidebar);
 
-        // إخفاء رسائل النجاح / التحذير تلقائياً
         setTimeout(() => {
             document.getElementById('success-message')?.remove();
             document.getElementById('warning-message')?.remove();

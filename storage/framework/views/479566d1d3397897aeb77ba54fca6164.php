@@ -18,11 +18,12 @@
         min-height: 100vh;
         margin: 0;
         padding: 20px;
+        box-sizing: border-box;
         background-color: #e8e8e8 !important;
     }
 
     .page-main-title {
-        font-size: 24px;
+        font-size: clamp(18px, 5vw, 24px);
         font-weight: bold;
         color: #3B524A;
         margin-bottom: 20px;
@@ -33,10 +34,11 @@
         background: #ffffff;
         width: 100%;
         max-width: 420px;
-        padding: 35px;
+        padding: clamp(20px, 5vw, 35px);
         border-radius: 15px;
         box-shadow: 0 10px 25px rgba(0,0,0,0.06);
         border-top: 4px solid #3B524A;
+        box-sizing: border-box;
     }
 
     .card-logo-area {
@@ -45,7 +47,7 @@
     }
 
     .card-logo-area img {
-        max-width: 160px;
+        max-width: clamp(100px, 40vw, 160px);
         height: auto;
     }
 
@@ -56,7 +58,7 @@
     }
 
     .admin-link {
-        font-size: 16px;
+        font-size: clamp(14px, 4vw, 16px);
         color: #497033;
         text-decoration: none;
         font-weight: 600;
@@ -87,7 +89,7 @@
         border-bottom: 2px solid #ccc !important;
         border-radius: 0 !important;
         padding: 10px 5px !important;
-        font-size: 15px;
+        font-size: clamp(14px, 4vw, 15px);
         background: transparent !important;
         outline: none !important;
         box-shadow: none !important;
@@ -103,7 +105,7 @@
     .login-btn-full {
         width: 100%;
         padding: 14px !important;
-        font-size: 17px !important;
+        font-size: clamp(15px, 4vw, 17px) !important;
         background-color: #3B524A !important;
         color: #ffffff !important;
         border: none !important;
@@ -118,41 +120,70 @@
         background-color: #497033 !important;
         transform: translateY(-2px);
     }
-    .success-message {
-        position: fixed;
-        right: 80px;
-        top: 80px;
-        background-color: #e8fff3;
-        border: 2px solid #28a745;
-        padding: 14px 18px;
-        border-radius: 10px; /* زودنا الانحناء */
-        color: #155724;
-        font-size: 16px;
-        margin: 15px auto; /* يخليها في النص */
-        font-weight: bold;
-        transition: opacity 0.5s ease;
-        width: fit-content; /* على قد المحتوى */
-        max-width: 400px; /* حد أقصى */
-        text-align: center;
-        z-index: 9999;
+
+    .login-btn-full:active {
+        transform: translateY(0);
     }
+
+    .success-message,
     .warning-message {
         position: fixed;
-        right: 80px;
-        top: 80px;
-        background-color: #fcebd3;
-        border: 2px solid #f5712f;
+        top: 20px;
+        right: 50%;
+        transform: translateX(50%);
         padding: 14px 18px;
-        border-radius: 10px; /* زودنا الانحناء */
-        color: #a37b3e;
-        font-size: 16px;
-        margin: 15px auto; /* يخليها في النص */
+        border-radius: 10px;
+        font-size: clamp(14px, 4vw, 16px);
         font-weight: bold;
         transition: opacity 0.5s ease;
-        width: fit-content; /* على قد المحتوى */
-        max-width: 400px; /* حد أقصى */
+        width: calc(100% - 40px);
+        max-width: 400px;
         text-align: center;
         z-index: 9999;
+        box-sizing: border-box;
+    }
+
+    .success-message {
+        background-color: #e8fff3;
+        border: 2px solid #28a745;
+        color: #155724;
+    }
+
+    .warning-message {
+        background-color: #fcebd3;
+        border: 2px solid #f5712f;
+        color: #a37b3e;
+    }
+
+    @media (max-width: 480px) {
+        body {
+            padding: 16px;
+            justify-content: flex-start;
+            padding-top: 40px;
+        }
+
+        .login-card-unique {
+            border-radius: 12px;
+        }
+
+        .login-btn-full {
+            padding: 12px !important;
+        }
+    }
+
+    @media (max-width: 360px) {
+        body {
+            padding: 12px;
+            padding-top: 30px;
+        }
+
+        .card-logo-area {
+            margin-bottom: 20px;
+        }
+
+        .login-card-unique .form-group {
+            margin-bottom: 16px;
+        }
     }
 </style>
 </head>

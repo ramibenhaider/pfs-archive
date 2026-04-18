@@ -7,48 +7,60 @@
     .pending-approval-alert {
         display: flex;
         align-items: center;
-        background-color: #fff3cd; /* لون خلفية تنبيهي */
-        border-right: 5px solid #ffc107; /* حافة برتقالية جهة اليمين */
+        flex-wrap: wrap;
+        gap: 12px;
+        background-color: #fff3cd;
+        border-right: 5px solid #ffc107;
         color: #856404;
-        padding: 20px;
+        padding: clamp(12px, 3vw, 20px);
         border-radius: 8px;
         margin: 20px 0;
         box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-        font-family: 'Cairo', sans-serif; /* أو أي خط عربي تستخدمه */
+        font-family: 'Cairo', sans-serif;
+        box-sizing: border-box;
+        width: 100%;
     }
 
     .alert-icon {
         margin-left: 15px;
         display: flex;
         align-items: center;
+        flex-shrink: 0;
     }
 
     .alert-icon svg {
-        width: 35px;
-        height: 35px;
+        width: clamp(26px, 6vw, 35px);
+        height: clamp(26px, 6vw, 35px);
         stroke: #ffc107;
     }
 
     .alert-content {
         flex: 1;
+        min-width: 0;
     }
 
     .alert-title {
         margin: 0 0 5px 0;
-        font-size: 18px;
+        font-size: clamp(15px, 4vw, 18px);
         font-weight: bold;
     }
 
     .alert-message {
         margin: 0;
-        font-size: 14px;
+        font-size: clamp(13px, 3.5vw, 14px);
         opacity: 0.9;
+    }
+
+    @media (max-width: 360px) {
+        .alert-icon {
+            margin-left: 8px;
+        }
     }
 </style>
 @endpush
 
 @section('content')
-@if(auth()->user()->is_active)
+@if($CurrentUser->is_active)
 <script>window.location.href = '{{ route('employee.index') }}'</script>
 @endif
 <div class="pending-approval-alert">
