@@ -257,8 +257,9 @@ body {
                 @if($currentUser->hasPermission('previewDocuments'))
                     @php
                         $signedUrl = URL::temporarySignedRoute('documents.preview', now()->addMinutes(60), ['path' => $document->file_path]);
+                        $officeUrl = URL::temporarySignedRoute('documents.office.preview', now()->addMinutes(60), ['path' => $document->file_path]);
                     @endphp
-                    <button type="button" onclick="viewDocument('{{ $signedUrl }}', '{{ $document->original_name }}')" class="btn btn-primary">
+                    <button type="button" onclick="viewDocument('{{ $signedUrl }}', '{{ $document->original_name }}', '{{ $officeUrl }}')" class="btn btn-primary">
                         <i class="fa fa-eye"></i> معاينة المستند
                     </button>
                 @else

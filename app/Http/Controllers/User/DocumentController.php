@@ -185,7 +185,7 @@ class DocumentController extends Controller
         $fullpath = storage_path('app/public/' . $path);
 
         if (!file_exists($fullpath)) {
-            return back()->with('warning', 'المستند غير موجود!');
+            abort(404);
         }
 
         return response()->file($fullpath);

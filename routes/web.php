@@ -22,12 +22,12 @@ Route::prefix('/')->group(function() {
         Route::post('/user/login', [DashboardController::class, 'store'])->name('user.store');
     });
 
-    Route::middleware(['auth:web', 'prevent-back', 'user-activation'])->group(function () {
+    Route::get('documents/preview/{path}', [DocumentController::class, 'preview'])
+    ->name('documents.preview')
+    ->where('path', '.*')
+    ->middleware('signed');
 
-        Route::get('documents/preview/{path}', [DocumentController::class, 'preview'])
-             ->name('documents.preview')
-             ->where('path', '.*')
-             ->middleware('signed');
+    Route::middleware(['auth:web', 'prevent-back', 'user-activation'])->group(function () {
 
         Route::resource('documents', DocumentController::class)->except('create');
         Route::get('documents/{employeeHash}/edit/{document_typeHash}', [DocumentController::class, 'showTypeFiles'])

@@ -104,12 +104,12 @@ function deleteUser(fullRoute) {
     }
 }
 
-function viewDocument(url, originalName) {
+function viewDocument(url, originalName, officeUrl) {
     const extension = originalName.split('.').pop().toLowerCase();
     const officeExtensions = ['doc', 'docx', 'xls', 'xlsx'];
 
     if (officeExtensions.includes(extension)) {
-        window.open(`https://view.officeapps.live.com/op/view.aspx?src=${encodeURIComponent(url)}`, '_blank');
+        window.open(`https://view.officeapps.live.com/op/view.aspx?src=${encodeURIComponent(officeUrl)}`, '_blank');
     } else {
         window.open(url, '_blank');
     }
