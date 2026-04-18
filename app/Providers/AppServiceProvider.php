@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\URL;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -27,5 +28,9 @@ class AppServiceProvider extends ServiceProvider
         View::composer('*', function($view) {
             $view->with('currentUser', Auth::check() ? Auth::user()->fresh() : null);
         });
+
+        if (config('app.env') === 'production') {
+        URL::forceScheme('https');
+    }
     }
 }
