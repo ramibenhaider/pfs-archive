@@ -113,3 +113,13 @@ function viewDocument(url, originalName) {
         window.open(url, '_blank');
     }
 }
+
+document.querySelectorAll('.searchable-select').forEach((el) => {
+    if (el && !el.tomselect) {
+        new TomSelect(el, {
+            create: false,
+            sortField: { field: "text", order: "asc" },
+            allowEmptyOption: true,
+        });
+    }
+});

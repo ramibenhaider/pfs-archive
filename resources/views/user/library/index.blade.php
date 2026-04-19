@@ -137,6 +137,10 @@
         font-size: clamp(13px, 3.5vw, 15px);
     }
 
+    .ts-wrapper {
+        z-index: 1050 !important;
+    }
+
     .ts-control {
         border-radius: 10px !important;
         padding: 10px !important;
@@ -154,9 +158,7 @@
         overflow: visible !important;
     }
 
-    .ts-control {
 
-    }
 
     @media (max-width: 600px) {
         .notes-toolbar {
