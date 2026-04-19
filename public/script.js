@@ -104,14 +104,12 @@ function deleteUser(fullRoute) {
     }
 }
 
-function viewDocument(officeUrl, originalName) {
+function viewDocument(url, originalName) {
     const extension = originalName.split('.').pop().toLowerCase();
-    const officeExtensions = ['doc', 'docx', 'xls', 'xlsx'];
-
-    if (officeExtensions.includes(extension)) {
-        const finalUrl = "https://view.officeapps.live.com/op/embed.aspx?src=" + encodeURIComponent(officeUrl);
-        window.open(finalUrl, '_blank');
+    
+    if (['doc', 'docx', 'xls', 'xlsx'].includes(extension)) {
+        window.open("https://view.officeapps.live.com/op/embed.aspx?src=" + encodeURIComponent(url), '_blank');
     } else {
-        window.open(officeUrl, '_blank');
+        window.open(url, '_blank');
     }
 }

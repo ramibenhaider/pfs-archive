@@ -188,6 +188,7 @@ class DocumentController extends Controller
         $extension = strtolower(pathinfo($fullpath, PATHINFO_EXTENSION));
         
         $mimeTypes = [
+            'pdf'  => 'application/pdf',
             'doc'  => 'application/msword',
             'docx' => 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
             'xls'  => 'application/vnd.ms-excel',
