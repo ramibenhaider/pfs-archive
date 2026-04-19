@@ -191,14 +191,20 @@ class DocumentController extends Controller
         return response()->file($fullpath);
     }
 
-        public function officePreview($path)
+    public function officePreview($path)
     {
         $fullpath = storage_path('app/public/' . $path);
 
         if (!file_exists($fullpath)) {
-            return back()->with('warning', 'المستند غير موجود!');
+            return abort(404);
         }
 
-        return response()->file($fullpath);
+        $mimeType = mime_content_type($fullpath);
+
+        return response()->file($fullpath, [
+            'Content-Type' => $mimeType,
+            'Access-Control-Allow-Origin' => '*',
+            'Content-Disposition' => 'inline; filename="' . basename($fullpath) . '"'
+        ]);
     }
 }
