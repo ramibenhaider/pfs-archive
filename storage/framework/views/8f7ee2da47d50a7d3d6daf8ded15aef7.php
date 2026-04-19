@@ -3,7 +3,7 @@
 <?php $__env->startSection('title', 'دار الوثائق'); ?>
 
 <?php $__env->startPush('styles'); ?>
-<link href="https://cdn.jsdelivr.net/npm/tom-select@2.2.2/dist/css/tom-select.bootstrap5.min.css" rel="stylesheet">
+<link href="<?php echo e(asset("tom-select.bootstrap5.min.css")); ?>" rel="stylesheet">
 <style>
     body {
         margin: 0;
@@ -18,30 +18,40 @@
         text-align: center;
     }
 
+    .logo-area img {
+        max-width: min(900px, 100%);
+        height: auto;
+        display: block;
+        margin: 0 auto;
+    }
+
     .container {
         max-width: 900px;
         margin: 40px auto 0 auto;
-        padding: 20px;
+        padding: clamp(12px, 4vw, 20px);
+        box-sizing: border-box;
     }
 
     .btn-back-note {
         background-color: #6c757d !important;
         color: #ffffff !important;
         text-decoration: none !important;
-        padding: 10px 30px !important;
+        padding: 10px clamp(16px, 4vw, 30px) !important;
         border-radius: 10px !important;
         font-weight: bold !important;
         transition: 0.3s !important;
         display: inline-block;
+        font-size: clamp(13px, 3.5vw, 15px);
     }
 
     .note-section-card {
         background: #fff;
         border-radius: 15px;
-        padding: 25px;
+        padding: clamp(15px, 4vw, 25px);
         box-shadow: 0 4px 15px rgba(0,0,0,0.05);
         margin-bottom: 30px;
         border-top: 4px solid #3B524A;
+        box-sizing: border-box;
     }
 
     .section-header {
@@ -51,21 +61,34 @@
         display: flex;
         align-items: center;
         gap: 10px;
+        font-size: clamp(14px, 4vw, 16px);
+        flex-wrap: wrap;
     }
 
     .notes-toolbar {
         display: flex;
         align-items: center;
         justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 12px;
         margin-bottom: 30px;
-        padding: 18px 22px;
+        padding: clamp(12px, 3vw, 18px) clamp(14px, 4vw, 22px);
         background: #fff;
         border-radius: 14px;
         box-shadow: 0 6px 16px rgba(0,0,0,0.06);
+        box-sizing: border-box;
+    }
+
+    .custom-table-wrapper {
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        border-radius: 12px;
     }
 
     .custom-table {
         width: 100%;
+        min-width: 500px;
         background: #fff;
         border-radius: 12px;
         overflow: hidden;
@@ -78,18 +101,22 @@
     }
 
     .custom-table th, .custom-table td {
-        padding: 15px;
+        padding: clamp(10px, 2.5vw, 15px);
         text-align: center;
         vertical-align: middle;
+        font-size: clamp(12px, 3vw, 15px);
+        white-space: nowrap;
     }
 
     .btn-main {
         background-color: #3B524A !important;
         color: white !important;
         border-radius: 8px !important;
-        padding: 8px 20px !important;
+        padding: 8px clamp(12px, 3vw, 20px) !important;
         border: none !important;
         transition: 0.3s;
+        font-size: clamp(13px, 3.5vw, 15px);
+        white-space: nowrap;
     }
 
     .btn-main:hover {
@@ -97,20 +124,55 @@
         transform: translateY(-2px);
     }
 
+    .btn-main:active {
+        transform: translateY(0);
+    }
+
     .custom-input {
         border-radius: 10px !important;
         padding: 12px 15px !important;
         border: 1px solid #ddd !important;
+        width: 100%;
+        box-sizing: border-box;
+        font-size: clamp(13px, 3.5vw, 15px);
     }
 
-    /* تنسيق خاص لـ TomSelect ليتناسب مع تصميمك */
     .ts-control {
         border-radius: 10px !important;
         padding: 10px !important;
         border: 1px solid #ddd !important;
     }
+
     .ts-wrapper.is-invalid .ts-control {
         border-color: red !important;
+    }
+
+    @media (max-width: 600px) {
+        .notes-toolbar {
+            flex-direction: column;
+            align-items: stretch;
+        }
+
+        .notes-toolbar .btn-main {
+            width: 100%;
+            text-align: center;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .container {
+            margin-top: 20px;
+        }
+
+        .note-section-card {
+            border-radius: 12px;
+        }
+    }
+
+    @media (max-width: 360px) {
+        .note-section-card {
+            border-radius: 0;
+        }
     }
 </style>
 <?php $__env->stopPush(); ?>

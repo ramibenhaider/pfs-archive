@@ -3,7 +3,7 @@
 @section('title', 'دار الوثائق')
 
 @push('styles')
-<link href="https://cdn.jsdelivr.net/npm/tom-select@2.2.2/dist/css/tom-select.bootstrap5.min.css" rel="stylesheet">
+<link href="{{ asset("tom-select.bootstrap5.min.css") }}" rel="stylesheet">
 <style>
     body {
         margin: 0;

@@ -5,7 +5,6 @@ body {
   background-color: #e8e8e8 !important;
 }
 
-/* اللوقو */
 .logo-area {
   width: 100%;
   padding: 5px 0 0 0;
@@ -24,14 +23,14 @@ body {
   background-color: #e8fff3;
   border: 2px solid #28a745;
   padding: 14px 18px;
-  border-radius: 10px; /* زودنا الانحناء */
+  border-radius: 10px;
   color: #155724;
   font-size: 16px;
-  margin: 15px auto; /* يخليها في النص */
+  margin: 15px auto;
   font-weight: bold;
   transition: opacity 0.5s ease;
-  width: fit-content; /* على قد المحتوى */
-  max-width: 400px; /* حد أقصى */
+  width: fit-content;
+  max-width: 400px;
   text-align: center;
   z-index: 9999;
 }
@@ -43,14 +42,14 @@ body {
   background-color: #fcebd3;
   border: 2px solid #f5712f;
   padding: 14px 18px;
-  border-radius: 10px; /* زودنا الانحناء */
+  border-radius: 10px;
   color: #a37b3e;
   font-size: 16px;
-  margin: 15px auto; /* يخليها في النص */
+  margin: 15px auto;
   font-weight: bold;
   transition: opacity 0.5s ease;
-  width: fit-content; /* على قد المحتوى */
-  max-width: 400px; /* حد أقصى */
+  width: fit-content;
+  max-width: 400px;
   text-align: center;
   z-index: 9999;
 }

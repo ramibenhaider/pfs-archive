@@ -305,7 +305,7 @@
                     </ul>
                     @if($currentUser->hasPermission('showDocuments'))
                         <div class="card-footer text-center bg-white border-0">
-                            <a href="{{ route('documents.show', encodeId($employee->id)) }}" class="view-all-link">مشاهدة تفاصيل المستندات</a>
+                            <a href="{{ route('documents.show', encodeId($employee->id)) }}" class="view-all-link">مشاهدة الكل</a>
                         </div>
                     @endif
                 </div>
