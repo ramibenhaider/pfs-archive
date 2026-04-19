@@ -7,6 +7,7 @@ use App\Http\Controllers\User\EmployeeController;
 use App\Http\Controllers\User\MyNoteController;
 use App\Http\Controllers\User\NoteController;
 use App\Http\Controllers\User\UserLoginController;
+use GuzzleHttp\Middleware;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('/')->group(function() {
@@ -29,7 +30,8 @@ Route::prefix('/')->group(function() {
     
     Route::get('documents/office-preview/{path}', [DocumentController::class, 'officePreview'])
      ->name('documents.office.preview')
-     ->where('path', '.*');
+     ->where('path', '.*')
+     ->Middleware('signed');
 
     Route::middleware(['auth:web', 'prevent-back', 'user-activation'])->group(function () {
 

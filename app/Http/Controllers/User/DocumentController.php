@@ -196,15 +196,25 @@ class DocumentController extends Controller
         $fullpath = storage_path('app/public/' . $path);
 
         if (!file_exists($fullpath)) {
-            return abort(404);
+            return response()->json(['error' => 'File not found'], 404);
         }
 
-        $mimeType = mime_content_type($fullpath);
+        $extension = strtolower(pathinfo($fullpath, PATHINFO_EXTENSION));
+        $mimeTypes = [
+            'doc'  => 'application/msword',
+            'docx' => 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+            'xls'  => 'application/vnd.ms-excel',
+            'xlsx' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+        ];
+
+        $contentType = $mimeTypes[$extension] ?? 'application/octet-stream';
 
         return response()->file($fullpath, [
-            'Content-Type' => $mimeType,
+            'Content-Type' => $contentType,
             'Access-Control-Allow-Origin' => '*',
-            'Content-Disposition' => 'inline; filename="' . basename($fullpath) . '"'
+            'Access-Control-Allow-Methods' => 'GET',
+            'Content-Disposition' => 'inline; filename="' . basename($fullpath) . '"',
+            'Cache-Control' => 'no-cache, no-store, must-revalidate',
         ]);
     }
 }
