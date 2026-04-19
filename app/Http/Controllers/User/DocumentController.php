@@ -176,30 +176,17 @@ class DocumentController extends Controller
         return view('user.document.show', compact('documents', 'employee'));
     }
 
-    public function preview($path)
+    public function officePreview($id)
     {
-        if (!Auth::user()->hasPermission('previewDocuments')) {
-            return back()->with('warning', 'أنت غير مصرح لك بمعاينة المستندات');
-        }
-
-        $fullpath = storage_path('app/public/' . $path);
+        $document = Document::findOrFail($id);
+        $fullpath = storage_path('app/public/' . $document->file_path);
 
         if (!file_exists($fullpath)) {
-            return back()->with('warning', 'المستند غير موجود!');
-        }
-
-        return response()->file($fullpath);
-    }
-
-    public function officePreview($path)
-    {
-        $fullpath = storage_path('app/public/' . $path);
-
-        if (!file_exists($fullpath)) {
-            return response()->json(['error' => 'File not found'], 404);
+            abort(404, 'المستند غير موجود');
         }
 
         $extension = strtolower(pathinfo($fullpath, PATHINFO_EXTENSION));
+        
         $mimeTypes = [
             'doc'  => 'application/msword',
             'docx' => 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
@@ -212,9 +199,7 @@ class DocumentController extends Controller
         return response()->file($fullpath, [
             'Content-Type' => $contentType,
             'Access-Control-Allow-Origin' => '*',
-            'Access-Control-Allow-Methods' => 'GET',
-            'Content-Disposition' => 'inline; filename="' . basename($fullpath) . '"',
-            'Cache-Control' => 'no-cache, no-store, must-revalidate',
+            'Content-Disposition' => 'inline; filename="' . $document->original_name . '"',
         ]);
     }
 }

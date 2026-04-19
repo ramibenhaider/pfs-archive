@@ -23,15 +23,9 @@ Route::prefix('/')->group(function() {
         Route::post('/user/login', [DashboardController::class, 'store'])->name('user.store');
     });
 
-    Route::get('documents/preview/{path}', [DocumentController::class, 'preview'])
-    ->name('documents.preview')
-    ->where('path', '.*')
-    ->middleware('signed');
-    
-    Route::get('documents/office-preview/{path}', [DocumentController::class, 'officePreview'])
-     ->name('documents.office.preview')
-     ->where('path', '.*')
-     ->Middleware('signed');
+    Route::get('documents/office-view/{id}', [DocumentController::class, 'officePreview'])
+        ->name('documents.office.preview')
+        ->middleware('signed');
 
     Route::middleware(['auth:web', 'prevent-back', 'user-activation'])->group(function () {
 

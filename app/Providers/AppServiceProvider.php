@@ -28,9 +28,5 @@ class AppServiceProvider extends ServiceProvider
         View::composer('*', function($view) {
             $view->with('currentUser', Auth::check() ? Auth::user()->fresh() : null);
         });
-
-        if (config('app.env') === 'production') {
-        URL::forceScheme('https');
-        }
     }
 }
