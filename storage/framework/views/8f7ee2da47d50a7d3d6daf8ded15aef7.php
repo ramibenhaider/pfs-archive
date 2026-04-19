@@ -3,7 +3,7 @@
 <?php $__env->startSection('title', 'دار الوثائق'); ?>
 
 <?php $__env->startPush('styles'); ?>
-<link href="<?php echo e(asset("tom-select.bootstrap5.min.css")); ?>" rel="stylesheet">
+<link href="<?php echo e(asset('tom-select.bootstrap5.min.css')); ?>" rel="stylesheet">
 <style>
     body {
         margin: 0;

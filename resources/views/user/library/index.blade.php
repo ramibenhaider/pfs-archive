@@ -3,7 +3,7 @@
 @section('title', 'دار الوثائق')
 
 @push('styles')
-<link href="{{ asset('tom-select.bootstrap5.min.css') }}" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/tom-select@2.2.2/dist/css/tom-select.bootstrap5.min.css" rel="stylesheet">
 <style>
     body {
         margin: 0;
@@ -141,10 +141,21 @@
         border-radius: 10px !important;
         padding: 10px !important;
         border: 1px solid #ddd !important;
+        min-height: 45px !important;
+        display: flex !important;
+        align-items: center !important;
     }
 
     .ts-wrapper.is-invalid .ts-control {
         border-color: red !important;
+    }
+
+    .table-responsive {
+        overflow: visible !important;
+    }
+
+    .ts-control {
+
     }
 
     @media (max-width: 600px) {
@@ -320,6 +331,8 @@
         </div>
     </div>
 </div>
-<script src="{{ asset('script.js') }}"></script>
-<script src="https://cdn.jsdelivr.net/npm/tom-select@2.2.2/dist/js/tom-select.complete.min.js"></script>
 @endsection
+@push('scripts')
+<script src="https://cdn.jsdelivr.net/npm/tom-select@2.2.2/dist/js/tom-select.complete.min.js"></script>
+<script src="{{ asset('script.js') }}"></script>
+@endpush
