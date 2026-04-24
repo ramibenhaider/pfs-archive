@@ -190,6 +190,10 @@ class EmployeeController extends Controller
         if (!Auth::user()->hasPermission('deleteEmployees')) {
             return back()->with('warning', 'غير مصرح لك بحذف موظف');
         }
+
+        $employee->delete();
+
+        return redirect()->route('employees.index')->with('success', 'تم حذف الموظف بنجاح');
     }
 
     public function doSearch(Request $request)
