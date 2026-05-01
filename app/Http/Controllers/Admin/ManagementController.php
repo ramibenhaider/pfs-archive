@@ -43,25 +43,6 @@ class ManagementController extends Controller
         return redirect()->back()->with('success', 'تم إضافة اسم الإدارة بنجاح');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Management $management)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Management $management)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, $managementHashed)
     {
         $managementHashed = decodeId($managementHashed);
@@ -88,9 +69,6 @@ class ManagementController extends Controller
         return redirect()->back()->with('success', 'تم التعديل بنجاح!');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy($managementHashed)
     {
         $managementHashed = decodeId($managementHashed);

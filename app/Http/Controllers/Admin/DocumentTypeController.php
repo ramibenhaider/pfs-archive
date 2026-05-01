@@ -53,25 +53,6 @@ class DocumentTypeController extends Controller
         return redirect()->back()->with('success', 'تم إضافة اسم نوع المستند بنجاح');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Document_type $document_type)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Document_type $document_type)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, String $document_typeHashed)
     {
         $document_typeDecoded = DecodeId($document_typeHashed);
@@ -98,9 +79,6 @@ class DocumentTypeController extends Controller
         return back()->with('success', 'تم التعديل بنجاح!');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy($document_typeHashed)
     {
         $document_typeDecoded = DecodeId($document_typeHashed);

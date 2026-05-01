@@ -10,30 +10,40 @@
         background-color: #e8e8e8 !important;
     }
 
-    /* الرسائل التنبيهية */
     .success-message, .warning-message {
-        position: fixed; right: 80px; top: 80px; padding: 14px 18px;
-        border-radius: 10px; font-weight: bold; transition: opacity 0.5s ease;
-        width: fit-content; max-width: 400px; text-align: center; z-index: 9999;
+        position: fixed;
+        top: 20px;
+        right: 50%;
+        transform: translateX(50%);
+        padding: 14px 18px;
+        border-radius: 10px;
+        font-weight: bold;
+        transition: opacity 0.5s ease;
+        width: calc(100% - 40px);
+        max-width: 400px;
+        text-align: center;
+        z-index: 9999;
+        box-sizing: border-box;
     }
     .success-message { background-color: #e8fff3; border: 2px solid #28a745; color: #155724; }
     .warning-message { background-color: #fcebd3; border: 2px solid #f5712f; color: #a37b3e; }
 
-    /* الحاوية الرئيسية */
     .container-createEmployee {
         max-width: 1000px;
         margin: 20px auto;
-        padding: 20px;
+        padding: clamp(12px, 4vw, 20px);
+        box-sizing: border-box;
     }
 
     .section-title {
         color: #3B524A;
-        margin-top: 35px; margin-bottom: 15px;
-        font-size: 22px; border-right: 5px solid #3B524A;
+        margin-top: 35px;
+        margin-bottom: 15px;
+        font-size: clamp(17px, 5vw, 22px);
+        border-right: 5px solid #3B524A;
         padding-right: 10px;
     }
 
-    /* شبكة الحقول */
     .form-grid {
         display: grid;
         grid-template-columns: 1fr 1fr;
@@ -42,15 +52,22 @@
     }
 
     .form-group { display: flex; flex-direction: column; }
-    .form-group label { margin-bottom: 6px; font-weight: bold; color: #333; }
+    .form-group label {
+        margin-bottom: 6px;
+        font-weight: bold;
+        color: #333;
+        font-size: clamp(13px, 3.5vw, 15px);
+    }
 
     .form-group input, .form-group select {
         padding: 12px;
         border-radius: 8px;
         border: 1px solid #bbb;
-        font-size: 15px;
+        font-size: clamp(13px, 3.5vw, 15px);
         font-family: "Cairo", sans-serif;
         outline: none;
+        width: 100%;
+        box-sizing: border-box;
     }
 
     .form-group input:focus, .form-group select:focus {
@@ -58,7 +75,6 @@
         box-shadow: 0 0 5px rgba(59, 82, 74, 0.2);
     }
 
-    /* سويتش الحالة */
     .switch-container {
         position: relative; display: inline-block;
         width: 44px; height: 22px;
@@ -77,15 +93,77 @@
     input:checked + .slider { background-color: #28a745; }
     input:checked + .slider:before { transform: translateX(22px); }
 
-    /* الأزرار */
-    .bottom-buttons { margin-top: 25px; text-align: center; }
-    .save-btn { background-color: #3B524A; color: white; border: none; padding: 12px 40px; border-radius: 10px; cursor: pointer; font-weight: bold; }
-    .cancel-btn { background-color: #999; color: white; text-decoration: none; padding: 12px 40px; border-radius: 10px; display: inline-block; }
-    .save-btn:hover { background-color: #497033; }
+    .bottom-buttons {
+        margin-top: 25px;
+        text-align: center;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        justify-content: center;
+    }
 
-    /* التنبيهات */
+    .save-btn {
+        background-color: #3B524A;
+        color: white;
+        border: none;
+        padding: 12px clamp(20px, 5vw, 40px);
+        border-radius: 10px;
+        cursor: pointer;
+        font-weight: bold;
+        font-family: "Cairo", sans-serif;
+        font-size: clamp(14px, 4vw, 16px);
+        min-width: 120px;
+        transition: background-color 0.3s, transform 0.2s;
+    }
+
+    .cancel-btn {
+        background-color: #999;
+        color: white;
+        text-decoration: none;
+        padding: 12px clamp(20px, 5vw, 40px);
+        border-radius: 10px;
+        display: inline-block;
+        font-family: "Cairo", sans-serif;
+        font-size: clamp(14px, 4vw, 16px);
+        min-width: 120px;
+        text-align: center;
+        transition: background-color 0.3s;
+    }
+
+    .save-btn:hover { background-color: #497033; transform: translateY(-2px); }
+    .save-btn:active { transform: translateY(0); }
+    .cancel-btn:hover { background-color: #7a7a7a; color: white; }
+
     .invalid-feedback { color: red; font-size: 13px; margin-top: 5px; }
     .is-invalid { border-color: red !important; }
+
+    @media (max-width: 600px) {
+        .form-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .container-createEmployee {
+            margin-top: 10px;
+        }
+
+        .bottom-buttons {
+            flex-direction: column;
+            align-items: stretch;
+        }
+
+        .save-btn, .cancel-btn {
+            width: 100%;
+            text-align: center;
+        }
+    }
+
+    @media (max-width: 360px) {
+        .section-title {
+            font-size: 16px;
+        }
+    }
 </style>
 <?php $__env->stopPush(); ?>
 

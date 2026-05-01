@@ -42,25 +42,6 @@ class JobTitleController extends Controller
         return redirect()->back()->with('success', 'تم إضافة اسم المسمى الوظيفي بنجاح');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Job_title $job_title)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Job_title $job_title)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, $job_titleHashed)
     {
         $job_titleHashed = decodeId($job_titleHashed);
@@ -87,9 +68,6 @@ class JobTitleController extends Controller
         return redirect()->back()->with('success', 'تم التعديل بنجاح!');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy($job_titleHashed)
     {
         $job_titleHashed = decodeId($job_titleHashed);

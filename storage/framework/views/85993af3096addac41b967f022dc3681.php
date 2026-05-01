@@ -18,21 +18,24 @@ body {
 }
 
 .logo-area img {
-  max-width: 800px;
+  max-width: min(800px, 100%);
   height: auto;
+  display: block;
+  margin: 0 auto;
 }
 
 .container-createEmployee {
     max-width: 1000px;
     margin: 20px auto;
-    padding: 20px;
+    padding: clamp(12px, 4vw, 20px);
+    box-sizing: border-box;
 }
 
 .section-title {
     color: #3B524A;
     margin-top: 35px;
     margin-bottom: 15px;
-    font-size: 22px;
+    font-size: clamp(17px, 5vw, 22px);
     border-right: 5px solid #3B524A;
     padding-right: 10px;
 }
@@ -53,6 +56,7 @@ body {
     margin-bottom: 6px;
     font-weight: bold;
     color: #333;
+    font-size: clamp(13px, 3.5vw, 15px);
 }
 
 .form-group input,
@@ -60,8 +64,10 @@ body {
     padding: 12px;
     border-radius: 8px;
     border: 1px solid #bbb;
-    font-size: 15px;
+    font-size: clamp(13px, 3.5vw, 15px);
     font-family: "Cairo", sans-serif;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .invalid-feedback { color: red; font-size: 13px; margin-top: 5px; }
@@ -69,20 +75,77 @@ body {
 
 .bottom-buttons {
     margin-top: 25px;
-    text-align: center;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
 }
 
-.bottom-buttons button, .bottom-buttons a {
-    padding: 12px 25px;
-    margin: 5px;
+.bottom-buttons button,
+.bottom-buttons a {
+    padding: 12px clamp(16px, 4vw, 25px);
     border: none;
     border-radius: 10px;
-    font-size: 15px;
+    font-size: clamp(13px, 3.5vw, 15px);
     cursor: pointer;
+    font-family: "Cairo", sans-serif;
+    min-width: 120px;
+    text-align: center;
+    transition: background-color 0.3s, transform 0.2s;
 }
 
-.save-btn { background-color: #3B524A; color: white; }
-.cancel-btn { background-color: #999; color: white; text-decoration: none;}
+.save-btn {
+    background-color: #3B524A;
+    color: white;
+}
+
+.save-btn:hover {
+    background-color: #497033;
+    transform: translateY(-2px);
+}
+
+.save-btn:active { transform: translateY(0); }
+
+.cancel-btn {
+    background-color: #999;
+    color: white;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.cancel-btn:hover {
+    background-color: #7a7a7a;
+    color: white;
+}
+
+@media (max-width: 600px) {
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .container-createEmployee {
+        margin-top: 10px;
+    }
+
+    .bottom-buttons {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .bottom-buttons button,
+    .bottom-buttons a {
+        width: 100%;
+        text-align: center;
+    }
+}
+
+@media (max-width: 360px) {
+    .section-title {
+        font-size: 16px;
+    }
+}
 </style>
 <?php $__env->stopPush(); ?>
 

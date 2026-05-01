@@ -10,38 +10,50 @@
         background-color: #e8e8e8 !important;
     }
 
-    /* كرت الموظف الرئيسي */
     .emp-main-card-unique {
         border: 1px solid #3B524A !important;
         border-radius: 12px !important;
         overflow: hidden;
         box-shadow: 0 4px 12px rgba(0,0,0,0.05);
         background: #fff;
+        width: 100%;
+        box-sizing: border-box;
     }
 
     .card-header-unique {
         background-color: #3B524A !important;
         color: #ffffff !important;
-        padding: 15px 20px;
+        padding: clamp(10px, 3vw, 15px) clamp(12px, 4vw, 20px);
+        font-size: clamp(14px, 4vw, 16px);
     }
 
-    .list-group-item strong { min-width: 160px; color: #333; }
-    
+    .list-group-item {
+        flex-wrap: wrap;
+        gap: 6px;
+        font-size: clamp(13px, 3.5vw, 15px);
+    }
+    .list-group-item strong {
+        min-width: clamp(120px, 30vw, 160px);
+        color: #333;
+    }
+
     .auto-resize { resize: none; overflow: hidden; }
 
-    /* الكروت الجانبية */
     .side-card-unique {
         border: 1px solid #3B524A !important;
         border-radius: 10px !important;
         overflow: hidden;
         background: #fff;
+        width: 100%;
+        box-sizing: border-box;
     }
 
     .side-card-header {
         background-color: #3B524A;
         color: white;
-        padding: 10px 15px;
+        padding: clamp(8px, 2.5vw, 10px) clamp(10px, 3vw, 15px);
         font-weight: bold;
+        font-size: clamp(13px, 3.5vw, 15px);
     }
 
     .total-count-badge {
@@ -53,13 +65,12 @@
         font-size: 0.85rem;
     }
 
-    /* تنسيق المستندات */
     .pfs-doc-container { direction: rtl; }
     .pfs-doc-wrapper:hover { background-color: #f9fafb; }
     .pfs-doc-title-link {
         color: #000 !important;
         font-weight: 700;
-        font-size: 0.92rem;
+        font-size: clamp(12px, 3.5vw, 0.92rem);
     }
 
     .pfs-count-square {
@@ -69,12 +80,13 @@
         display: flex; align-items: center; justify-content: center;
         border-radius: 5px; border: 1px solid #e2e8f0;
         font-size: 0.7rem;
+        flex-shrink: 0;
     }
 
-    /* سويتش الحالة */
     .switch-container {
         position: relative; display: inline-block;
         width: 44px; height: 22px;
+        flex-shrink: 0;
     }
     .switch-container input { opacity: 0; width: 0; height: 0; }
     .slider {
@@ -90,20 +102,60 @@
     input:checked + .slider { background-color: #28a745; }
     input:checked + .slider:before { transform: translateX(22px); }
 
-    /* الأزرار */
     .btn-save-custom {
         background-color: #3B524A !important;
         color: white !important;
-        padding: 6px 20px !important;
+        padding: 6px clamp(12px, 3vw, 20px) !important;
         border-radius: 8px !important;
         transition: 0.3s;
+        font-size: clamp(13px, 3.5vw, 15px);
+        white-space: nowrap;
     }
     .btn-save-custom:hover { background-color: #497033; }
-    .view-all-link { color: #3B524A; font-weight: bold; text-decoration: none; font-size: 0.85rem; }
+
+    .view-all-link {
+        color: #3B524A;
+        font-weight: bold;
+        text-decoration: none;
+        font-size: clamp(12px, 3vw, 0.85rem);
+    }
     .view-all-link:hover { text-decoration: underline; }
-    
+
     .disabled-btn { opacity: 0.5; cursor: not-allowed; filter: grayscale(1); }
-    .move-this { padding: 30px 0; }
+    .move-this { padding: clamp(15px, 4vw, 30px) 0; }
+
+    @media (max-width: 768px) {
+        .list-group-item {
+            flex-direction: column;
+            align-items: flex-start !important;
+        }
+
+        .list-group-item strong {
+            min-width: unset;
+            width: 100%;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .card-header-unique {
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .side-card-header {
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .btn-save-custom {
+            width: 100%;
+            text-align: center;
+        }
+
+        .move-this {
+            padding: 15px 0;
+        }
+    }
 </style>
 <?php $__env->stopPush(); ?>
 
@@ -341,7 +393,7 @@ unset($__errorArgs, $__bag); ?>
                     </ul>
                     <?php if($currentUser->hasPermission('showDocuments')): ?>
                         <div class="card-footer text-center bg-white border-0">
-                            <a href="<?php echo e(route('documents.show', encodeId($employee->id))); ?>" class="view-all-link">مشاهدة تفاصيل المستندات</a>
+                            <a href="<?php echo e(route('documents.show', encodeId($employee->id))); ?>" class="view-all-link">مشاهدة الكل</a>
                         </div>
                     <?php endif; ?>
                 </div>

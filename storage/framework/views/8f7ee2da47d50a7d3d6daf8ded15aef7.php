@@ -3,7 +3,7 @@
 <?php $__env->startSection('title', 'دار الوثائق'); ?>
 
 <?php $__env->startPush('styles'); ?>
-<link href="<?php echo e(asset('tom-select.bootstrap5.min.css')); ?>" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/tom-select@2.2.2/dist/css/tom-select.bootstrap5.min.css" rel="stylesheet">
 <style>
     body {
         margin: 0;
@@ -137,15 +137,28 @@
         font-size: clamp(13px, 3.5vw, 15px);
     }
 
+    .ts-wrapper {
+        z-index: 1050 !important;
+    }
+
     .ts-control {
         border-radius: 10px !important;
         padding: 10px !important;
         border: 1px solid #ddd !important;
+        min-height: 45px !important;
+        display: flex !important;
+        align-items: center !important;
     }
 
     .ts-wrapper.is-invalid .ts-control {
         border-color: red !important;
     }
+
+    .table-responsive {
+        overflow: visible !important;
+    }
+
+
 
     @media (max-width: 600px) {
         .notes-toolbar {
@@ -398,7 +411,9 @@ unset($__errorArgs, $__bag); ?>
         </div>
     </div>
 </div>
-<script src="<?php echo e(asset('script.js')); ?>"></script>
-<script src="https://cdn.jsdelivr.net/npm/tom-select@2.2.2/dist/js/tom-select.complete.min.js"></script>
 <?php $__env->stopSection(); ?>
+<?php $__env->startPush('scripts'); ?>
+<script src="https://cdn.jsdelivr.net/npm/tom-select@2.2.2/dist/js/tom-select.complete.min.js"></script>
+<script src="<?php echo e(asset('script.js')); ?>"></script>
+<?php $__env->stopPush(); ?>
 <?php echo $__env->make('layouts.user-layout', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\xampp\htdocs\pfs-archive\resources\views/user/library/index.blade.php ENDPATH**/ ?>

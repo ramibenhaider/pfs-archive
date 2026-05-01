@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\Controllers\User;
+namespace App\Http\Controllers\Api\User;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Document_type;
 use App\Models\Document;
@@ -13,37 +13,24 @@ use Illuminate\Support\Facades\Storage;
 
 class DocumentController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         if (!Auth::user()->hasPermission('createDocuments')) {
-            return back()->with('warning', 'غير مصرح لك بإضافة موظف!');
+            return response()->json([
+                'status' => 'warning',
+                'message' => 'غير مصرح لك بإضافة مستند!'
+            ],403);
         }
 
         $document_type = Document_type::find($request->document_type_id);
         if (!$document_type) {
-            return back()->with('warning', 'نوع الملف هذا غير موجود!');
+            return response()->json([
+                'status' => 'warning',
+                'message' => 'نوع الملف هذا غير موجود!'
+            ],400);
         }
         
-        $request->validateWithBag('doc_errors',
+        $request->validate(
             [
                 'files' => 'required|array',
                 'files.*' => 'required|file|mimes:pdf,doc,docx,xls,xlsx|max:10240',
@@ -68,13 +55,13 @@ class DocumentController extends Controller
             ]
         );
         
-        DB::transaction(function () use ($request, $document_type) {
-
+        $documents = DB::transaction(function () use ($request, $document_type) {
+            $created = [];
             foreach ($request->file('files') as $index => $file) {
 
                 $path = $file->store($document_type->typeEn, 'public');
 
-                Document::create([
+                $created[] = Document::create([
                     'file_path' => $path,
                     'original_name' => $file->getClientOriginalName(),
                     'employee_id' => $request->employee_id,
@@ -82,9 +69,14 @@ class DocumentController extends Controller
                     'comment' => $request->comments[$index] ?? null,
                 ]);
             }
+            return $created;
         });
 
-        return back()->with('success', 'تم رفع الملفات بنجاح!');
+        return response()->json([
+            'status' => 'success',
+            'message' => 'تم رفع الملفات بنجاح!',
+            'data' => $documents
+        ],200);
     }
 
 
@@ -93,21 +85,25 @@ class DocumentController extends Controller
      */
     public function show($employeeHash)
     {
+        if (!Auth::user()->hasPermission('showDocuments')) {
+            return response()->json([
+                'status' => 'warning',
+                'message' => 'غير مصرح لك بالإطلاع على المستندات!'
+            ], 403);
+        }
         $employeeId = decodeId($employeeHash);
         if (!$employeeId) {
             abort(404);
         }
         $employee = Employee::findOrFail($employeeId);
         $documents = Document::where('employee_id', $employee->id)->orderByDesc('created_at')->get();
-        return view('user.document.show', compact('documents', 'employee'));
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Document $document)
-    {
-        //
+        return response()->json([
+            'status' => 'success',
+            'data' => [
+                'employee' => $employee,
+                'documents' => $documents
+            ]
+        ],200);
     }
 
     /**
@@ -123,12 +119,18 @@ class DocumentController extends Controller
         ]);
 
         if (!$document->fill($new_comment)->isDirty()) {
-            return back()->with('warning', 'لم تقم بأي تعديل');
+            return response()->json([
+                'status' => 'warning',
+                'message' => 'لم تقم بأي تعديل!'
+            ],422);
         }
 
         $document->save();
-        return redirect()->back()
-             ->with('success', 'تم التعديل بنجاح!');
+        
+        return response()->json([
+            'status' => 'success',
+            'message' => 'تم التعديل بنجاح'
+        ],200);
     }
 
     /**
@@ -137,7 +139,10 @@ class DocumentController extends Controller
     public function destroy($id)
     {
         if (!Auth::user()->hasPermission('deleteDocuments')) {
-            return back()->with('warning', 'غير مصرح لك بحذف المستند');
+            return response()->json([
+                'status' => 'warning',
+                'message' => 'غير مصرح لك بحذف المستندات!'
+            ],403);
         }
 
         $document = Document::findOrFail($id);
@@ -148,13 +153,19 @@ class DocumentController extends Controller
 
         $document->delete();
 
-        return back()->with('success', 'تم حذف الملف بنجاح!');
+            return response()->json([
+                'status' => 'success',
+                'message' => 'تم حذف الملف بنجاح!'
+            ],200);
     }
 
-        public function showTypeFiles($employeeHash,$document_typeHash)
+    public function showTypeFiles($employeeHash, $document_typeHash)
     {
         if (!Auth::user()->hasPermission('showDocuments')) {
-            return back()->with('warning', 'غير مصرح لك بالإطلاع على المستندات!');
+            return response()->json([
+                'status' => 'warning',
+                'message' => 'غير مصرح لك بالإطلاع على المستندات!'
+            ],403);
         }
 
         $employeeId = decodeId($employeeHash);
@@ -172,11 +183,25 @@ class DocumentController extends Controller
         $documents = Document::where('employee_id', $employee->id)
                              ->where('document_type_id', $document_type->id)
                              ->orderByDesc('created_at')->get();
-        return view('user.document.show', compact('documents', 'employee'));
+
+        return response()->json([
+            'status' => 'success',
+            'data' => [
+                'employee' => $employee,
+                'documents' => $documents
+            ]
+        ],200);
     }
 
     public function officePreview($id)
     {
+        if (!Auth::user()->hasPermission('showDocuments')) {
+            return response()->json([
+                'status' => 'warning',
+                'message' => 'غير مصرح لك بالإطلاع على المستندات!'
+            ],403);
+        }
+
         $document = Document::findOrFail($id);
         $fullpath = storage_path('app/public/' . $document->file_path);
 

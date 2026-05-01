@@ -42,26 +42,6 @@ class AirlineController extends Controller
         Airline::create($data);
         return redirect()->back()->with('success', 'تم إضافة اسم خطوط الطيران بنجاح');
     }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Airline $airline)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Airline $airline)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, $airlineHashed)
     {
         $airlineHashed = decodeId($airlineHashed);
@@ -86,10 +66,6 @@ class AirlineController extends Controller
         $airline->save();
         return redirect()->back()->with('success', 'تم التعديل بنجاح!');
     }
-
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy($airlineHashed)
     {
         $airlineHashed = decodeId($airlineHashed);

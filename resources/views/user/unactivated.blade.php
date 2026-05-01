@@ -60,7 +60,7 @@
 @endpush
 
 @section('content')
-@if($CurrentUser->is_active)
+@if($currentUser->is_active)
 <script>window.location.href = '{{ route('employee.index') }}'</script>
 @endif
 <div class="pending-approval-alert">

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\User;
+namespace App\Http\Controllers\Api\User;
 
 use App\Http\Controllers\Controller;
 use App\Models\MyNote;
@@ -17,19 +17,11 @@ class MyNoteController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        return view('user.notes.createMyNote');
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
-        $data = $request->validateWithBag('note_errors', [
+        $data = $request->validate([
             'title'       => ['required', 'string', 'max:150'],
             'note'        => ['nullable', 'string', 'max:255'],
         ],
@@ -39,32 +31,27 @@ class MyNoteController extends Controller
 
             'note.max' => 'لقد تجاوزت عدد الأحرف المسموحة'
         ]);
-        MyNote::create([...$data, 'user_id' => auth()->id()]);
-        return redirect()->route('note.index')->with('success', 'تمت إضافة ملاحظتك بنجاح!');
+        $storedData = MyNote::create([...$data, 'user_id' => auth()->id()]);
+        return response()->json([
+            'status' => 'success',
+            'message' => 'تمت إضافة ملاحظتك بنجاح!',
+            'data' => $storedData
+        ],201);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit($HashedId)
+    public function show($HashedId)
     {
         $decodedId = decodeId($HashedId);
 
-        if(!$decodedId) {
-            return abort(404);
-        }
+        if (!$decodedId)
+        return abort(404);
 
         $myNote = MyNote::findOrFail($decodedId);
 
-        return view('user.notes.editMyNote', compact('myNote'));
+        return response()->json(['data' => $myNote],200);
     }
 
     /**
@@ -84,11 +71,18 @@ class MyNoteController extends Controller
         ]);
 
         if (!$myNote->fill($new_data)->isDirty()) {
-            return back()->with('warning', 'لم تقم بأي تعديل!');
+            return response()->json([
+                'status' => 'warning',
+                'message' => 'لم تقم بأي تعديل!'
+            ],422);
         }
 
-        $myNote->save();
-        return back()->with('success', 'تم التعديل بنجاح!');
+        $myNote->update($new_data);
+        return response()->json([
+            'status' => 'success',
+            'message' => 'تم التعديل بنجاح!',
+            'data' => $myNote
+        ],200);
     }
 
     /**
@@ -99,6 +93,6 @@ class MyNoteController extends Controller
         $note = MyNote::findOrFail($id);
 
         $note->delete();
-        return redirect()->route('note.index')->with('success', 'تم الحذف بنجاح!');
+        return response()->noContent();
     }
 }
