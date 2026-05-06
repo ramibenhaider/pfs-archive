@@ -9,7 +9,6 @@ body {
   background-color: #e8e8e8 !important;
 }
 
-/* اللوقو */
 .logo-area {
   width: 100%;
   padding: 5px 0 0 0;
@@ -17,20 +16,24 @@ body {
 }
 
 .logo-area img {
-  max-width: 800px;
+  max-width: min(800px, 100%);
   height: auto;
+  display: block;
+  margin: 0 auto;
 }
+
 .container-createEmployee {
     max-width: 1000px;
     margin: 20px auto;
-    padding: 20px;
+    padding: clamp(12px, 4vw, 20px);
+    box-sizing: border-box;
 }
 
 .btn-back-note {
     background-color: #6c757d !important;
     color: #ffffff !important;
     text-decoration: none !important;
-    padding: 10px 30px !important;
+    padding: 10px clamp(16px, 4vw, 30px) !important;
     border-radius: 10px !important;
     font-weight: bold !important;
     transition: 0.3s !important;
@@ -44,11 +47,13 @@ body {
 
 .edit-note-container {
     max-width: 700px;
-    margin: 40px auto;
+    margin: clamp(20px, 5vw, 40px) auto;
     background: #fff;
-    padding: 30px;
+    padding: clamp(16px, 5vw, 30px);
     border-radius: 15px;
     box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+    box-sizing: border-box;
+    width: calc(100% - 24px);
 }
 
 .edit-note-header {
@@ -58,7 +63,7 @@ body {
 }
 
 .edit-note-header h1 {
-    font-size: 24px;
+    font-size: clamp(18px, 5vw, 24px);
     color: #3B524A;
     margin: 0;
     font-weight: bold;
@@ -80,6 +85,7 @@ body {
     margin-bottom: 6px;
     font-weight: bold;
     color: #333;
+    font-size: clamp(13px, 3.5vw, 15px);
 }
 
 .form-group input,
@@ -87,8 +93,10 @@ body {
     padding: 12px;
     border-radius: 8px;
     border: 1px solid #bbb;
-    font-size: 15px;
+    font-size: clamp(13px, 3.5vw, 15px);
     font-family: "Cairo", sans-serif;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .form-label-custom {
@@ -96,7 +104,7 @@ body {
     color: #444;
     margin-bottom: 8px;
     display: block;
-    font-size: 16px;
+    font-size: clamp(14px, 4vw, 16px);
 }
 
 .custom-input {
@@ -104,6 +112,9 @@ body {
     padding: 12px 15px !important;
     border: 1px solid #ddd !important;
     transition: all 0.3s ease;
+    width: 100%;
+    box-sizing: border-box;
+    font-size: clamp(13px, 3.5vw, 15px);
 }
 
 .custom-input:focus {
@@ -126,7 +137,8 @@ body {
 .edit-actions {
     margin-top: 30px;
     display: flex;
-    gap: 15px;
+    flex-wrap: wrap;
+    gap: 12px;
     justify-content: center;
 }
 
@@ -134,16 +146,22 @@ body {
     background-color: #3B524A !important;
     color: #ffffff !important;
     border: none !important;
-    padding: 10px 30px !important;
+    padding: 10px clamp(16px, 4vw, 30px) !important;
     border-radius: 10px !important;
     font-weight: bold !important;
     transition: 0.3s !important;
     display: inline-block;
+    min-width: 120px;
+    text-align: center;
 }
 
 .btn-save-note:hover {
     background-color: #497033 !important;
     transform: translateY(-2px);
+}
+
+.btn-save-note:active {
+    transform: translateY(0);
 }
 
 .btn-delete-small { color: #497033; }
@@ -155,6 +173,42 @@ body {
     padding: 5px 12px !important;
     font-size: 14px !important;
     color: white !important;
+}
+
+@media (max-width: 600px) {
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .container-createEmployee {
+        margin-top: 10px;
+    }
+
+    .edit-note-container {
+        width: calc(100% - 16px);
+        border-radius: 12px;
+    }
+
+    .edit-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .btn-save-note,
+    .btn-back-note {
+        width: 100%;
+        text-align: center;
+    }
+}
+
+@media (max-width: 360px) {
+    .edit-note-container {
+        width: 100%;
+        border-radius: 0;
+        margin: 10px auto;
+    }
 }
 </style>
 <?php $__env->stopPush(); ?>
@@ -202,9 +256,9 @@ body {
                 <button type="submit" class="btn-save-note">حفظ التعديلات</button>
                 <?php if($currentUser->hasPermission('previewDocuments')): ?>
                     <?php
-                        $signedUrl = URL::temporarySignedRoute('documents.preview', now()->addMinutes(60), ['path' => $document->file_path]);
+                    $officeUrl = URL::temporarySignedRoute('documents.office.preview', now()->addMinutes(60), ['id' => $document->id]);
                     ?>
-                    <button type="button" onclick="viewDocument('<?php echo e($signedUrl); ?>', '<?php echo e($document->original_name); ?>')" class="btn btn-primary">
+                    <button type="button" onclick="viewDocument('<?php echo e($officeUrl); ?>', '<?php echo e($document->original_name); ?>')" class="btn btn-primary">
                         <i class="fa fa-eye"></i> معاينة المستند
                     </button>
                 <?php else: ?>

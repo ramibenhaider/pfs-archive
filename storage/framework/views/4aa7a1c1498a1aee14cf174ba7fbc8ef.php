@@ -23,12 +23,10 @@
         padding-right: 10px; 
     }
 
-    /* التعديل الأساسي هنا ليصبح مرن */
     .form-grid { 
         display: grid; 
         gap: 18px; 
         align-items: start; 
-        /* التوزيع التلقائي للكروت */
         grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
     }
 
@@ -45,21 +43,18 @@
     .invalid-feedback { color: red; font-size: 13px; margin-top: 5px; display: block; }
     .is-invalid { border-color: red !important; }
 
-    /* ######## التعديلات الخاصة بالجوال ######## */
     @media (max-width: 768px) {
-        /* إلغاء الهامش الأيمن (260px) لأن القائمة الجانبية غالباً تختفي أو تصبح فوق المحتوى */
         div[style*="margin-right: 260px"] {
             margin-right: 0 !important;
-            padding: 10px !important; /* تقليل الحواف لتوفير مساحة */
+            padding: 10px !important;
         }
 
         .form-grid {
-            /* كرت واحد فقط في السطر */
             grid-template-columns: 1fr !important; 
         }
 
         .search-form input {
-            font-size: 14px; /* تصغير الخط قليلاً ليناسب العرض */
+            font-size: 14px;
             padding: 0 10px;
         }
 
@@ -68,13 +63,11 @@
             font-size: 14px;
         }
 
-        /* جعل خانة التعديل تأخذ مساحة أكبر في الشاشات الصغيرة */
         .form-control.me-2 {
             width: 100% !important;
             margin-bottom: 5px;
         }
 
-        /* جعل أزرار التعديل والحذف تحت بعضها إذا ضاق العرض جداً */
         .d-flex.justify-content-between {
             flex-wrap: wrap; 
         }
@@ -87,7 +80,6 @@
 
     <div class="form-grid" style="grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));">
 
-        
         <div class="side-card-unique">
             <div class="side-card-header d-flex justify-content-between align-items-center">
                 <span class="side-title">خطوط الطيران</span>
@@ -116,7 +108,6 @@ endif;
 unset($__errorArgs, $__bag); ?>
 
                 <div class="side-list">
-                    
                     <?php $__errorArgs = ['airline_name', 'airline_name.edit'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -129,12 +120,14 @@ unset($__errorArgs, $__bag); ?>
                     <?php $__currentLoopData = $airlines; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $airline): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                         <div class="d-flex justify-content-between align-items-center border-bottom py-2">
                             <form action="<?php echo e(route('admin.airline.update', encodeId($airline->id))); ?>" method="POST" class="d-flex align-items-center flex-grow-1">
-                                <?php echo csrf_field(); ?> <?php echo method_field('PUT'); ?>
+                                <?php echo csrf_field(); ?>
+                                <?php echo method_field('PUT'); ?>
                                 <input type="text" name="airline_name" value="<?php echo e($airline->airline_name); ?>" class="form-control me-2">
                                 <button type="submit" style="border:none; background:none; color:blue; white-space:nowrap;">تعديل</button>
                             </form>
                             <form action="<?php echo e(route('admin.airline.destroy', encodeId($airline->id))); ?>" onsubmit="return confirm('هل أنت متأكد؟')" method="POST" class="m-0 ms-2">
-                                <?php echo csrf_field(); ?> <?php echo method_field('DELETE'); ?>
+                                <?php echo csrf_field(); ?>
+                                <?php echo method_field('DELETE'); ?>
                                 <button type="submit" style="border:none; background:none; color:red; white-space:nowrap;">حذف</button>
                             </form>
                         </div>
@@ -143,7 +136,6 @@ unset($__errorArgs, $__bag); ?>
             </div>
         </div>
 
-        
         <div class="side-card-unique">
             <div class="side-card-header d-flex justify-content-between align-items-center">
                 <span class="side-title">الإدارات</span>
@@ -183,12 +175,14 @@ unset($__errorArgs, $__bag); ?>
                     <?php $__currentLoopData = $management; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $manage): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                         <div class="d-flex justify-content-between align-items-center border-bottom py-2">
                             <form action="<?php echo e(route('admin.management.update', encodeId($manage->id))); ?>" method="POST" class="d-flex align-items-center flex-grow-1">
-                                <?php echo csrf_field(); ?> <?php echo method_field('PUT'); ?>
+                                <?php echo csrf_field(); ?>
+                                <?php echo method_field('PUT'); ?>
                                 <input type="text" name="management_name" value="<?php echo e($manage->management_name); ?>" class="form-control me-2">
                                 <button type="submit" style="border:none; background:none; color:blue; white-space:nowrap;">تعديل</button>
                             </form>
                             <form action="<?php echo e(route('admin.management.destroy', encodeId($manage->id))); ?>" onsubmit="return confirm('هل أنت متأكد؟')" method="POST" class="m-0 ms-2">
-                                <?php echo csrf_field(); ?> <?php echo method_field('DELETE'); ?>
+                                <?php echo csrf_field(); ?>
+                                <?php echo method_field('DELETE'); ?>
                                 <button type="submit" style="border:none; background:none; color:red; white-space:nowrap;">حذف</button>
                             </form>
                         </div>
@@ -197,7 +191,6 @@ unset($__errorArgs, $__bag); ?>
             </div>
         </div>
 
-        
         <div class="side-card-unique">
             <div class="side-card-header d-flex justify-content-between align-items-center">
                 <span class="side-title">المسميات الوظيفية</span>
@@ -237,12 +230,14 @@ unset($__errorArgs, $__bag); ?>
                     <?php $__currentLoopData = $job_titles; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $job_title): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                         <div class="d-flex justify-content-between align-items-center border-bottom py-2">
                             <form action="<?php echo e(route('admin.job_title.update', encodeId($job_title->id))); ?>" method="POST" class="d-flex align-items-center flex-grow-1">
-                                <?php echo csrf_field(); ?> <?php echo method_field('PUT'); ?>
+                                <?php echo csrf_field(); ?>
+                                <?php echo method_field('PUT'); ?>
                                 <input type="text" name="job_title_name" value="<?php echo e($job_title->job_title_name); ?>" class="form-control me-2">
                                 <button type="submit" style="border:none; background:none; color:blue; white-space:nowrap;">تعديل</button>
                             </form>
                             <form action="<?php echo e(route('admin.job_title.destroy', encodeId($job_title->id))); ?>" onsubmit="return confirm('هل أنت متأكد؟')" method="POST" class="m-0 ms-2">
-                                <?php echo csrf_field(); ?> <?php echo method_field('DELETE'); ?>
+                                <?php echo csrf_field(); ?>
+                                <?php echo method_field('DELETE'); ?>
                                 <button type="submit" style="border:none; background:none; color:red; white-space:nowrap;">حذف</button>
                             </form>
                         </div>
@@ -251,7 +246,6 @@ unset($__errorArgs, $__bag); ?>
             </div>
         </div>
 
-        
         <div class="side-card-unique">
             <div class="side-card-header d-flex justify-content-between align-items-center">
                 <span class="side-title">أنواع المستندات</span>
@@ -294,13 +288,15 @@ unset($__errorArgs, $__bag); ?>
                     <?php $__currentLoopData = $document_types; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $document_type): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                         <div class="d-flex align-items-center border-bottom py-2">
                             <form action="<?php echo e(route('admin.document_type.update', encodeId($document_type->id))); ?>" method="POST" class="d-flex align-items-center flex-grow-1">
-                                <?php echo csrf_field(); ?> <?php echo method_field('PUT'); ?>
+                                <?php echo csrf_field(); ?>
+                                <?php echo method_field('PUT'); ?>
                                 <input type="text" name="type" value="<?php echo e($document_type->type); ?>" class="form-control form-control-sm me-2">
                                 <input type="hidden" name="typeEn" value="<?php echo e($document_type->typeEn); ?>">
                                 <button type="submit" style="border:none; background:none; color:blue; white-space:nowrap;">تعديل</button>
                             </form>
                             <form action="<?php echo e(route('admin.document_type.destroy', encodeId($document_type->id))); ?>" onsubmit="return confirm('حذف؟')" method="POST" class="ms-2">
-                                <?php echo csrf_field(); ?> <?php echo method_field('DELETE'); ?>
+                                <?php echo csrf_field(); ?>
+                                <?php echo method_field('DELETE'); ?>
                                 <button type="submit" style="border:none; background:none; color:red; white-space:nowrap;">حذف</button>
                             </form>
                         </div>
@@ -309,7 +305,6 @@ unset($__errorArgs, $__bag); ?>
             </div>
         </div>
 
-        
         <div class="side-card-unique">
             <div class="side-card-header d-flex justify-content-between align-items-center">
                 <span class="side-title">الجنسيات</span>
@@ -349,12 +344,14 @@ unset($__errorArgs, $__bag); ?>
                     <?php $__currentLoopData = $nationalities; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $nationality): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                         <div class="d-flex justify-content-between align-items-center border-bottom py-2">
                             <form action="<?php echo e(route('admin.nationality.update', encodeId($nationality->id))); ?>" method="POST" class="d-flex align-items-center flex-grow-1">
-                                <?php echo csrf_field(); ?> <?php echo method_field('PUT'); ?>
+                                <?php echo csrf_field(); ?>
+                                <?php echo method_field('PUT'); ?>
                                 <input type="text" name="nationality_name" value="<?php echo e($nationality->nationality_name); ?>" class="form-control me-2">
                                 <button type="submit" style="border:none; background:none; color:blue; white-space:nowrap;">تعديل</button>
                             </form>
                             <form action="<?php echo e(route('admin.nationality.destroy', encodeId($nationality->id))); ?>" onsubmit="return confirm('حذف؟')" method="POST" class="m-0 ms-2">
-                                <?php echo csrf_field(); ?> <?php echo method_field('DELETE'); ?>
+                                <?php echo csrf_field(); ?>
+                                <?php echo method_field('DELETE'); ?>
                                 <button type="submit" style="border:none; background:none; color:red; white-space:nowrap;">حذف</button>
                             </form>
                         </div>
