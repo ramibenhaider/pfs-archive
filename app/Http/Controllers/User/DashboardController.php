@@ -50,4 +50,13 @@ class DashboardController extends Controller
         return redirect()->route('login')->with('success', 'تم إرسال طلبك بنجاح، في انتظار موافقة الأدمن!');
     }
 
+    public function unactivated()
+    {
+        $currentUser = auth()->user();
+        if ($currentUser && $currentUser->is_active) {
+            return redirect()->route('employee.index');
+        }
+        return view('user.unactivated');
+    }
+
 }

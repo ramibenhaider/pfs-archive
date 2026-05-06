@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::prefix('/')->group(function() {
 
-    Route::get('/user/unactivated', function() {return view('user.unactivated');})->name('user.unactivated');
+    Route::get('/user/unactivated', [DashboardController::class, 'unactivated'])->name('user.unactivated');
 
     Route::post('/logout', [UserLoginController::class, 'logout'])->name('user.logout');
 
