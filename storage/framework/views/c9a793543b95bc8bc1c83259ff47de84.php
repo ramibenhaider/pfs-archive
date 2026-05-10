@@ -1,5 +1,3 @@
-
-
 <?php $__env->startSection('note-title', 'تعديل ملاحظة: '. $note->employee->name); ?>
 
 <?php $__env->startSection('method'); ?>

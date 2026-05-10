@@ -1,5 +1,3 @@
-
-
 <?php $__env->startSection('title', 'تعديل الملاحظة'); ?>
 
 <?php $__env->startPush('styles'); ?>

@@ -1,5 +1,3 @@
-
-
 <?php $__env->startSection('title', 'الصفحة الرئيسية'); ?>
 
 <?php $__env->startPush('styles'); ?>

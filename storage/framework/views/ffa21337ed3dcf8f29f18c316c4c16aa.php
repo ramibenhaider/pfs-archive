@@ -1,5 +1,3 @@
-
-
 <?php $__env->startSection('title', 'بيانات الموظف'); ?>
 
 <?php $__env->startPush('styles'); ?>

@@ -24,10 +24,10 @@ Route::middleware('auth:sanctum')->group(function() {
     Route::apiResource('myNote', MyNoteController::class);
     Route::get('/employees/search', [EmployeeController::class, 'doSearch']);
     Route::apiResource('employees', EmployeeController::class);
-    Route::get('/documents/employee/{employeeHash}', [DocumentController::class, 'show']);
-    Route::get('/documents/{employeeHash}/{document_typeHash}', [DocumentController::class, 'showTypeFiles']);
-    Route::get('/documents/{id}/preview', [DocumentController::class, 'officePreview']);
-    Route::apiResource('documents', DocumentController::class)->except(['show']);
+    Route::get('/document/employee/{employeeHash}', [DocumentController::class, 'show']);
+    Route::get('/document/{employeeHash}/{document_typeHash}', [DocumentController::class, 'showTypeFiles']);
+    Route::get('/document/{id}/preview', [DocumentController::class, 'officePreview']);
+    Route::apiResource('document', DocumentController::class)->except(['show']);
 });
 
 Route::prefix('admin')->group(function() {

@@ -1,5 +1,3 @@
-
-
 <?php $__env->startSection('title', 'دار الوثائق'); ?>
 
 <?php $__env->startPush('styles'); ?>
@@ -242,107 +240,70 @@
     </div>
 
     <div class="row">
-        <div class="col-md-6">
-            <div class="note-section-card">
-                <h5 class="section-header">رفع المستندات</h5>
-                <form action="<?php echo e(route('documents.store')); ?>" method="POST" enctype="multipart/form-data">
-                    <?php echo csrf_field(); ?>
-                    <div class="mb-3">
-                        <label class="form-label">الموظف</label>
-                        <select name="employee_id" id="select-employee-doc" class="searchable-select <?php $__errorArgs = ['employee_id', 'doc_errors'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>" placeholder="ابحث عن موظف...">
-                            <option value=""></option>
-                            <?php $__currentLoopData = $employees; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $employee): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                <option value="<?php echo e($employee->id); ?>" <?php echo e(old('employee_id') == $employee->id ? 'selected' : ''); ?>><?php echo e($employee->name); ?></option>
-                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                        </select>
-                        <?php $__errorArgs = ['employee_id', 'doc_errors'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?>
-                            <div class="invalid-feedback d-block"><?php echo e($message); ?></div>
-                        <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>
-                    </div>
+<div class="col-md-6">
+    <div class="note-section-card">
+        <form action="<?php echo e(route('documents.store')); ?>" method="POST" enctype="multipart/form-data">
+            <?php echo csrf_field(); ?>
+            <h5 class="section-header">رفع المستندات</h5>
 
-                    <div class="mb-3">
-                        <label class="form-label">نوع المستند</label>
-                        <select name="document_type_id" class="form-select custom-input <?php $__errorArgs = ['document_type_id', 'doc_errors'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>">
-                            <?php $__currentLoopData = $document_types; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $document_type): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                <option value="<?php echo e($document_type->id); ?>" <?php echo e(old('document_type_id') == $document_type->id ? 'selected' : ''); ?>><?php echo e($document_type->type); ?></option>
-                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                        </select>
-                    </div>
-
-                    <div class="mb-3">
-                        <label class="form-label">الملفات</label>
-                        <input type="file" name="files[]" class="form-control custom-input" accept=".pdf,.doc,.docs,.xls,.xlsx" multiple>
-                        <?php $__errorArgs = ['files', 'doc_errors'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?>
-                            <div class="invalid-feedback d-block"><?php echo e($message); ?></div>
-                        <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>
-                        <?php $__errorArgs = ['files.*', 'doc_errors'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?>
-                            <div class="invalid-feedback d-block"><?php echo e($message); ?></div>
-                        <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>
-                        <?php $__errorArgs = ['comments', 'doc_errors'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?>
-                            <div class="invalid-feedback d-block"><?php echo e($message); ?></div>
-                        <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>
-                        <?php $__errorArgs = ['comments.*', 'doc_errors'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?>
-                            <div class="invalid-feedback d-block"><?php echo e($message); ?></div>
-                        <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>
-                    </div>
-
-                    <?php if($currentUser->hasPermission('createDocuments')): ?>
-                        <button type="submit" class="btn-main w-100">بدء الرفع</button>
-                    <?php else: ?>
-                        <button type="button" class="btn-main w-100" disabled>غير مصرح لك برفع الملفات</button>
-                    <?php endif; ?>
-                </form>
+            <div class="mb-3">
+                <label class="form-label">الموظف</label>
+                <select name="employee_id" id="select-employee-doc" class="searchable-select" placeholder="ابحث عن موظف...">
+                    <?php $__currentLoopData = $employees; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $employee): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <option value="<?php echo e($employee->id); ?>"><?php echo e($employee->name); ?></option>
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                </select>
+                <div id="err-employee" class="invalid-feedback d-block"></div>
             </div>
-        </div>
+
+            <div class="mb-3">
+                <label class="form-label">نوع المستند</label>
+                <select name="document_type_id" id="select-doc-type" class="form-select custom-input">
+                    <?php $__currentLoopData = $document_types; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $document_type): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <option value="<?php echo e($document_type->id); ?>"><?php echo e($document_type->type); ?></option>
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">الملفات</label>
+                    <input type="file" id="fileInput"
+                        class="form-control custom-input <?php if($errors->doc_errors->has('files') || $errors->doc_errors->has('files.*')): ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>"
+                        multiple accept=".pdf,.doc,.docx,.xls,.xlsx">
+                    <div id="fileList" class="mt-2"></div>
+                    <?php $__errorArgs = ['files', 'doc_errors'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                        <div class="invalid-feedback d-block"><?php echo e($message); ?></div>
+                    <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+                    <?php $__errorArgs = ['files.*', 'doc_errors'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                        <div class="invalid-feedback d-block"><?php echo e($message); ?></div>
+                    <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+                </div>
+
+            <?php if($currentUser->hasPermission('createDocuments')): ?>
+                <button type="submit" class="btn-main w-100">بدء الرفع</button>
+            <?php else: ?>
+                <button type="button" class="btn-main w-100" disabled>غير مصرح لك برفع الملفات</button>
+            <?php endif; ?>
+        </form>
+    </div>
+</div>
 
         <div class="col-md-6">
             <div class="note-section-card">

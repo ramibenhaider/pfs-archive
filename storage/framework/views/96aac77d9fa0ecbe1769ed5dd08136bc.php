@@ -1,5 +1,3 @@
-
-
 <?php $__env->startSection('title', 'لوحة التحكم'); ?>
 <?php $__env->startSection('sidebar-permissions', 'active'); ?>
 

@@ -1,5 +1,3 @@
-
-
 <?php $__env->startSection('loginForWho', "تسجيل دخول المستخدمين"); ?>
 
 <?php $__env->startSection('action', route('user.doLogin')); ?>

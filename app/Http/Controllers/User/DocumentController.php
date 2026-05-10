@@ -35,7 +35,7 @@ class DocumentController extends Controller
     public function store(Request $request)
     {
         if (!Auth::user()->hasPermission('createDocuments')) {
-            return back()->with('warning', 'غير مصرح لك بإضافة موظف!');
+            return back()->with('warning', 'غير مصرح لك بإضافة مستندات!');
         }
 
         $document_type = Document_type::find($request->document_type_id);
@@ -148,7 +148,7 @@ class DocumentController extends Controller
 
         $document->delete();
 
-        return back()->with('success', 'تم حذف الملف بنجاح!');
+        return back()->with('success', 'تم حذف المستند بنجاح!');
     }
 
         public function showTypeFiles($employeeHash,$document_typeHash)
