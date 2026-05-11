@@ -1,4 +1,6 @@
-<?php $__env->startPush('styles'); ?>
+@extends('layouts.user-layout')
+
+@push('styles')
 <style>
 body {
   margin: 0;
@@ -6,6 +8,9 @@ body {
   font-family: "Cairo", sans-serif;
   background-color: #e8e8e8 !important;
 }
+
+.invalid-feedback { color: red; font-size: 13px; margin-top: 5px; }
+.is-invalid { border-color: red !important; }
 
 .logo-area {
   width: 100%;
@@ -173,13 +178,6 @@ body {
     color: white !important;
 }
 
-.disabled-btn {
-    background-color: #b0b0b0 !important;
-    color: #ffffff !important;
-    cursor: not-allowed;
-    opacity: 0.8;
-}
-
 @media (max-width: 600px) {
     .form-grid {
         grid-template-columns: 1fr;
@@ -208,6 +206,13 @@ body {
     }
 }
 
+.disabled-btn {
+    background-color: #b0b0b0 !important;
+    color: #ffffff !important;
+    cursor: not-allowed;
+    opacity: 0.8;
+}
+
 @media (max-width: 360px) {
     .edit-note-container {
         width: 100%;
@@ -216,79 +221,91 @@ body {
     }
 }
 </style>
-<?php $__env->stopPush(); ?>
+@endpush
 
-<?php $__env->startSection('content'); ?>
-<div class="container-createEmployee">
-    <div class="mb-3">
-        <a href="<?php echo e(route('employee.edit', encodeId($employee->id))); ?>" class="btn-back-note" style="text-decoration: none; display: inline-flex; align-items: center; gap: 8px;">
-            <span>&larr;</span> رجوع
+@section('content')
+<div class="container-createEmployee" dir="rtl">
+    <div style="max-width: 700px; margin: 0 auto 20px auto; padding: 0 12px; box-sizing: border-box; text-align: right;">
+        <a href="{{ route('company-docs.index') }}" class="btn-back-note" style="text-decoration: none; display: inline-flex; align-items: center; justify-content: center; gap: 8px;">
+            <i class="fas fa-arrow-right"></i> رجوع
         </a>
     </div>
 
-    <?php $__currentLoopData = $documents; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $document): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+    @foreach ($company_documents as $company_document)
     <div class="edit-note-container" style="margin-bottom: 30px;">
         <div class="edit-note-header">
             <h1>تعديل بيانات المستند</h1>
         </div>
 
-        <form action="<?php echo e(route('documents.update', $document->id)); ?>" method="POST">
-            <?php echo csrf_field(); ?>
-            <?php echo method_field('PUT'); ?>
+        <form action="{{ route('company-docs.update', $company_document->id) }}" method="POST">
+            @csrf
+            @method('PUT')
 
             <div class="form-grid">
                 <div class="form-group">
-                    <label>اسم الموظف</label>
-                    <input type="text" value="<?php echo e($document->employee->name); ?>" disabled style="background-color: #f0f0f0;">
+                    <label>الشركة</label>
+                    <select name="airline_id">
+                        @foreach ($airlines as $airline)
+                            <option value="{{ $airline->id }}" {{ old('airline_id', $company_document->airline_id) == $airline->id ? 'selected' : '' }}
+                                class="@error('airline_id') is-invalid @enderror">{{ $airline->airline_name }}</option>
+                        @endforeach
+                    </select>
+                    @error('airline_id') <div class="invalid-feedback">{{ $message }}</div> @enderror
                 </div>
 
                 <div class="form-group">
                     <label>نوع المستند</label>
-                    <input type="text" value="<?php echo e($document->document_type->type); ?>" disabled style="background-color: #f0f0f0;">
+                    <select name="company_document_type_id">
+                        @foreach ($company_document_types as $type)
+                            <option value="{{ $type->id }}" {{ old('company_document_type_id', $company_document->company_document_type_id) == $type->id ? 'selected' : '' }}
+                                class="@error('company_document_type_id') is-invalid @enderror">{{ $type->name }}</option>
+                        @endforeach
+                    </select>
+                    @error('company_document_type_id') <div class="invalid-feedback">{{ $message }}</div> @enderror
                 </div>
 
                 <div class="form-group" style="grid-column: span 2;">
                     <label>اسم الملف</label>
-                    <input type="text" value="<?php echo e($document->original_name); ?>" disabled class="custom-input" readonly>
+                    <input type="text" value="{{ $company_document->original_name }}" disabled style="background-color: #f0f0f0;">
                 </div>
 
                 <div class="form-group" style="grid-column: span 2;">
                     <label class="form-label-custom">التعليق</label>
-                    <textarea name="comment" class="form-control custom-input custom-textarea auto-resize" placeholder="أدخل ملاحظاتك هنا..."><?php echo e($document->comment); ?></textarea>
+                    <textarea name="comment" class="form-control custom-input custom-textarea auto-resize @error('comment') is-invalid @enderror" placeholder="أدخل ملاحظاتك هنا...">{{ $company_document->comment }}</textarea>
+                    @error('comment') <div class="invalid-feedback">{{ $message }}</div> @enderror
                 </div>
             </div>
             <div class="edit-actions">
                 <button type="submit" class="btn-save-note">حفظ التعديلات</button>
-                <?php if($currentUser->hasPermission('previewDocuments')): ?>
-                    <?php
-                    $officeUrl = URL::temporarySignedRoute('documents.office.preview', now()->addMinutes(60), ['id' => $document->id]);
-                    ?>
-                    <button type="button" onclick="viewDocument('<?php echo e($officeUrl); ?>', '<?php echo e($document->original_name); ?>')" class="btn btn-primary">
+                @if($currentUser->hasPermission('previewDocuments'))
+                    @php
+                    $officeUrl = URL::temporarySignedRoute('documents.office.preview', now()->addMinutes(60), ['id' => $company_document->id]);
+                    @endphp
+                    <button type="button" onclick="viewDocument('{{ $officeUrl }}', '{{ $company_document->original_name }}')" class="btn btn-primary">
                         <i class="fa fa-eye"></i> معاينة المستند
                     </button>
-                <?php else: ?>
-                    <button type="button" class="btn-delete-sm disabled-btn" disabled><i class="fa fa-eye"></i>غير مصرح لك بمعاينة المستندات</button>                              
-                <?php endif; ?>
+                @else
+                    <button type="button" class="btn-delete-sm disabled-btn" disabled><i class="fa fa-eye"></i>غير مصرح لك بمعاينة المستندات</button>                
+                @endif
         </form>
-        <?php if($currentUser->hasPermission('deleteDocuments')): ?>
-                <form action="<?php echo e(route('documents.destroy', $document->id)); ?>" method="POST" onsubmit="return confirm('هل أنت متأكد من حذف هذا المستند نهائياً؟');">
-                    <?php echo csrf_field(); ?>
-                    <?php echo method_field('DELETE'); ?>
+        @if($currentUser->hasPermission('deleteDocuments'))
+                <form action="{{ route('company-docs.destroy', $company_document->id) }}" method="POST" onsubmit="return confirm('هل أنت متأكد من حذف هذا المستند نهائياً؟');">
+                    @csrf
+                    @method('DELETE')
                     <button type="submit" class="btn-delete-sm" style="padding: 10px 30px !important; height: 100%; cursor: pointer;">
                         حذف المستند
                     </button>
                 </form>
             </div>
-        <?php else: ?>       
+        @else       
                 <button type="button" class="btn-delete-sm disabled-btn" disabled><i class="fa fa-eye"></i>
                     غير مصرح لك بحذف المستندات
                 </button>
             </div>
-        <?php endif; ?>
+        @endif
     </div>
     <hr>
-    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+    @endforeach
 
 </div>
-<?php $__env->stopSection(); ?>
-<?php echo $__env->make('layouts.user-layout', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\xampp\htdocs\pfs-archive\resources\views/user/document/show.blade.php ENDPATH**/ ?>
+@endsection

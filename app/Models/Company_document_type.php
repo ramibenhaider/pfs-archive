@@ -4,16 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Airline extends Model
+class Company_document_type extends Model
 {
-    protected $fillable = [
-        'airline_name'
+    protected $fillable =
+    [
+        'name',
+        'nameEn'
     ];
-
-    public function employees()
-    {
-        return $this->hasMany(Employee::class);
-    }
 
     public function company_documents()
     {

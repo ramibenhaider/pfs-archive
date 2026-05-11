@@ -36,11 +36,11 @@ class AirlineController extends Controller
         [
             'airline_name.reqired' => 'الاسم مطلوب!',
             'airline_name.max' => 'لقد تجاوزت العدد المسموح به من عدد الحروف!',
-            'airline_name.unique' => 'اسم خط الطيران مكرر!'
+            'airline_name.unique' => 'اسم الشركة مكرر!'
         ]);
 
         Airline::create($data);
-        return redirect()->back()->with('success', 'تم إضافة اسم خطوط الطيران بنجاح');
+        return redirect()->back()->with('success', 'تم إضافة اسم الشركة بنجاح');
     }
     public function update(Request $request, $airlineHashed)
     {
@@ -56,7 +56,7 @@ class AirlineController extends Controller
         [
             'airline_name.required' => 'لا يمكن ترك هذه الخانة فارغ فارغة!',
             'airline_name.max' => 'لقد تجاوزت عدد الأحرف المسموحة!',
-            'airline_name.unique' => 'اسم خط الطيران مكرر!'
+            'airline_name.unique' => 'اسم الشركة مكرر!'
         ]);
 
         if (!$airline->fill($new_data)->isDirty()) {
@@ -66,7 +66,7 @@ class AirlineController extends Controller
         $airline->save();
         return redirect()->back()->with('success', 'تم التعديل بنجاح!');
     }
-    public function destroy($airlineHashed)
+    public function destroy(string $airlineHashed)
     {
         $airlineHashed = decodeId($airlineHashed);
 
@@ -77,11 +77,11 @@ class AirlineController extends Controller
         $airline = airline::findOrFail($airlineHashed);
         
         if ($airline->employees()->exists()) {
-            return back()->with('warning', 'يجب أن لا يكون هناك موظف مرتبط بخط الطيران هذا!');
+            return back()->with('warning', 'يجب أن لا يكون هناك موظف مرتبط بهذه الشركة لإتمام عملية الحذف!');
         }
 
         $airline->delete();
 
-        return back()->with('success', 'تم حذف خط الطيران بنجاح');
+        return back()->with('success', 'تم حذف الشركة بنجاح');
     }
 }

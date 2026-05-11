@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\DocumentTypeController;
 use App\Http\Controllers\Admin\AdminLoginController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\CompanyDocumentTypeController;
 
 Route::middleware('guest.admin')->group(function () {
     Route::get('/login', [AdminLoginController::class, 'showLoginForm'])->name('login');
@@ -23,6 +24,7 @@ Route::middleware(['auth.admin', 'prevent-back'])->group(function () {
 
     Route::resource('airline', AirlineController::class)->only(['store', 'update', 'destroy']);
     Route::resource('document_type', DocumentTypeController::class)->only(['store', 'update', 'destroy']);
+    Route::resource('company_document_type', CompanyDocumentTypeController::class)->only(['store', 'update', 'destroy']);
     Route::resource('management', ManagementController::class)->only(['store', 'update', 'destroy']);
     Route::resource('nationality', NationalityController::class)->only(['store', 'update', 'destroy']);
     Route::resource('job_title', JobTitleController::class)->only(['store', 'update', 'destroy']);

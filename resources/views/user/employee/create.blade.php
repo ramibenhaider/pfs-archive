@@ -182,7 +182,7 @@
             </div>
 
             <div class="form-group">
-                <label>خطوط الطيران</label>
+                <label>الشركة</label>
                 <select name="airline_id">
                     @foreach ($airlines as $airline)
                         <option value="{{ $airline->id }}">{{ $airline->airline_name }}</option>

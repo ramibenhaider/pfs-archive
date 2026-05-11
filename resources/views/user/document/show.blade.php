@@ -175,6 +175,13 @@ body {
     color: white !important;
 }
 
+.disabled-btn {
+    background-color: #b0b0b0 !important;
+    color: #ffffff !important;
+    cursor: not-allowed;
+    opacity: 0.8;
+}
+
 @media (max-width: 600px) {
     .form-grid {
         grid-template-columns: 1fr;
@@ -262,7 +269,7 @@ body {
                         <i class="fa fa-eye"></i> معاينة المستند
                     </button>
                 @else
-                    <button type="button" class="btn-delete-sm" disabled><i class="fa fa-eye"></i>غير مصرح لك بمعاينة المستندات</button>                
+                    <button type="button" class="btn-delete-sm disabled-btn" disabled><i class="fa fa-eye"></i>غير مصرح لك بمعاينة المستندات</button>                              
                 @endif
         </form>
         @if($currentUser->hasPermission('deleteDocuments'))
@@ -275,7 +282,7 @@ body {
                 </form>
             </div>
         @else       
-                <button type="button" class="btn-delete-sm" style="padding: 10px 30px !important; height: 100%; cursor: pointer;" disabled>
+                <button type="button" class="btn-delete-sm disabled-btn" disabled><i class="fa fa-eye"></i>
                     غير مصرح لك بحذف المستندات
                 </button>
             </div>

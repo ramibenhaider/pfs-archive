@@ -326,7 +326,7 @@ unset($__errorArgs, $__bag); ?>
                         </li>
 
                         <li class="list-group-item d-flex justify-content-between align-items-center py-3">
-                            <strong>خطوط الطيران:</strong>
+                            <strong>الشركة:</strong>
                             <select name="airline_id" class="form-select w-50">
                                 <?php $__currentLoopData = $airlines; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $airline): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                     <option value="<?php echo e($airline->id); ?>" <?php echo e(old('airline_id', $employee->airline_id) == $airline->id ? 'selected' : ''); ?>>
@@ -359,10 +359,21 @@ unset($__errorArgs, $__bag); ?>
                     </ul>
                     <div class="card-footer d-flex justify-content-between bg-white py-3">
                         <a href="<?php echo e(route('employee.index')); ?>" class="btn btn-outline-secondary btn-sm">رجوع</a>
+
                         <?php if($currentUser->hasPermission('updateEmployees')): ?>
                             <button type="submit" class="btn btn-save-custom btn-sm">حفظ التعديلات</button>
                         <?php else: ?>
                             <button type="button" class="btn btn-save-custom disabled-btn btn-sm">غير مصرح لك بالتعديل</button>
+                        <?php endif; ?>
+
+                        <?php if($currentUser->hasPermission('deleteEmployees')): ?>
+                            <form method="POST" action="<?php echo e(route('employee.destroy', $employee->id)); ?>" class="d-inline">
+                                <?php echo csrf_field(); ?>
+                                <?php echo method_field('DELETE'); ?>
+                                <button type="submit" onclick="return confirm('هل أنت متأكد أنك تريد حذف هذا الموظف؟');" class="btn btn-danger btn-sm">حذف الموظف</button>
+                            </form>
+                        <?php else: ?>
+                            <button type="button" class="btn btn-danger disabled-btn btn-sm">غير مصرح لك بحذف الموظفين</button>
                         <?php endif; ?>
                     </div>
                 </form>

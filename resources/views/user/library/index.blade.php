@@ -128,9 +128,14 @@
         transform: translateY(0);
     }
 
+    .form-label {
+        padding-right: 12px; /* إزاحة عنوان الحقل قليلاً لليسار */
+    }
+
     .custom-input {
         border-radius: 10px !important;
         padding: 12px 15px !important;
+        padding-right: 35px !important; /* إزاحة النص الظاهر داخل الحقل لليسار */
         border: 1px solid #ddd !important;
         width: 100%;
         box-sizing: border-box;
@@ -144,6 +149,7 @@
     .ts-control {
         border-radius: 10px !important;
         padding: 10px !important;
+        padding-right: 35px !important; /* إزاحة النص في القوائم المنسدلة لليسار */
         border: 1px solid #ddd !important;
         min-height: 45px !important;
         display: flex !important;
@@ -241,53 +247,101 @@
     </div>
 
     <div class="row">
-<div class="col-md-6">
-    <div class="note-section-card">
-        <form action="{{ route('documents.store') }}" method="POST" enctype="multipart/form-data">
-            @csrf
-            <h5 class="section-header">رفع المستندات</h5>
+        <div class="col-md-6">
+            <div class="note-section-card">
+                <form action="{{ route('documents.store') }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    <h5 class="section-header">رفع مستندات الموظفين</h5>
 
-            <div class="mb-3">
-                <label class="form-label">الموظف</label>
-                <select name="employee_id" id="select-employee-doc" class="searchable-select" placeholder="ابحث عن موظف...">
-                    @foreach ($employees as $employee)
-                        <option value="{{ $employee->id }}">{{ $employee->name }}</option>
-                    @endforeach
-                </select>
-                <div id="err-employee" class="invalid-feedback d-block"></div>
+                    <div class="mb-3">
+                        <label class="form-label">اسم الموظف</label>
+                        <select name="employee_id" id="select-employee-doc" class="searchable-select" placeholder="ابحث عن موظف...">
+                            @foreach ($employees as $employee)
+                                <option value="{{ $employee->id }}">{{ $employee->name }}</option>
+                            @endforeach
+                        </select>
+                        <div id="err-employee" class="invalid-feedback d-block"></div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">نوع المستند</label>
+                        <select name="document_type_id" id="select-doc-type" class="form-select custom-input">
+                            @foreach ($document_types as $document_type)
+                                <option value="{{ $document_type->id }}">{{ $document_type->type }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">الملفات</label>
+                            <input type="file" id="fileInput"
+                                class="form-control custom-input @if($errors->doc_errors->has('files') || $errors->doc_errors->has('files.*')) is-invalid @enderror"
+                                multiple accept=".pdf,.doc,.docx,.xls,.xlsx">
+                            <div id="fileList" class="mt-2"></div>
+                            @error('files', 'doc_errors')
+                                <div class="invalid-feedback d-block">{{ $message }}</div>
+                            @enderror
+                            @error('files.*', 'doc_errors')
+                                <div class="invalid-feedback d-block">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                    @if($currentUser->hasPermission('createDocuments'))
+                        <button type="submit" class="btn-main w-100">بدء الرفع</button>
+                    @else
+                        <button type="button" class="btn-main w-100" disabled>غير مصرح لك برفع الملفات</button>
+                    @endif
+                </form>
             </div>
+        </div>
 
-            <div class="mb-3">
-                <label class="form-label">نوع المستند</label>
-                <select name="document_type_id" id="select-doc-type" class="form-select custom-input">
-                    @foreach ($document_types as $document_type)
-                        <option value="{{ $document_type->id }}">{{ $document_type->type }}</option>
-                    @endforeach
-                </select>
+        <div class="col-md-6">
+            <div class="note-section-card">
+                <form action="{{ route('company-documents.store') }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    <h5 class="section-header">رفع مستندات الشركات</h5>
+
+                    <div class="mb-3">
+                        <label class="form-label">اسم الشركة</label>
+                        <select name="airline_id" id="select-airline-doc" class="searchable-select" placeholder="ابحث عن شركة...">
+                            @foreach ($airlines as $airline)
+                                <option value="{{ $airline->id }}">{{ $airline->airline_name }}</option>
+                            @endforeach
+                        </select>
+                        <div id="err-airline" class="invalid-feedback d-block"></div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">نوع المستند</label>
+                        <select name="company_document_type_id" id="select-company-doc-type" class="form-select custom-input">
+                            @foreach ($company_document_types as $company_document_type)
+                                <option value="{{ $company_document_type->id }}">{{ $company_document_type->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">الملفات</label>
+                            <input type="file" id="companyFileInput" name="files[]"
+                                class="form-control custom-input @if($errors->company_doc_errors->has('files') || $errors->company_doc_errors->has('files.*')) is-invalid @enderror"
+                                multiple accept=".pdf,.doc,.docx,.xls,.xlsx">
+                            <div id="companyFileList" class="mt-2"></div>
+                            @error('files', 'company_doc_errors')
+                                <div class="invalid-feedback d-block">{{ $message }}</div>
+                            @enderror
+                            @error('files.*', 'company_doc_errors')
+                                <div class="invalid-feedback d-block">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                    @if($currentUser->hasPermission('createDocuments'))
+                        <button type="submit" class="btn-main w-100">بدء الرفع</button>
+                    @else
+                        <button type="button" class="btn-main w-100" disabled>غير مصرح لك برفع الملفات</button>
+                    @endif
+                </form>
             </div>
-
-            <div class="mb-3">
-                <label class="form-label">الملفات</label>
-                    <input type="file" id="fileInput"
-                        class="form-control custom-input @if($errors->doc_errors->has('files') || $errors->doc_errors->has('files.*')) is-invalid @enderror"
-                        multiple accept=".pdf,.doc,.docx,.xls,.xlsx">
-                    <div id="fileList" class="mt-2"></div>
-                    @error('files', 'doc_errors')
-                        <div class="invalid-feedback d-block">{{ $message }}</div>
-                    @enderror
-                    @error('files.*', 'doc_errors')
-                        <div class="invalid-feedback d-block">{{ $message }}</div>
-                    @enderror
-                </div>
-
-            @if($currentUser->hasPermission('createDocuments'))
-                <button type="submit" class="btn-main w-100">بدء الرفع</button>
-            @else
-                <button type="button" class="btn-main w-100" disabled>غير مصرح لك برفع الملفات</button>
-            @endif
-        </form>
-    </div>
-</div>
+        </div>
 
         <div class="col-md-6">
             <div class="note-section-card">

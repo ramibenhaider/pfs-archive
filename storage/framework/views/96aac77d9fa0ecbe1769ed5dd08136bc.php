@@ -22,14 +22,14 @@
     /* Desktop Grid */
     .perm-table-header, .perm-row-item {
         display: grid;
-        /* توزيع الأعمدة: اسم المستخدم (2) + الحالة (1) + 6 صلاحيات (6) + حذف (0.5) */
-        grid-template-columns: 2fr repeat(7, 1fr) 0.5fr;
+        /* توزيع الأعمدة: اسم المستخدم (2) + الحالة (1) + 7 صلاحيات (7) + حذف (0.5) */
+        grid-template-columns: 2fr repeat(8, 1fr) 0.5fr;
         list-style: none;
         padding: 15px;
         margin: 0;
         align-items: center;
         text-align: center;
-        min-width: 900px; /* لضمان عدم تداخل الحقول في الشاشات المتوسطة */
+        min-width: 1050px; /* لضمان عدم تداخل الحقول في الشاشات المتوسطة */
     }
 
     .perm-table-header {
@@ -132,10 +132,11 @@
         .perm-row-item li:nth-child(2)::before { content: "الحالة:"; }
         .perm-row-item li:nth-child(3)::before { content: "إضافة الموظفين:"; }
         .perm-row-item li:nth-child(4)::before { content: "تعديل الموظفين:"; }
-        .perm-row-item li:nth-child(5)::before { content: "معاينة المستندات:"; }
+        .perm-row-item li:nth-child(5)::before { content: "حذف الموظفين:"; }
         .perm-row-item li:nth-child(6)::before { content: "إضافة مستندات:"; }
         .perm-row-item li:nth-child(7)::before { content: "عرض مستندات:"; }
         .perm-row-item li:nth-child(8)::before { content: "حذف مستندات:"; }
+        .perm-row-item li:nth-child(9)::before { content: "معاينة المستندات:"; }
         
         .btn-delete-perm {
             width: 100%;
@@ -170,10 +171,11 @@
                 <li>الحالة</li>
                 <li>إضافة الموظفين</li>
                 <li>تعديل الموظفين</li>
-                <li>معاينة المستندات</li>
+                <li>حذف الموظفين</li>
                 <li>إضافة مستندات</li>
                 <li>عرض مستندات</li>
                 <li>حذف مستندات</li>
+                <li>معاينة المستندات</li>
                 <li>إجراء</li>
             </ul>
 

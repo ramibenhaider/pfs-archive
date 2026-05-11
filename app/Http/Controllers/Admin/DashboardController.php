@@ -10,6 +10,7 @@ use App\Models\User;
 use App\Models\Management;
 use App\Models\Job_title;
 use App\Models\Nationality;
+use App\Models\Company_document_type;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -29,7 +30,8 @@ class DashboardController extends Controller
         $management = Management::orderByDesc('created_at')->get();
         $job_titles = Job_title::orderByDesc('created_at')->get();
         $nationalities = Nationality::orderByDesc('created_at')->get();
+        $company_document_types = Company_document_type::orderByDesc('created_at')->get();
 
-        return view('admin.fields', compact('airlines', 'document_types', 'job_titles', 'management', 'nationalities'));
+        return view('admin.fields', compact('airlines', 'document_types', 'job_titles', 'management', 'nationalities', 'company_document_types'));
     }
 }

@@ -33,6 +33,10 @@ class EmployeeController extends Controller
 
     public function create()
     {
+        if (!Auth::user()->hasPermission('createEmployees')) {
+            return redirect()->route('employee.index')->with('warning', 'غير مصرح لك بإضافة موظف');
+        }
+
         $management = Management::all();
         $nationalities = Nationality::all();
         $document_types = Document_type::all();
@@ -125,8 +129,8 @@ class EmployeeController extends Controller
      */
     public function update(Request $request, Employee $employee)
     {
-        if (!Auth::user()->hasPermission('updateEmployees')) {
-            return back()->with('warning', 'غير مصرح لك بالتعديل على موظف');
+        if (!Auth::user()->hasPermission('editEmployees')) {
+            return back()->with('warning', 'غير مصرح لك بتعديل موظف');
         }
 
         $is_active = $request->has('is_active') ? 1 : 0;

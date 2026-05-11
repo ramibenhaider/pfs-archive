@@ -82,13 +82,13 @@
 
         <div class="side-card-unique">
             <div class="side-card-header d-flex justify-content-between align-items-center">
-                <span class="side-title">خطوط الطيران</span>
+                <span class="side-title">الشركات</span>
                 <span class="total-count-badge">{{ $airlines->count() ?? 0 }}</span>
             </div>
             <div class="p-3 bg-white">
                 <form action="{{ route('admin.airline.store') }}" method="POST" class="search-form">
                     @csrf
-                    <input type="text" name="airline_name" class="@error('airline_name', 'airline_name.create') is-invalid @enderror" placeholder="إضافة خط طيران جديد..." required>
+                    <input type="text" name="airline_name" class="@error('airline_name', 'airline_name.create') is-invalid @enderror" placeholder="إضافة شركة جديدة..." required>
                     <button type="submit" class="search-submit">إضافة</button>
                 </form>
                 @error('airline_name', 'airline_name.create') <div class="invalid-feedback mb-2">{{ $message }}</div> @enderror
@@ -211,6 +211,44 @@
                                 <button type="submit" style="border:none; background:none; color:blue; white-space:nowrap;">تعديل</button>
                             </form>
                             <form action="{{ route('admin.document_type.destroy', encodeId($document_type->id)) }}" onsubmit="return confirm('حذف؟')" method="POST" class="ms-2">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" style="border:none; background:none; color:red; white-space:nowrap;">حذف</button>
+                            </form>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+
+        <div class="side-card-unique">
+            <div class="side-card-header d-flex justify-content-between align-items-center">
+                <span class="side-title">أنواع المستندات (للشركات)</span>
+                <span class="total-count-badge">{{ $company_document_types->count() ?? 0 }}</span>
+            </div>
+            <div class="p-3 bg-white">
+                <form action="{{ route('admin.company_document_type.store') }}" method="POST" class="mb-2">
+                    @csrf
+                    <div class="d-flex flex-column gap-2">
+                        <input type="text" name="name" class="form-control form-control-sm @error('name', 'name.create') is-invalid @enderror" placeholder="نوع (عربي)..." required>
+                        <input type="text" name="nameEn" class="form-control form-control-sm @error('nameEn', 'name.create') is-invalid @enderror" placeholder="Type (En)..." required>
+                        <button type="submit" class="search-submit w-100" style="margin: 0; height: 35px; border-radius:8px !important;">إضافة</button>
+                    </div>
+                </form>
+                @if($errors->hasBag('name.create')) <div class="invalid-feedback mb-2">{{ $errors->getBag('name.create')->first() }}</div> @endif
+
+                <div class="side-list">
+                    @error('name', 'name.edit') <div class="invalid-feedback border-bottom pb-2">{{ $message }}</div> @enderror
+                    @foreach ($company_document_types as $company_document_type)
+                        <div class="d-flex align-items-center border-bottom py-2">
+                            <form action="{{ route('admin.company_document_type.update', encodeId($company_document_type->id)) }}" method="POST" class="d-flex align-items-center flex-grow-1">
+                                @csrf
+                                @method('PUT')
+                                <input type="text" name="name" value="{{ $company_document_type->name }}" class="form-control form-control-sm me-2">
+                                <input type="hidden" name="nameEn" value="{{ $company_document_type->nameEn }}">
+                                <button type="submit" style="border:none; background:none; color:blue; white-space:nowrap;">تعديل</button>
+                            </form>
+                            <form action="{{ route('admin.company_document_type.destroy', encodeId($company_document_type->id)) }}" onsubmit="return confirm('هل أنت متأكد من الحذف؟')" method="POST" class="ms-2">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" style="border:none; background:none; color:red; white-space:nowrap;">حذف</button>

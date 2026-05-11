@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\User\DashboardController;
-use App\Http\Controllers\User\DocumentTypeController;
+use App\Http\Controllers\User\CompanyDocumentController;
 use App\Http\Controllers\User\DocumentController;
 use App\Http\Controllers\User\EmployeeController;
 use App\Http\Controllers\User\MyNoteController;
@@ -32,16 +32,20 @@ Route::prefix('/')->group(function() {
         Route::resource('documents', DocumentController::class)->except('create');
         Route::get('documents/{employeeHash}/edit/{document_typeHash}', [DocumentController::class, 'showTypeFiles'])
              ->name('documents.showTypeFiles');
+
+        Route::resource('company-docs', CompanyDocumentController::class)->only(['index', 'show', 'update', 'destroy']);
+        Route::get('company-docs/{airlineHash}/edit/{company_document_typeHash}', [CompanyDocumentController::class, 'officePreview'])
+             ->name('company-docs.office.preview')
+             ->middleware('signed');
+        Route::get('company-docs/{airlineHash}/edit/{company_document_typeHash}', [CompanyDocumentController::class, 'showTypeFiles'])
+             ->name('company-docs.showTypeFiles');
              
-        Route::resource('employee', EmployeeController::class)->except(['destroy', 'show', 'index']);
+        Route::resource('employee', EmployeeController::class)->except(['show', 'index']);
         Route::get('/', [EmployeeController::class, 'index'])->name('employee.index');
         Route::get('employee/idex', [EmployeeController::class, 'doSearch'])->name('employee.search');
 
         Route::resource('note', NoteController::class)->except(['create', 'show']);
 
         Route::resource('myNote', MyNoteController::class)->except(['index', 'show']);
-        
     });
 });
-
-

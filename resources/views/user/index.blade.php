@@ -20,7 +20,7 @@
 
   .search-row {
     display: grid;
-    grid-template-columns: 60px 1fr 60px;
+    grid-template-columns: max-content 1fr max-content;
     align-items: center;
     gap: 6px;
     margin-bottom: 25px;
@@ -96,9 +96,14 @@
   }
 
   .disabled-btn {
-    opacity: 0.4;
+    background-color: #b0b0b0 !important;
+    color: #ffffff !important;
     cursor: not-allowed;
-    filter: grayscale(1);
+    opacity: 0.8;
+  }
+  .main-btn.disabled-btn:hover {
+    transform: none !important;
+    box-shadow: none !important;
   }
 
   .tooltip {
@@ -241,7 +246,7 @@
 
   @media (max-width: 600px) {
     .search-row {
-      grid-template-columns: 48px 1fr 48px;
+      grid-template-columns: max-content 1fr max-content;
       gap: 4px;
     }
 
@@ -277,7 +282,7 @@
 
   @media (max-width: 360px) {
     .search-row {
-      grid-template-columns: 42px 1fr 42px;
+      grid-template-columns: max-content 1fr max-content;
     }
 
     .container {
@@ -293,13 +298,35 @@
 
     <div class="search-row">
 
-      <div class="btn-wrapper">
-        <a href="{{ route('note.index', encodeId($currentUser->id)) }}" class="main-btn">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="#ffffff">
-            <path d="M10 4l2 2h8a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V4h8z"/>
-          </svg>
-        </a>
-        <div class="tooltip">دار الوثائق</div>
+      <div style="display: flex; gap: 8px;">
+        <div class="btn-wrapper">
+          <a href="{{ route('note.index', encodeId($currentUser->id)) }}" class="main-btn">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="#ffffff">
+              <path d="M10 4l2 2h8a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V4h8z"/>
+            </svg>
+          </a>
+          <div class="tooltip">دار الوثائق</div>
+        </div>
+
+        @if($currentUser->hasPermission('showDocuments'))
+          <div class="btn-wrapper">
+            <a href="{{ route('company-docs.index') }}" class="main-btn">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="#ffffff">
+                <path d="M20 6h-4V4c0-1.11-.89-2-2-2h-4c-1.11 0-2 .89-2 2v2H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zm-6 0h-4V4h4v2z"/>
+              </svg>
+            </a>
+            <div class="tooltip">مستندات الشركات</div>
+          </div>
+        @else
+          <div class="btn-wrapper">
+            <span class="main-btn disabled-btn">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="#ffffff">
+                <path d="M20 6h-4V4c0-1.11-.89-2-2-2h-4c-1.11 0-2 .89-2 2v2H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zm-6 0h-4V4h4v2z"/>
+              </svg>
+            </span>
+            <div class="tooltip">لست مصرحاً برؤية مستندات الشركات</div>
+          </div>
+        @endif
       </div>
  
       <form action="{{ route('employee.search') }}" method="GET" class="search-form">

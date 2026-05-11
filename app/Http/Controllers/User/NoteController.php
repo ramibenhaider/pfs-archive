@@ -8,6 +8,8 @@ use App\Models\Note;
 use App\Models\Document;
 use App\Models\Employee;
 use App\Models\Document_type;
+use App\Models\Airline;
+use App\Models\Company_document_type;
 use Illuminate\Http\Request;
 
 class NoteController extends Controller
@@ -21,7 +23,9 @@ class NoteController extends Controller
         $employees = Employee::orderByDesc('created_at')->get();
         $documents = Document::all();
         $document_types = Document_type::all();
-        return view('user.library.index', compact('documents', 'employees', 'document_types', 'myNotes'));
+        $airlines = Airline::orderByDesc('created_at')->get();
+        $company_document_types = Company_document_type::orderByDesc('created_at')->get();
+        return view('user.library.index', compact('documents', 'employees', 'document_types', 'myNotes', 'airlines', 'company_document_types'));
     }
 
     /**

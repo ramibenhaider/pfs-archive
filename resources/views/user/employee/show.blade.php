@@ -242,7 +242,7 @@
                         </li>
 
                         <li class="list-group-item d-flex justify-content-between align-items-center py-3">
-                            <strong>خطوط الطيران:</strong>
+                            <strong>الشركة:</strong>
                             <select name="airline_id" class="form-select w-50">
                                 @foreach ($airlines as $airline)
                                     <option value="{{ $airline->id }}" {{ old('airline_id', $employee->airline_id) == $airline->id ? 'selected' : '' }}>
@@ -273,10 +273,21 @@
                     </ul>
                     <div class="card-footer d-flex justify-content-between bg-white py-3">
                         <a href="{{ route('employee.index') }}" class="btn btn-outline-secondary btn-sm">رجوع</a>
+
                         @if($currentUser->hasPermission('updateEmployees'))
                             <button type="submit" class="btn btn-save-custom btn-sm">حفظ التعديلات</button>
                         @else
                             <button type="button" class="btn btn-save-custom disabled-btn btn-sm">غير مصرح لك بالتعديل</button>
+                        @endif
+
+                        @if ($currentUser->hasPermission('deleteEmployees'))
+                            <form method="POST" action="{{ route('employee.destroy', $employee->id) }}" class="d-inline">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" onclick="return confirm('هل أنت متأكد أنك تريد حذف هذا الموظف؟');" class="btn btn-danger btn-sm">حذف الموظف</button>
+                            </form>
+                        @else
+                            <button type="button" class="btn btn-danger disabled-btn btn-sm">غير مصرح لك بحذف الموظفين</button>
                         @endif
                     </div>
                 </form>

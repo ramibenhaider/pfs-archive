@@ -127,11 +127,13 @@ document.querySelectorAll('.searchable-select').forEach((el) => {
 document.addEventListener('DOMContentLoaded', function () {
 
     class DocumentUploader {
-        constructor() {
-            this.fileInput    = document.getElementById('fileInput');
-            this.fileList     = document.getElementById('fileList');
-            this.uploadErrors = document.getElementById('upload-errors');
-            this.errFiles     = document.getElementById('err-files');
+        constructor(config) {
+            this.fileInput    = document.getElementById(config.inputId);
+            if (!this.fileInput) return; // لتجنب الأخطاء إذا لم يكن العنصر موجوداً في الصفحة
+
+            this.fileList     = document.getElementById(config.listId);
+            this.uploadErrors = document.getElementById(config.errorsId);
+            this.errFiles     = document.getElementById(config.errFilesId);
             this.form         = this.fileInput.closest('form');
 
             this.selectedFiles = []; // [{ id, file, comment }]
@@ -209,6 +211,14 @@ document.addEventListener('DOMContentLoaded', function () {
             filesInput.dataset.uploader = '1';
             filesInput.files           = dt.files;
             this.form.appendChild(filesInput);
+
+            // index 0 = null كـ padding
+            const paddingInput = document.createElement('input');
+            paddingInput.type            = 'hidden';
+            paddingInput.name            = 'comments[]';
+            paddingInput.value           = '';
+            paddingInput.dataset.uploader = '1';
+            this.form.appendChild(paddingInput);
 
             this.selectedFiles.forEach(entry => {
                 const commentInput = document.createElement('input');
@@ -304,5 +314,19 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    new DocumentUploader();
+    // تطبيق الكود على فورم مستندات الموظفين
+    new DocumentUploader({
+        inputId: 'fileInput',
+        listId: 'fileList',
+        errorsId: 'upload-errors',
+        errFilesId: 'err-files'
+    });
+
+    // تطبيق الكود على فورم مستندات الشركات
+    new DocumentUploader({
+        inputId: 'companyFileInput',
+        listId: 'companyFileList',
+        errorsId: 'company-upload-errors',
+        errFilesId: 'company-err-files'
+    });
 });
