@@ -297,7 +297,7 @@
 
         <div class="col-md-6">
             <div class="note-section-card">
-                <form action="{{ route('company-documents.store') }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('company-docs.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <h5 class="section-header">رفع مستندات الشركات</h5>
 
