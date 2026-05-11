@@ -193,14 +193,6 @@ class CompanyDocumentController extends Controller
 
     public function officePreview($id)
     {
-        if (!Auth::user()->hasPermission('showDocuments')) {
-            return redirect()->route('employee.index')->with('warning', 'غير مصرح لك بالإطلاع على المستندات!');
-        }
-
-        if (!Auth::user()->hasPermission('previewDocuments')) {
-            return back()->with('warning', 'غير مصرح لك بمعاينة المستندات!');
-        }
-
         $company_document = Company_document::findOrFail($id);
         $fullpath = storage_path('app/public/' . $company_document->file_path);
 
