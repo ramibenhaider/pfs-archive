@@ -33,7 +33,7 @@ Route::prefix('/')->group(function() {
         Route::get('documents/{employeeHash}/edit/{document_typeHash}', [DocumentController::class, 'showTypeFiles'])
              ->name('documents.showTypeFiles');
 
-        Route::resource('company-docs', CompanyDocumentController::class)->only(['index', 'show', 'update', 'destroy']);
+        Route::resource('company-docs', CompanyDocumentController::class)->only(['index', 'show', 'update', 'destroy', 'store']);
         Route::get('company-docs/{airlineHash}/edit/{company_document_typeHash}', [CompanyDocumentController::class, 'officePreview'])
              ->name('company-docs.office.preview')
              ->middleware('signed');
