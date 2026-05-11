@@ -18,63 +18,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }, 5000);
     }
 
-    // const fileInput   = document.getElementById('fileInput');
-    // const hiddenFiles = document.getElementById('hiddenFiles');
-    // const fileList    = document.getElementById('fileList');
-
-    // let allFiles = new DataTransfer();
-    // const comments = new Map();
-
-    // if (fileInput) {
-    //     fileInput.addEventListener('change', function () {
-    //         Array.from(this.files).forEach(file => {
-    //             const exists = Array.from(allFiles.files)
-    //                 .some(f => f.name === file.name && f.size === file.size);
-    //             if (!exists) allFiles.items.add(file);
-    //         });
-
-    //         const dt = new DataTransfer();
-    //         Array.from(allFiles.files).forEach(f => dt.items.add(f));
-    //         hiddenFiles.files = dt.files;
-
-    //         updateList();
-    //         this.value = '';
-    //     });
-    // }
-
-    // function updateList() {
-    //     fileList.innerHTML = '';
-    //     Array.from(allFiles.files).forEach((file, index) => {
-    //         const key = file.name + file.size;
-    //         const row = document.createElement('div');
-    //         row.style.cssText = "display:flex; align-items:center; gap:10px; margin-bottom:8px;";
-    //         row.innerHTML = `
-    //             <span style="min-width:150px">${file.name}</span>
-    //             <input type="text" name="comments[]" placeholder="تعليق..." style="flex:1; padding:4px">
-    //             <button type="button" onclick="removeFile(${index})">حذف</button>
-    //         `;
-    //         fileList.appendChild(row);
-
-    //         const input = row.querySelector('input[name="comments[]"]');
-    //         input.value = comments.get(key) || '';
-    //         input.addEventListener('input', e => comments.set(key, e.target.value));
-    //     });
-    // }
-
-    // window.removeFile = function(index) {
-    //     const newFiles = new DataTransfer();
-    //     Array.from(allFiles.files).forEach((file, i) => {
-    //         if (i !== index) newFiles.items.add(file);
-    //     });
-    //     allFiles = newFiles;
-
-    //     const dt = new DataTransfer();
-    //     Array.from(allFiles.files).forEach(f => dt.items.add(f));
-    //     hiddenFiles.files = dt.files;
-
-    //     updateList();
-    // };
-
     document.querySelectorAll('textarea').forEach(el => {
         el.addEventListener('input', () => {
             el.style.height = 'auto';
@@ -87,56 +30,31 @@ document.addEventListener("DOMContentLoaded", function () {
         customTextarea.style.height = customTextarea.scrollHeight + 'px';
     }
 
-    document.querySelectorAll('.searchable-select').forEach((el) => {
-        new TomSelect(el, {
-            create: false,
-            sortField: { field: "text", order: "asc" }
-        });
-    });
-
-});
-
-function deleteUser(fullRoute) {
-    if (confirm('هل أنت متأكد من حذف هذا المستخدم؟')) {
-        let form = document.getElementById('global-delete-form');
-        form.action = fullRoute;
-        form.submit();
-    }
-}
-
-function viewDocument(url, originalName) {
-    const extension = originalName.split('.').pop().toLowerCase();
-    
-    if (['doc', 'docx', 'xls', 'xlsx'].includes(extension)) {
-        window.open("https://view.officeapps.live.com/op/embed.aspx?src=" + encodeURIComponent(url), '_blank');
-    } else {
-        window.open(url, '_blank');
-    }
-}
-
-document.querySelectorAll('.searchable-select').forEach((el) => {
-    if (el && !el.tomselect) {
-        new TomSelect(el, {
-            create: false,
-            sortField: { field: "text", order: "asc" },
-            allowEmptyOption: true,
+    // TomSelect — مرة وحدة فقط مع حماية
+    if (typeof TomSelect !== 'undefined') {
+        document.querySelectorAll('.searchable-select').forEach((el) => {
+            if (el && !el.tomselect) {
+                new TomSelect(el, {
+                    create: false,
+                    sortField: { field: "text", order: "asc" },
+                    allowEmptyOption: true,
+                });
+            }
         });
     }
-});
 
-document.addEventListener('DOMContentLoaded', function () {
-
+    // DocumentUploader
     class DocumentUploader {
         constructor(config) {
             this.fileInput    = document.getElementById(config.inputId);
-            if (!this.fileInput) return; // لتجنب الأخطاء إذا لم يكن العنصر موجوداً في الصفحة
+            if (!this.fileInput) return;
 
             this.fileList     = document.getElementById(config.listId);
             this.uploadErrors = document.getElementById(config.errorsId);
             this.errFiles     = document.getElementById(config.errFilesId);
             this.form         = this.fileInput.closest('form');
 
-            this.selectedFiles = []; // [{ id, file, comment }]
+            this.selectedFiles = [];
             this.maxSizeMB     = 10;
 
             this._initEvents();
@@ -204,27 +122,26 @@ document.addEventListener('DOMContentLoaded', function () {
             this.selectedFiles.forEach(entry => dt.items.add(entry.file));
 
             const filesInput = document.createElement('input');
-            filesInput.type            = 'file';
-            filesInput.name            = 'files[]';
-            filesInput.multiple        = true;
-            filesInput.style.display   = 'none';
+            filesInput.type             = 'file';
+            filesInput.name             = 'files[]';
+            filesInput.multiple         = true;
+            filesInput.style.display    = 'none';
             filesInput.dataset.uploader = '1';
-            filesInput.files           = dt.files;
+            filesInput.files            = dt.files;
             this.form.appendChild(filesInput);
 
-            // index 0 = null كـ padding
             const paddingInput = document.createElement('input');
-            paddingInput.type            = 'hidden';
-            paddingInput.name            = 'comments[]';
-            paddingInput.value           = '';
+            paddingInput.type             = 'hidden';
+            paddingInput.name             = 'comments[]';
+            paddingInput.value            = '';
             paddingInput.dataset.uploader = '1';
             this.form.appendChild(paddingInput);
 
             this.selectedFiles.forEach(entry => {
                 const commentInput = document.createElement('input');
-                commentInput.type            = 'hidden';
-                commentInput.name            = 'comments[]';
-                commentInput.value           = entry.comment;
+                commentInput.type             = 'hidden';
+                commentInput.name             = 'comments[]';
+                commentInput.value            = entry.comment;
                 commentInput.dataset.uploader = '1';
                 this.form.appendChild(commentInput);
             });
@@ -291,14 +208,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
         _showFieldError(msg) {
             if (!this.errFiles) return;
-            this.errFiles.textContent    = msg;
-            this.errFiles.style.display  = 'block';
+            this.errFiles.textContent   = msg;
+            this.errFiles.style.display = 'block';
         }
 
         _clearFieldError() {
             if (!this.errFiles) return;
-            this.errFiles.textContent    = '';
-            this.errFiles.style.display  = 'none';
+            this.errFiles.textContent   = '';
+            this.errFiles.style.display = 'none';
         }
 
         _esc(str) {
@@ -314,19 +231,36 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    // تطبيق الكود على فورم مستندات الموظفين
     new DocumentUploader({
-        inputId: 'fileInput',
-        listId: 'fileList',
-        errorsId: 'upload-errors',
+        inputId:   'fileInput',
+        listId:    'fileList',
+        errorsId:  'upload-errors',
         errFilesId: 'err-files'
     });
 
-    // تطبيق الكود على فورم مستندات الشركات
     new DocumentUploader({
-        inputId: 'companyFileInput',
-        listId: 'companyFileList',
-        errorsId: 'company-upload-errors',
+        inputId:   'companyFileInput',
+        listId:    'companyFileList',
+        errorsId:  'company-upload-errors',
         errFilesId: 'company-err-files'
     });
+
 });
+
+function deleteUser(fullRoute) {
+    if (confirm('هل أنت متأكد من حذف هذا المستخدم؟')) {
+        let form = document.getElementById('global-delete-form');
+        form.action = fullRoute;
+        form.submit();
+    }
+}
+
+function viewDocument(url, originalName) {
+    const extension = originalName.split('.').pop().toLowerCase();
+    
+    if (['doc', 'docx', 'xls', 'xlsx'].includes(extension)) {
+        window.open("https://view.officeapps.live.com/op/embed.aspx?src=" + encodeURIComponent(url), '_blank');
+    } else {
+        window.open(url, '_blank');
+    }
+}
