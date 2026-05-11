@@ -24,8 +24,12 @@ Route::prefix('/')->group(function() {
     });
 
     Route::get('documents/office-view/{id}', [DocumentController::class, 'officePreview'])
-        ->name('documents.office.preview')
-        ->middleware('signed');
+         ->name('documents.office.preview')
+         ->middleware('signed');
+
+    Route::get('company-docs/office-view/{id}', [CompanyDocumentController::class, 'officePreview'])
+         ->name('company-docs.office.preview')
+         ->middleware('signed');
 
     Route::middleware(['auth:web', 'prevent-back', 'user-activation'])->group(function () {
 
@@ -34,9 +38,7 @@ Route::prefix('/')->group(function() {
              ->name('documents.showTypeFiles');
 
         Route::resource('company-docs', CompanyDocumentController::class)->only(['index', 'show', 'update', 'destroy', 'store']);
-        Route::get('company-docs/{airlineHash}/edit/{company_document_typeHash}', [CompanyDocumentController::class, 'officePreview'])
-             ->name('company-docs.office.preview')
-             ->middleware('signed');
+
         Route::get('company-docs/{airlineHash}/edit/{company_document_typeHash}', [CompanyDocumentController::class, 'showTypeFiles'])
              ->name('company-docs.showTypeFiles');
              

@@ -313,7 +313,7 @@ unset($__errorArgs, $__bag); ?>
 
         <div class="col-md-6">
             <div class="note-section-card">
-                <form action="<?php echo e(route('company-documents.store')); ?>" method="POST" enctype="multipart/form-data">
+                <form action="<?php echo e(route('company-docs.store')); ?>" method="POST" enctype="multipart/form-data">
                     <?php echo csrf_field(); ?>
                     <h5 class="section-header">رفع مستندات الشركات</h5>
 
