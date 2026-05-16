@@ -323,7 +323,7 @@ unset($__errorArgs, $__bag); ?>
                 <button type="submit" class="btn-save-note">حفظ التعديلات</button>
                 <?php if($currentUser->hasPermission('previewDocuments')): ?>
                     <?php
-                    $officeUrl = URL::temporarySignedRoute('documents.office.preview', now()->addMinutes(60), ['id' => $company_document->id]);
+                        $officeUrl = URL::temporarySignedRoute('company-docs.office.preview', now()->addMinutes(60), ['id' => $company_document->id]);
                     ?>
                     <button type="button" onclick="viewDocument('<?php echo e($officeUrl); ?>', '<?php echo e($company_document->original_name); ?>')" class="btn btn-primary">
                         <i class="fa fa-eye"></i> معاينة المستند

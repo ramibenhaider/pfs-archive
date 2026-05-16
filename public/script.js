@@ -43,7 +43,6 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    // DocumentUploader
     class DocumentUploader {
         constructor(config) {
             this.fileInput    = document.getElementById(config.inputId);
@@ -174,7 +173,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                 class="btn btn-link text-danger p-0" 
                                 style="text-decoration:none; font-size:14px;"
                                 data-id="${entry.id}">
-                            حذف المستند
+                           X
                         </button>
                     </div>
                     <input type="text"
