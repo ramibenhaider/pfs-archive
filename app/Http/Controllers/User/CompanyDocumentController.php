@@ -10,6 +10,7 @@ use App\Models\Company_document;
 use App\Models\Airline;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
+use App\Http\Requests\CompanyDocumentStore;
 class CompanyDocumentController extends Controller
 {
     public function index()
@@ -23,50 +24,16 @@ class CompanyDocumentController extends Controller
         return view('user.company-docs.index', compact('airlines', 'company_document_types'));
     }
 
-    public function store(Request $request)
+    public function store(CompanyDocumentStore $request)
     {
-        if (!Auth::user()->hasPermission('showDocuments')) {
-            return redirect()->route('employee.index')->with('warning', 'غير مصرح لك بعرض مستندات الشركات!');
-        }
+        $validated = $request->validated();
 
-        if (!Auth::user()->hasPermission('createDocuments')) {
-            return back()->with('warning', 'غير مصرح لك بإضافة مستندات!');
-        }
-
-        $company_document_type = Company_document_type::find($request->company_document_type_id);
+        $company_document_type = Company_document_type::find($validated['company_document_type_id']);
         if (!$company_document_type) {
             return back()->with('warning', 'نوع الملف هذا غير موجود!');
         }
         
-        $request->validateWithBag('company_doc_errors',
-            [
-                'files' => 'required|array',
-                'files.*' => 'required|file|mimes:pdf,doc,docx,xls,xlsx|max:10240',
-
-                'airline_id' => 'required|exists:airlines,id',
-                'company_document_type_id' => 'required|exists:company_document_types,id',
-
-                'comments' => 'array',
-                'comments.*' => 'nullable|string|max:255',
-            ],
-            [
-                'files.required' => 'يجب رفع ملف واحد على الأقل!',
-                'files.*.required' => 'يجب رفع ملف واحد على الأقل!',
-                'files.*.file' => 'الملف المرفوع غير صالح!',
-                'files.*.mimes' => 'الملفات المدعومة هي: PDF وWord وExcel!',
-                'files.*.max' => 'حجم الملف يجب ألا يتجاوز 10 ميجابايت!',
-
-                'airline_id.required' => 'يجب تحديد الشركة!',
-                'airline_id.exists' => 'لا يوجد هذه الشركة في قاعدة البيانات!',
-
-                'company_document_type_id.required' => 'يجب تحديد نوع المستند!',
-                'company_document_type_id.exists' => 'لا يوجد هذا النوع في قاعدة البيانات!',
-
-                'comments.*.max' => 'لقد تجاوزت الحد المسموح من الحروف!',
-            ]
-        );
-        
-        DB::transaction(function () use ($request, $company_document_type) {
+        DB::transaction(function () use ($validated, $company_document_type, $request) {
 
             foreach ($request->file('files') as $index => $file) {
 
@@ -75,9 +42,9 @@ class CompanyDocumentController extends Controller
                 Company_document::create([
                     'file_path' => $path,
                     'original_name' => $file->getClientOriginalName(),
-                    'airline_id' => $request->airline_id,
-                    'company_document_type_id' => $request->company_document_type_id,
-                    'comment' => $request->comments[$index] ?? null,
+                    'airline_id' => $validated['airline_id'],
+                    'company_document_type_id' => $validated['company_document_type_id'],
+                    'comment' => $validated['comments'][$index] ?? null,
                 ]);
             }
         });
