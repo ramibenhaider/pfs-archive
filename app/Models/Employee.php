@@ -19,7 +19,7 @@ class Employee extends Model
         'phone_number',
         'is_active',
         'job_title_id',
-        'airline_id'
+        'company_id'
     ];
 
     public function nationality()
@@ -47,8 +47,8 @@ class Employee extends Model
         return $this->belongsTo(Job_title::class);
     }
 
-    public function airline()
+    public function company()
     {
-        return $this->belongsTo(Airline::class);
+        return $this->belongsTo(Company::class);
     }
 }

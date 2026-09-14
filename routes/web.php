@@ -6,7 +6,7 @@ use App\Http\Controllers\User\DocumentController;
 use App\Http\Controllers\User\EmployeeController;
 use App\Http\Controllers\User\MyNoteController;
 use App\Http\Controllers\User\NoteController;
-use App\Http\Controllers\User\UserLoginController;
+use App\Http\Controllers\UserLoginController;
 use GuzzleHttp\Middleware;
 use Illuminate\Support\Facades\Route;
 
@@ -39,7 +39,7 @@ Route::prefix('/')->group(function() {
 
         Route::resource('company-docs', CompanyDocumentController::class)->only(['index', 'show', 'update', 'destroy', 'store']);
 
-        Route::get('company-docs/{airlineHash}/edit/{company_document_typeHash}', [CompanyDocumentController::class, 'showTypeFiles'])
+        Route::get('company-docs/{companyHash}/edit/{company_document_typeHash}', [CompanyDocumentController::class, 'showTypeFiles'])
              ->name('company-docs.showTypeFiles');
              
         Route::resource('employee', EmployeeController::class)->except(['show', 'index']);

@@ -21,6 +21,8 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'username',
+        'email',
+        'role',
         'password',
         'admin_id',
         'is_active',
@@ -39,6 +41,11 @@ class User extends Authenticatable
     public function hasPermission(string $permission)
     {
         return $this->is_active && $this->permissions->contains('name', $permission);
+    }
+
+    public function isAdmin(): bool
+    {
+        return $this->role === 'admin';
     }
 
     /**

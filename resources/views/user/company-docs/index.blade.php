@@ -72,21 +72,21 @@
     </a>
 </div>
 <div class="row px-4" dir="rtl">
-    @foreach ($airlines as $airline)
+    @foreach ($companies as $company)
     <div class="col-12 col-md-6 mb-4">
         <div class="card side-card-unique h-100">
             <div class="side-card-header d-flex justify-content-between align-items-center">
-                <span>مستندات {{ $airline->airline_name }}</span>
-                <span class="total-count-badge">{{ $airline->company_documents->count() }}</span>
+                <span>مستندات {{ $company->company_name }}</span>
+                <span class="total-count-badge">{{ $company->company_documents->count() }}</span>
             </div>
             <div class="card-body p-0 d-flex flex-column">
                 <ul class="list-group list-group-flush pfs-doc-container flex-grow-1">
                     @forelse($company_document_types as $company_document_type)
                         <li class="list-group-item p-0 pfs-doc-wrapper">
-                            <a href="{{ route('company-docs.showTypeFiles', [encodeId($airline->id), encodeId($company_document_type->id)]) }}" 
+                            <a href="{{ route('company-docs.showTypeFiles', [encodeId($company->id), encodeId($company_document_type->id)]) }}" 
                                 class="pfs-doc-title-link d-flex justify-content-between align-items-center p-3 text-decoration-none">
                                 <span><i class="fas fa-file-alt me-2"></i> {{ $company_document_type->name }}</span>
-                                <span class="pfs-count-square">{{ $airline->company_documents->where('company_document_type_id', $company_document_type->id)->count()}}</span>
+                                <span class="pfs-count-square">{{ $company->company_documents->where('company_document_type_id', $company_document_type->id)->count()}}</span>
                             </a>
                         </li>
                     @empty
@@ -94,7 +94,7 @@
                     @endforelse
                 </ul>
                     <div class="card-footer text-center bg-white border-0 mt-auto">
-                        <a href="{{ route('company-docs.show', encodeId($airline->id)) }}" class="view-all-link">مشاهدة الكل</a>
+                        <a href="{{ route('company-docs.show', encodeId($company->id)) }}" class="view-all-link">مشاهدة الكل</a>
                     </div>
             </div>
         </div>

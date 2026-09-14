@@ -198,7 +198,7 @@
       </div>
     @endif
 
-    <h1 class="page-main-title">@yield('loginForWho')</h1>
+    <h1 class="page-main-title">تسجيل الدخول</h1>
 
     <div class="login-card-unique">
         
@@ -206,7 +206,7 @@
             <img src="{{ asset('logo.png') }}">
         </div>
 
-        <form action="@yield('action')" method="POST">
+        <form action="{{ route('user.doLogin') }}" method="POST">
             @csrf
             <div class="form-group">
                 <label class="form-label-custom">اسم المستخدم</label>
@@ -219,7 +219,7 @@
             </div>
 
             <div class="sub-link-wrapper">
-                <a href="@yield('goTo')" class="admin-link">@yield('goTo-text')</a>
+                <a href="{{ route('user.register') }}" class="admin-link">إنشاء حساب جديد</a>
             </div>
 
             <div class="text-center">

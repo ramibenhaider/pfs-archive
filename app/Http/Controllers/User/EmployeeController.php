@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
-use App\Models\Airline;
+use App\Models\Company;
 use App\Models\Employee;
 use App\Models\Job_title;
 use Illuminate\Http\Request;
@@ -40,9 +40,9 @@ class EmployeeController extends Controller
         $management = Management::all();
         $nationalities = Nationality::all();
         $document_types = Document_type::all();
-        $airlines = Airline::all();
+        $companies = Company::all();
         $job_titles = Job_title::all();
-        return view('user.employee.create', compact('management', 'nationalities', 'document_types', 'airlines', 'job_titles'));
+        return view('user.employee.create', compact('management', 'nationalities', 'document_types', 'companies', 'job_titles'));
     }
 
     /**
@@ -70,7 +70,7 @@ class EmployeeController extends Controller
             'phone_number'    => ['nullable', 'digits:10', 'unique:employees,phone_number'],
             'nationality_id'  => ['nullable', 'integer'],
             'is_active'       => 'nullable',
-            'airline_id'      => 'nullable',
+            'company_id'      => 'nullable',
             'job_title_id'    => 'nullable'
         ],
         [
@@ -108,7 +108,7 @@ class EmployeeController extends Controller
 
         $managements = Management::all();
         $nationalities = Nationality::all();
-        $airlines = Airline::all();
+        $companies = Company::all();
         $job_titles = Job_title::all();
         $documents = Document::where('employee_id', $employee->id)->orderByDesc('created_at')->get();
         $notes = Note::where('employee_id', $employee->id)->orderByDesc('created_at')->get();
@@ -116,7 +116,7 @@ class EmployeeController extends Controller
             $query->where('employee_id', $employee->id);
         }])->orderByDesc('created_at')->get();
 
-        return view('user.employee.show', compact('employee', 'documents', 'notes', 'managements', 'nationalities', 'documentTypes', 'job_titles', 'airlines'));
+        return view('user.employee.show', compact('employee', 'documents', 'notes', 'managements', 'nationalities', 'documentTypes', 'job_titles', 'companies'));
     }
 
     public function show(Employee $employee)
@@ -129,7 +129,7 @@ class EmployeeController extends Controller
      */
     public function update(Request $request, Employee $employee)
     {
-        if (!Auth::user()->hasPermission('editEmployees')) {
+        if (!Auth::user()->hasPermission('updateEmployees')) {
             return back()->with('warning', 'غير مصرح لك بتعديل موظف');
         }
 
@@ -153,7 +153,7 @@ class EmployeeController extends Controller
                                     Rule::unique('employees', 'phone_number')->ignore($employee->id)],
             'nationality_id'  => 'nullable|integer',
 
-            'airline_id'      => 'nullable|integer',
+            'company_id'      => 'nullable|integer',
 
             'job_title_id'    => 'nullable|integer'
         ],

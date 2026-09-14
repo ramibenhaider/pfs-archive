@@ -83,28 +83,28 @@
         <div class="side-card-unique">
             <div class="side-card-header d-flex justify-content-between align-items-center">
                 <span class="side-title">الشركات</span>
-                <span class="total-count-badge">{{ $airlines->count() ?? 0 }}</span>
+                <span class="total-count-badge">{{ $companies->count() ?? 0 }}</span>
             </div>
             <div class="p-3 bg-white">
-                <form action="{{ route('admin.airline.store') }}" method="POST" class="search-form">
+                <form action="{{ route('admin.company.store') }}" method="POST" class="search-form">
                     @csrf
-                    <input type="text" name="airline_name" class="@error('airline_name', 'airline_name.create') is-invalid @enderror" placeholder="إضافة شركة جديدة..." required>
+                    <input type="text" name="company_name" class="@error('company_name', 'company_name.create') is-invalid @enderror" placeholder="إضافة شركة جديدة..." required>
                     <button type="submit" class="search-submit">إضافة</button>
                 </form>
-                @error('airline_name', 'airline_name.create') <div class="invalid-feedback mb-2">{{ $message }}</div> @enderror
+                @error('company_name', 'company_name.create') <div class="invalid-feedback mb-2">{{ $message }}</div> @enderror
 
                 <div class="side-list">
-                    @error('airline_name', 'airline_name.edit') <div class="invalid-feedback border-bottom pb-2">{{ $message }}</div> @enderror
+                    @error('company_name', 'company_name.edit') <div class="invalid-feedback border-bottom pb-2">{{ $message }}</div> @enderror
                     
-                    @foreach ($airlines as $airline)
+                    @foreach ($companies as $company)
                         <div class="d-flex justify-content-between align-items-center border-bottom py-2">
-                            <form action="{{ route('admin.airline.update', encodeId($airline->id)) }}" method="POST" class="d-flex align-items-center flex-grow-1">
+                            <form action="{{ route('admin.company.update', encodeId($company->id)) }}" method="POST" class="d-flex align-items-center flex-grow-1">
                                 @csrf
                                 @method('PUT')
-                                <input type="text" name="airline_name" value="{{ $airline->airline_name }}" class="form-control me-2">
+                                <input type="text" name="company_name" value="{{ $company->company_name }}" class="form-control me-2">
                                 <button type="submit" style="border:none; background:none; color:blue; white-space:nowrap;">تعديل</button>
                             </form>
-                            <form action="{{ route('admin.airline.destroy', encodeId($airline->id)) }}" onsubmit="return confirm('هل أنت متأكد؟')" method="POST" class="m-0 ms-2">
+                            <form action="{{ route('admin.company.destroy', encodeId($company->id)) }}" onsubmit="return confirm('هل أنت متأكد؟')" method="POST" class="m-0 ms-2">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" style="border:none; background:none; color:red; white-space:nowrap;">حذف</button>

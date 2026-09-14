@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('company_documents', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('airline_id')
+            $table->foreignId('company_id')
                   ->nullable()
                   ->constrained()
                   ->cascadeOnUpdate()

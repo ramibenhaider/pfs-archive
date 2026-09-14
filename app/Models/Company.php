@@ -4,10 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Airline extends Model
+class Company extends Model
 {
     protected $fillable = [
-        'airline_name'
+        'company_name'
     ];
 
     public function employees()

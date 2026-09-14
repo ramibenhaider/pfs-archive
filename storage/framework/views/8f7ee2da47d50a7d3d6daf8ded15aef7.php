@@ -319,12 +319,12 @@ unset($__errorArgs, $__bag); ?>
 
                     <div class="mb-3">
                         <label class="form-label">اسم الشركة</label>
-                        <select name="airline_id" id="select-airline-doc" class="searchable-select" placeholder="ابحث عن شركة...">
-                            <?php $__currentLoopData = $airlines; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $airline): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                <option value="<?php echo e($airline->id); ?>"><?php echo e($airline->airline_name); ?></option>
+                        <select name="company_id" id="select-company-doc" class="searchable-select" placeholder="ابحث عن شركة...">
+                            <?php $__currentLoopData = $companies; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $company): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <option value="<?php echo e($company->id); ?>"><?php echo e($company->company_name); ?></option>
                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         </select>
-                        <div id="err-airline" class="invalid-feedback d-block"></div>
+                        <div id="err-company" class="invalid-feedback d-block"></div>
                     </div>
 
                     <div class="mb-3">

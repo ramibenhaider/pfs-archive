@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Document_type;
+use App\Http\Requests\DocumentStore;
 use App\Models\Document;
 use App\Models\Employee;
 use Illuminate\Support\Facades\DB;
@@ -32,54 +33,25 @@ class DocumentController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(DocumentStore $request)
     {
-        if (!Auth::user()->hasPermission('createDocuments')) {
-            return back()->with('warning', 'غير مصرح لك بإضافة مستندات!');
-        }
 
-        $document_type = Document_type::find($request->document_type_id);
-        if (!$document_type) {
-            return back()->with('warning', 'نوع الملف هذا غير موجود!');
-        }
+        $validated = $request->validated();
+
+        $document_type = Document_type::find($validated['document_type_id']);
         
-        $request->validateWithBag('doc_errors',
-            [
-                'files' => 'required|array',
-                'files.*' => 'required|file|mimes:pdf,doc,docx,xls,xlsx|max:10240',
+        DB::transaction(function () use ($validated, $document_type) {
 
-                'employee_id' => 'required|exists:employees,id',
-                'document_type_id' => 'required|exists:document_types,id',
-
-                'comments' => 'array',
-                'comments.*' => 'nullable|string|max:255',
-            ],
-            [
-                'files.required' => 'يجب رفع ملف واحد على الأقل!',
-                'files.*.required' => 'يجب رفع ملف واحد على الأقل!',
-                'files.*.file' => 'الملف المرفوع غير صالح!',
-                'files.*.mimes' => 'الملفات المدعومة هي: PDF وWord وExcel!',
-                'files.*.max' => 'حجم الملف يجب ألا يتجاوز 10 ميجابايت!',
-
-                'employee_id.required' => 'يجب تحديد الموظف!',
-                'employee_id.exists' => 'لا يوجد هذا الموظف في قاعدة البيانات!',
-
-                'comments.*.max' => 'لقد تجاوزت الحد المسموح من الحروف!',
-            ]
-        );
-        
-        DB::transaction(function () use ($request, $document_type) {
-
-            foreach ($request->file('files') as $index => $file) {
+            foreach ($validated['files'] as $index => $file) {
 
                 $path = $file->store($document_type->typeEn, 'public');
 
                 Document::create([
                     'file_path' => $path,
                     'original_name' => $file->getClientOriginalName(),
-                    'employee_id' => $request->employee_id,
-                    'document_type_id' => $request->document_type_id,
-                    'comment' => $request->comments[$index] ?? null,
+                    'employee_id' => $validated['employee_id'],
+                    'document_type_id' => $validated['document_type_id'],
+                    'comment' => $validated['comments'][$index] ?? null,
                 ]);
             }
         });

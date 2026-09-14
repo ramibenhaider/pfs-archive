@@ -6,7 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class CompanyDocumentTypeStore extends FormRequest
 {
-    protected $errorBag = 'company_doc_errors';
+    protected $errorBag = 'name.create';
 
     public function authorize(): bool
     {
@@ -16,14 +16,8 @@ class CompanyDocumentTypeStore extends FormRequest
     public function rules(): array
     {
         return [
-            'files' => 'required|array',
-            'files.*' => 'required|file|mimes:pdf,doc,docx,xls,xlsx|max:10240',
-
-            'airline_id' => 'required|exists:airlines,id',
-            'company_document_type_id' => 'required|exists:company_document_types,id',
-
-            'comments' => 'array',
-            'comments.*' => 'nullable|string|max:255',
+            'name' => 'required|string|max:50|unique:company_document_types,name',
+            'nameEn' => 'required|string|regex:/^[a-zA-Z]+$/|max:50|unique:company_document_types,nameEn'
         ];
     }
 
@@ -31,19 +25,14 @@ class CompanyDocumentTypeStore extends FormRequest
     {
         return
         [
-            'files.required' => 'يجب رفع ملف واحد على الأقل!',
-            'files.*.required' => 'يجب رفع ملف واحد على الأقل!',
-            'files.*.file' => 'الملف المرفوع غير صالح!',
-            'files.*.mimes' => 'الملفات المدعومة هي: PDF وWord وExcel!',
-            'files.*.max' => 'حجم الملف يجب ألا يتجاوز 10 ميجابايت!',
+            'name.required' => 'الاسم مطلوب!',
+            'name.max' => 'لقد تجاوزت العدد المسموح به من عدد الحروف!',
+            'name.unique' => 'هذا الاسم مكرر باللغة العربية!',
 
-            'airline_id.required' => 'يجب تحديد الشركة!',
-            'airline_id.exists' => 'لا يوجد هذه الشركة في قاعدة البيانات!',
-
-            'company_document_type_id.required' => 'يجب تحديد نوع المستند!',
-            'company_document_type_id.exists' => 'لا يوجد هذا النوع في قاعدة البيانات!',
-
-            'comments.*.max' => 'لقد تجاوزت الحد المسموح من الحروف!',
+            'nameEn.reqired' => 'الاسم مطلوب!',
+            'nameEn.max' => 'لقد تجاوزت العدد المسموح به من عدد الحروف!',
+            'nameEn.regex' => 'يجب أن تكون هذه الخانة بحروف انجليزية فقط!',
+            'nameEn.unique' => 'هذا الاسم مكرر باللغة الانجليزية!'
         ];
     }
 }

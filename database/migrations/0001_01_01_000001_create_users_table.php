@@ -13,15 +13,12 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
+            $table->enum('role', ['admin','user'])->default('user');
             $table->string('name');
+            $table->string('email');
             $table->string('username')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->foreignId('admin_id')
-                  ->nullable()
-                  ->constrained('admins')
-                  ->cascadeOnUpdate()
-                  ->nullOnDelete();
             $table->string('myNotes')->nullable();
             $table->boolean('is_active')->default(false);
             $table->rememberToken();
@@ -29,7 +26,8 @@ return new class extends Migration
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {
-            $table->string('username')->primary();
+            $table->string('username')->unique();
+            $table->string('email')->primary();
             $table->string('token');
             $table->timestamp('created_at')->nullable();
         });

@@ -26,6 +26,7 @@ class DashboardController extends Controller
         $data = $request->validate([
             'name' => ['required', 'string'],
             'username' => ['required', 'string','regex:/^[a-zA-Z]+$/', 'unique:users,username'],
+            'email' => ['required', 'email', 'unique:users,email'],
             'password' => ['required', 'string', 'min:4', 'confirmed']
         ],
         [
@@ -35,6 +36,10 @@ class DashboardController extends Controller
             'username.unique' => 'اسم المستخدم موجود في قاعدة البيانات!',
             'username.regex' => 'يجب أن يكون اسم المستخدم من حروف انجليزية فقط ومن دون مسافات!',
 
+            'email.required' => 'البريد الإلكتروني مطلوب!',
+            'email.email' => 'البريد الإلكتروني غير صحيح!',
+            'email.unique' => 'البريد الإلكتروني موجود في قاعدة البيانات!',     
+
             'password.required' => 'كلمة المرور مطلوبة!',
             'password.min' => 'كلمة المرور يجب أن تكون على الأقل من 4 خانات!',
             'password.confirmed' => 'كلمتا المرور غير متطابقتان!'
@@ -43,6 +48,7 @@ class DashboardController extends Controller
         User::create ([
             'name' => $data['name'],
             'username' => $data['username'],
+            'email' => $data['email'],
             'password' => bcrypt($data['password']),
             'is_active' => false
         ]);

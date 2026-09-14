@@ -16,6 +16,9 @@ class RedirectIfAdmin
      */
     public function handle(Request $request, Closure $next): Response
     {
+        if (Auth::check() && Auth::user()->isAdmin()) {
+            return redirect()->route('admin.permissions');
+        }
         return $next($request);
     }
 }

@@ -29,7 +29,7 @@ protected $errorBag = 'company_doc_errors';
             'files' => 'required|array',
             'files.*' => 'required|file|mimes:pdf,doc,docx,xls,xlsx|max:10240',
 
-            'airline_id' => 'required|exists:airlines,id',
+            'company_id' => 'required|exists:companies,id',
             'company_document_type_id' => 'required|exists:company_document_types,id',
 
             'comments' => 'array',
@@ -47,8 +47,8 @@ protected $errorBag = 'company_doc_errors';
             'files.*.mimes' => 'الملفات المدعومة هي: PDF وWord وExcel!',
             'files.*.max' => 'حجم الملف يجب ألا يتجاوز 10 ميجابايت!',
 
-            'airline_id.required' => 'يجب تحديد الشركة!',
-            'airline_id.exists' => 'لا يوجد هذه الشركة في قاعدة البيانات!',
+            'company_id.required' => 'يجب تحديد الشركة!',
+            'company_id.exists' => 'لا يوجد هذه الشركة في قاعدة البيانات!',
 
             'company_document_type_id.required' => 'يجب تحديد نوع المستند!',
             'company_document_type_id.exists' => 'لا يوجد هذا النوع في قاعدة البيانات!',

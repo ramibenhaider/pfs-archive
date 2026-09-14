@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Company_document_type;
 use App\Models\Company_document;
-use App\Models\Airline;
+use App\Models\Company;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\CompanyDocumentStore;
@@ -19,9 +19,9 @@ class CompanyDocumentController extends Controller
             return redirect()->route('employee.index')->with('warning', 'غير مصرح لك بعرض مستندات الشركات!');
         }
 
-        $airlines = Airline::with('company_documents')->orderByDesc('created_at')->get();
+        $companies = Company::with('company_documents')->orderByDesc('created_at')->get();
         $company_document_types = Company_document_type::orderByDesc('created_at')->get();
-        return view('user.company-docs.index', compact('airlines', 'company_document_types'));
+        return view('user.company-docs.index', compact('companies', 'company_document_types'));
     }
 
     public function store(CompanyDocumentStore $request)
@@ -42,7 +42,7 @@ class CompanyDocumentController extends Controller
                 Company_document::create([
                     'file_path' => $path,
                     'original_name' => $file->getClientOriginalName(),
-                    'airline_id' => $validated['airline_id'],
+                    'company_id' => $validated['company_id'],
                     'company_document_type_id' => $validated['company_document_type_id'],
                     'comment' => $validated['comments'][$index] ?? null,
                 ]);
@@ -56,21 +56,21 @@ class CompanyDocumentController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $airlineHash)
+    public function show(string $companyHash)
     {
         if (!Auth::user()->hasPermission('showDocuments')) {
             return redirect()->route('employee.index')->with('warning', 'غير مصرح لك بالإطلاع على المستندات!');
         }
 
-        $airlineId = decodeId($airlineHash);
-        if (!$airlineId) {
+        $companyId = decodeId($companyHash);
+        if (!$companyId) {
             abort(404);
         }
-        $airlines = Airline::all();
+        $companies = Company::all();
         $company_document_types = Company_document_type::all();
-        $airline = Airline::findOrFail($airlineId);
-        $company_documents = Company_document::where('airline_id', $airline->id)->orderByDesc('created_at')->get();
-        return view('user.company-docs.show', compact('company_documents', 'airline', 'airlines', 'company_document_types'));
+        $company = Company::findOrFail($companyId);
+        $company_documents = Company_document::where('company_id', $company->id)->orderByDesc('created_at')->get();
+        return view('user.company-docs.show', compact('company_documents', 'company', 'companies', 'company_document_types'));
     }
 
     /**
@@ -86,14 +86,14 @@ class CompanyDocumentController extends Controller
 
         $new_comment = $request->validate([
             'comment' => 'nullable|string|max:255',
-            'airline_id' => 'required|exists:airlines,id',
+            'company_id' => 'required|exists:companies,id',
             'company_document_type_id' => 'required|exists:company_document_types,id'
         ],
         [
             'comment.max' => 'تم تجاوز الحد المسموح من الأحرف',
 
-            'airline_id.required' => 'يجب تحديد الشركة!',
-            'airline_id.exists' => 'لا توجد هذه الشركة في قاعدة البيانات!',
+            'company_id.required' => 'يجب تحديد الشركة!',
+            'company_id.exists' => 'لا توجد هذه الشركة في قاعدة البيانات!',
 
             'company_document_type_id.required' => 'يجب تحديد نوع المستند!',
             'company_document_type_id.exists' => 'لا يوجد هذا النوع في قاعدة البيانات!',
@@ -131,17 +131,17 @@ class CompanyDocumentController extends Controller
         return back()->with('success', 'تم حذف المستند بنجاح!');
     }
 
-        public function showTypeFiles(string $airlineHash, string $company_document_typeHash)
+        public function showTypeFiles(string $companyHash, string $company_document_typeHash)
     {
         if (!Auth::user()->hasPermission('showDocuments')) {
             return redirect()->route('employee.index')->with('warning', 'غير مصرح لك بالإطلاع على المستندات!');
         }
 
-        $airlineId = decodeId($airlineHash);
-        if (!$airlineId) {
+        $companyId = decodeId($companyHash);
+        if (!$companyId) {
             return abort(404);
         }
-        $airline = Airline::findOrFail($airlineId);
+        $company = Company::findOrFail($companyId);
 
         $document_typeId = decodeId($company_document_typeHash);
         if (!$document_typeId) {
@@ -149,13 +149,13 @@ class CompanyDocumentController extends Controller
         }
         $document_type = Company_document_type::findOrFail($document_typeId);
 
-        $airlines = Airline::all();
+        $companies = Company::all();
         $company_document_types = Company_document_type::all();
 
-        $company_documents = Company_document::where('airline_id', $airline->id)
+        $company_documents = Company_document::where('company_id', $company->id)
                                      ->where('company_document_type_id', $document_type->id)
                                      ->orderByDesc('created_at')->get();
-        return view('user.company-docs.show', compact('company_documents', 'airline', 'airlines', 'company_document_types'));
+        return view('user.company-docs.show', compact('company_documents', 'company', 'companies', 'company_document_types'));
     }
 
     public function officePreview($id)

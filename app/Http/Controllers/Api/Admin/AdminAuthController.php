@@ -18,15 +18,23 @@ class AdminAuthController extends Controller
             'password.required' => 'يجب إدخال كلمة المرور!',
         ]);
 
-        if (!Auth::guard('admin')->attempt($credentials)) {
+        if (!Auth::attempt($credentials)) {
             return response()->json([
                 'status'  => 'error',
                 'message' => 'بيانات دخول الأدمن غير صحيحة!',
             ], 401);
         }
 
-        /** @var \App\Models\Admin $admin */
-        $admin = Auth::guard('admin')->user();
+        /** @var \App\Models\User $admin */
+        $admin = Auth::user();
+
+        if (!$admin->isAdmin()) {
+            return response()->json([
+                'status'  => 'error',
+                'message' => 'لا تملك صلاحية الدخول!',
+            ], 403);
+        }
+
         $token = $admin->createToken('admin-api-token')->plainTextToken;
 
         return response()->json([

@@ -1,18 +1,17 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Models\Permission;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Http\Request;
 
-class AdminLoginController extends Controller
+class UserLoginController extends Controller
 {
     public function showLoginForm()
     {
-        return view('admin.login');
+        return view('login');
     }
 
     public function login(Request $request)
@@ -22,9 +21,14 @@ class AdminLoginController extends Controller
             'password' => 'required|string'
         ]);
 
-        if (Auth::guard('admin')->attempt($credentials)) {
+        if (Auth::guard('web')->attempt($credentials)) {
             $request->session()->regenerate();
-            return redirect()->route('admin.permissions');
+
+            if (Auth::guard('web')->user()->isAdmin()) {
+                return redirect()->route('admin.permissions');
+            }
+
+            return redirect()->route('employee.index')->with('success', 'تم تسجيل الدخول بنجاح');
         }
 
         return back()->withErrors(['username' => 'اسم المستخدم أو كلمة المرور غير صحيحة!'])->onlyInput('username');
@@ -32,9 +36,9 @@ class AdminLoginController extends Controller
 
     public function logout(Request $request)
     {
-        Auth::guard('admin')->logout();
+        Auth::guard('web')->logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-        return redirect()->route('admin.login');
+        return redirect()->route('login');
     }
 }

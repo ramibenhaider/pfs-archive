@@ -30,7 +30,7 @@ return new class extends Migration
                   ->constrained()
                   ->cascadeOnUpdate()
                   ->nullOnDelete();
-            $table->foreignId('airline_id')
+            $table->foreignId('company_id')
                   ->nullable()
                   ->constrained()
                   ->cascadeOnUpdate()

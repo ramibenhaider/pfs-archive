@@ -200,7 +200,7 @@
       </div>
     <?php endif; ?>
 
-    <h1 class="page-main-title"><?php echo $__env->yieldContent('loginForWho'); ?></h1>
+    <h1 class="page-main-title">تسجيل الدخول</h1>
 
     <div class="login-card-unique">
         
@@ -208,7 +208,7 @@
             <img src="<?php echo e(asset('logo.png')); ?>">
         </div>
 
-        <form action="<?php echo $__env->yieldContent('action'); ?>" method="POST">
+        <form action="<?php echo e(route('user.doLogin')); ?>" method="POST">
             <?php echo csrf_field(); ?>
             <div class="form-group">
                 <label class="form-label-custom">اسم المستخدم</label>
@@ -221,7 +221,7 @@
             </div>
 
             <div class="sub-link-wrapper">
-                <?php echo $__env->yieldContent('goTo-text'); ?>
+                <a href="<?php echo e(route('user.register')); ?>" class="admin-link">إنشاء حساب جديد</a>
             </div>
 
             <div class="text-center">
@@ -242,4 +242,4 @@ unset($__errorArgs, $__bag); ?>
     </div>
 <script src="<?php echo e(asset('script.js')); ?>"></script>
 </body>
-</html><?php /**PATH C:\xampp\htdocs\pfs-archive\resources\views/layouts/login.blade.php ENDPATH**/ ?>
+</html><?php /**PATH C:\xampp\htdocs\pfs-archive\resources\views/login.blade.php ENDPATH**/ ?>

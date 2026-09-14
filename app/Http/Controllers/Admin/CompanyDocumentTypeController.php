@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CompanyDocumentTypeStore;
 use App\Models\Company_document_type;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
@@ -25,23 +26,9 @@ class CompanyDocumentTypeController extends Controller
         //
     }
 
-    public function store(Request $request)
+    public function store(CompanyDocumentTypeStore $request)
     {
-        $data = $request->validateWithBag('name.create',
-        [
-            'name' => 'required|string|max:50|unique:company_document_types,name',
-            'nameEn' => 'required|string|regex:/^[a-zA-Z]+$/|max:50|unique:company_document_types,nameEn'
-        ],
-        [
-            'name.required' => 'الاسم مطلوب!',
-            'name.max' => 'لقد تجاوزت العدد المسموح به من عدد الحروف!',
-            'name.unique' => 'هذا الاسم مكرر باللغة العربية!',
-
-            'nameEn.reqired' => 'الاسم مطلوب!',
-            'nameEn.max' => 'لقد تجاوزت العدد المسموح به من عدد الحروف!',
-            'nameEn.regex' => 'يجب أن تكون هذه الخانة بحروف انجليزية فقط!',
-            'nameEn.unique' => 'هذا الاسم مكرر باللغة الانجليزية!'
-        ]);
+        $data = $request->validated();
 
         Storage::disk('public')->makeDirectory($request->nameEn);
 

@@ -72,21 +72,21 @@
     </a>
 </div>
 <div class="row px-4" dir="rtl">
-    <?php $__currentLoopData = $airlines; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $airline): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+    <?php $__currentLoopData = $companies; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $company): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
     <div class="col-12 col-md-6 mb-4">
         <div class="card side-card-unique h-100">
             <div class="side-card-header d-flex justify-content-between align-items-center">
-                <span>مستندات <?php echo e($airline->airline_name); ?></span>
-                <span class="total-count-badge"><?php echo e($airline->company_documents->count()); ?></span>
+                <span>مستندات <?php echo e($company->company_name); ?></span>
+                <span class="total-count-badge"><?php echo e($company->company_documents->count()); ?></span>
             </div>
             <div class="card-body p-0 d-flex flex-column">
                 <ul class="list-group list-group-flush pfs-doc-container flex-grow-1">
                     <?php $__empty_1 = true; $__currentLoopData = $company_document_types; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $company_document_type): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
                         <li class="list-group-item p-0 pfs-doc-wrapper">
-                            <a href="<?php echo e(route('company-docs.showTypeFiles', [encodeId($airline->id), encodeId($company_document_type->id)])); ?>" 
+                            <a href="<?php echo e(route('company-docs.showTypeFiles', [encodeId($company->id), encodeId($company_document_type->id)])); ?>" 
                                 class="pfs-doc-title-link d-flex justify-content-between align-items-center p-3 text-decoration-none">
                                 <span><i class="fas fa-file-alt me-2"></i> <?php echo e($company_document_type->name); ?></span>
-                                <span class="pfs-count-square"><?php echo e($airline->company_documents->where('company_document_type_id', $company_document_type->id)->count()); ?></span>
+                                <span class="pfs-count-square"><?php echo e($company->company_documents->where('company_document_type_id', $company_document_type->id)->count()); ?></span>
                             </a>
                         </li>
                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
@@ -94,7 +94,7 @@
                     <?php endif; ?>
                 </ul>
                     <div class="card-footer text-center bg-white border-0 mt-auto">
-                        <a href="<?php echo e(route('company-docs.show', encodeId($airline->id))); ?>" class="view-all-link">مشاهدة الكل</a>
+                        <a href="<?php echo e(route('company-docs.show', encodeId($company->id))); ?>" class="view-all-link">مشاهدة الكل</a>
                     </div>
             </div>
         </div>

@@ -183,9 +183,9 @@
 
             <div class="form-group">
                 <label>الشركة</label>
-                <select name="airline_id">
-                    @foreach ($airlines as $airline)
-                        <option value="{{ $airline->id }}">{{ $airline->airline_name }}</option>
+                <select name="company_id">
+                    @foreach ($companies as $company)
+                        <option value="{{ $company->id }}">{{ $company->company_name }}</option>
                     @endforeach
                 </select>
             </div>

@@ -303,12 +303,12 @@
 
                     <div class="mb-3">
                         <label class="form-label">اسم الشركة</label>
-                        <select name="airline_id" id="select-airline-doc" class="searchable-select" placeholder="ابحث عن شركة...">
-                            @foreach ($airlines as $airline)
-                                <option value="{{ $airline->id }}">{{ $airline->airline_name }}</option>
+                        <select name="company_id" id="select-company-doc" class="searchable-select" placeholder="ابحث عن شركة...">
+                            @foreach ($companies as $company)
+                                <option value="{{ $company->id }}">{{ $company->company_name }}</option>
                             @endforeach
                         </select>
-                        <div id="err-airline" class="invalid-feedback d-block"></div>
+                        <div id="err-company" class="invalid-feedback d-block"></div>
                     </div>
 
                     <div class="mb-3">

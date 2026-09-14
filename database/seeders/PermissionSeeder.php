@@ -18,7 +18,6 @@ class PermissionSeeder extends Seeder
             'createEmployees',
             'updateEmployees',
             'deleteEmployees',
-            'showEmployees',
             'createDocuments',
             'showDocuments',
             'deleteDocuments',

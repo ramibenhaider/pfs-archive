@@ -16,7 +16,7 @@ class CheckAdminApi
     public function handle(Request $request, Closure $next): Response
     {
         
-        if (!auth()->guard('admin-api')->check()) {
+        if (!auth()->check() || !auth()->user()->isAdmin()) {
             return response()->json([
                 'status' => false,
                 'message' => 'هذا المسار للأدمن'

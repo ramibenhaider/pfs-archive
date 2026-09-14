@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Airline;
+use App\Models\Company;
 use App\Models\Document_type;
 use App\Models\Permission;
 use App\Models\User;
@@ -29,7 +29,7 @@ class DashboardController extends Controller
 
     public function fields()
     {
-        $airlines = Airline::orderByDesc('created_at')->get();
+        $companies = Company::orderByDesc('created_at')->get();
         $document_types = Document_type::orderByDesc('created_at')->get();
         $management = Management::orderByDesc('created_at')->get();
         $job_titles = Job_title::orderByDesc('created_at')->get();
@@ -38,7 +38,7 @@ class DashboardController extends Controller
         return response()->json([
             'status' => 'success',
             'data' => [
-                'airlines' => $airlines,
+                'companies' => $companies,
                 'document_types' => $document_types,
                 'management' => $management,
                 'job_titles' => $job_titles,

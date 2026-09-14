@@ -243,10 +243,10 @@
 
                         <li class="list-group-item d-flex justify-content-between align-items-center py-3">
                             <strong>الشركة:</strong>
-                            <select name="airline_id" class="form-select w-50">
-                                @foreach ($airlines as $airline)
-                                    <option value="{{ $airline->id }}" {{ old('airline_id', $employee->airline_id) == $airline->id ? 'selected' : '' }}>
-                                        {{ $airline->airline_name }}
+                            <select name="company_id" class="form-select w-50">
+                                @foreach ($companies as $company)
+                                    <option value="{{ $company->id }}" {{ old('company_id', $employee->company_id) == $company->id ? 'selected' : '' }}>
+                                        {{ $company->company_name }}
                                     </option>
                                 @endforeach
                             </select>
@@ -281,16 +281,19 @@
                         @endif
 
                         @if ($currentUser->hasPermission('deleteEmployees'))
-                            <form method="POST" action="{{ route('employee.destroy', $employee->id) }}" class="d-inline">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" onclick="return confirm('هل أنت متأكد أنك تريد حذف هذا الموظف؟');" class="btn btn-danger btn-sm">حذف الموظف</button>
-                            </form>
+                            <button type="submit" form="delete-form-{{ $employee->id }}" onclick="return confirm('هل أنت متأكد أنك تريد حذف هذا الموظف؟');" class="btn btn-danger btn-sm">حذف الموظف</button>
                         @else
                             <button type="button" class="btn btn-danger disabled-btn btn-sm">غير مصرح لك بحذف الموظفين</button>
                         @endif
                     </div>
                 </form>
+                
+                @if ($currentUser->hasPermission('deleteEmployees'))
+                <form id="delete-form-{{ $employee->id }}" method="POST" action="{{ route('employee.destroy', $employee->id) }}" class="d-none">
+                    @csrf
+                    @method('DELETE')
+                </form>
+                @endif
             </div>
         </div>
 

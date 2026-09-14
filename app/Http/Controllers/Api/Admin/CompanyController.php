@@ -3,88 +3,88 @@
 namespace App\Http\Controllers\Api\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Airline;
+use App\Models\Company;
 use Illuminate\Http\Request;
 
-class AirlineController extends Controller
+class CompanyController extends Controller
 {
 public function store(Request $request)
     {
         $data = $request->validate([
-            'airline_name' => 'required|string|max:70|unique:airlines,airline_name'
+            'company_name' => 'required|string|max:70|unique:companies,company_name'
         ], [
-            'airline_name.required' => 'الاسم مطلوب!',
-            'airline_name.max' => 'لقد تجاوزت العدد المسموح به من عدد الحروف!',
-            'airline_name.unique' => 'اسم خط الطيران مكرر!'
+            'company_name.required' => 'الاسم مطلوب!',
+            'company_name.max' => 'لقد تجاوزت العدد المسموح به من عدد الحروف!',
+            'company_name.unique' => 'اسم خط الطيران مكرر!'
         ]);
 
-        $airline = Airline::create($data);
+        $company = Company::create($data);
 
         return response()->json([
             'status' => 'success',
             'message' => 'تم إضافة اسم خطوط الطيران بنجاح',
-            'data' => $airline
+            'data' => $company
         ], 201);
     }
 
-    public function update(Request $request, $airlineHashed)
+    public function update(Request $request, $companyHashed)
     {
-    $airlineId = decodeId($airlineHashed);
+    $companyId = decodeId($companyHashed);
         
-        if (!$airlineId) {
+        if (!$companyId) {
             return response()->json([
                 'status' => 'warning',
                 'message' => 'معرف غير صالح'
             ], 404);
         }
 
-        $airline = Airline::findOrFail($airlineId);
+        $company = Company::findOrFail($companyId);
 
         $new_data = $request->validate([
-            'airline_name' => 'required|string|max:70|unique:airlines,airline_name,' . $airline->id,
+            'company_name' => 'required|string|max:70|unique:companies,company_name,' . $company->id,
         ], [
-            'airline_name.required' => 'لا يمكن ترك هذه الخانة فارغة!',
-            'airline_name.max' => 'لقد تجاوزت عدد الأحرف المسموحة!',
-            'airline_name.unique' => 'اسم خط الطيران مكرر!'
+            'company_name.required' => 'لا يمكن ترك هذه الخانة فارغة!',
+            'company_name.max' => 'لقد تجاوزت عدد الأحرف المسموحة!',
+            'company_name.unique' => 'اسم خط الطيران مكرر!'
         ]);
 
-        if (!$airline->fill($new_data)->isDirty()) {
+        if (!$company->fill($new_data)->isDirty()) {
             return response()->json([
                 'status' => 'warning',
                 'message' => 'لم تقم بأي تعديل!'
             ],422);
         }
 
-        $airline->save();
+        $company->save();
 
         return response()->json([
             'status' => 'success',
             'message' => 'تم التعديل بنجاح!',
-            'data' => $airline
+            'data' => $company
         ],200);
     }
 
-    public function destroy($airlineHashed)
+    public function destroy($companyHashed)
     {
-        $airlineId = decodeId($airlineHashed);
+        $companyId = decodeId($companyHashed);
 
-        if (!$airlineId) {
+        if (!$companyId) {
             return response()->json([
                 'status' => 'warning',
                 'message' => 'معرف غير صالح'
             ], 404);
         }
 
-        $airline = Airline::findOrFail($airlineId);
+        $company = Company::findOrFail($companyId);
 
-        if ($airline->employees()->exists()) {
+        if ($company->employees()->exists()) {
             return response()->json([
                 'status' => 'warning', 
                 'message' => 'يجب أن لا يكون هناك موظف مرتبط بخط الطيران هذا!'
             ], 400);
         }
 
-        $airline->delete();
+        $company->delete();
 
         return response()->json([
             'status' => 'success',

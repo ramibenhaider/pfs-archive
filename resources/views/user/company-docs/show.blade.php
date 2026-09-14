@@ -244,13 +244,13 @@ body {
             <div class="form-grid">
                 <div class="form-group">
                     <label>الشركة</label>
-                    <select name="airline_id">
-                        @foreach ($airlines as $airline)
-                            <option value="{{ $airline->id }}" {{ old('airline_id', $company_document->airline_id) == $airline->id ? 'selected' : '' }}
-                                class="@error('airline_id') is-invalid @enderror">{{ $airline->airline_name }}</option>
+                    <select name="company_id">
+                        @foreach ($companies as $company)
+                            <option value="{{ $company->id }}" {{ old('company_id', $company_document->company_id) == $company->id ? 'selected' : '' }}
+                                class="@error('company_id') is-invalid @enderror">{{ $company->company_name }}</option>
                         @endforeach
                     </select>
-                    @error('airline_id') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                    @error('company_id') <div class="invalid-feedback">{{ $message }}</div> @enderror
                 </div>
 
                 <div class="form-group">

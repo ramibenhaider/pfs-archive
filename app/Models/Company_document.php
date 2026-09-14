@@ -12,7 +12,7 @@ class Company_document extends Model
         'original_name',
         'file_path',
         'comment',
-        'airline_id'
+        'company_id'
     ];
 
     public function company_document_type()
@@ -20,8 +20,8 @@ class Company_document extends Model
         return $this->belongsTo(Company_document_type::class);
     }
     
-    public function airline()
+    public function company()
     {
-        return $this->belongsTo(Airline::class);
+        return $this->belongsTo(Company::class);
     }
 }
