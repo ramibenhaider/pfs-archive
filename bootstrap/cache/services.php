@@ -33,6 +33,7 @@
     29 => 'Termwind\\Laravel\\TermwindServiceProvider',
     30 => 'Vinkla\\Hashids\\HashidsServiceProvider',
     31 => 'App\\Providers\\AppServiceProvider',
+    32 => 'App\\Providers\\RepositoryServiceProvider',
   ),
   'eager' => 
   array (
@@ -53,6 +54,7 @@
     14 => 'Termwind\\Laravel\\TermwindServiceProvider',
     15 => 'Vinkla\\Hashids\\HashidsServiceProvider',
     16 => 'App\\Providers\\AppServiceProvider',
+    17 => 'App\\Providers\\RepositoryServiceProvider',
   ),
   'deferred' => 
   array (
