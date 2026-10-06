@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Repositories\Eloquent;
+namespace App\Operations\Repositories;
 
 use App\Models\Employee;
-use App\Repositories\Contracts\EmployeeRepositoryInterface;
+use App\Contracts\Repositories\EmployeeRepositoryInterface;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\DB;
 

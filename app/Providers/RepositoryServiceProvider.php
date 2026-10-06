@@ -3,8 +3,8 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use App\Repositories\Contracts\EmployeeRepositoryInterface;
-use App\Repositories\Eloquent\EmployeeRepository;
+use App\Contracts\Repositories\EmployeeRepositoryInterface;
+use App\Operations\Repositories\EmployeeRepository;
 
 class RepositoryServiceProvider extends ServiceProvider
 {

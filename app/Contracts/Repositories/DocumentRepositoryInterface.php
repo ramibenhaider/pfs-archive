@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Repositories\Contracts;
+namespace App\Contracts\Repositories;
 
 interface DocumentRepositoryInterface
 {
@@ -9,7 +9,7 @@ interface DocumentRepositoryInterface
     public function updateDocument(Document $document, array $data): bool;
     public function deleteDocument(Document $document): bool;
     public function findById(int $id): ?Document;
-    public function getDocumentsByTypeForEmployee(int $employeeId, int $documentTypeId, array $columns = ['*']): Collection;
+    public function getDocumentsByType(int $id, int $documentTypeId, array $columns = ['*']): Collection;
     public function getLatestDocumentByEmployeeAndType(int $employeeId, int $documentTypeId): ?Document;
     public function officePreviewById(int $id): Document;
 }

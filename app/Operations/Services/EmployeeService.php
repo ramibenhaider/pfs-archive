@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Services;
+namespace App\Operations\Services;
 
 use App\Models\Employee;
-use App\Repositories\Contracts\EmployeeRepositoryInterface;
+use App\Contracts\Repositories\EmployeeRepositoryInterface;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 
